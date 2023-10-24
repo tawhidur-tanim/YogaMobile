@@ -13,7 +13,19 @@
         android:theme="@style/Theme.Dyoga"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.AddClassInstanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.AddCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.DashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.GetStartedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlaygroundActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

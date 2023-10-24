@@ -1,4 +1,4 @@
-package com.example.dyoga;
+package com.grouptwo.dyoga;
 
 import android.content.Context;
 

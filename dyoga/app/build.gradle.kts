@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dyoga"
+    namespace = "com.grouptwo.dyoga"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dyoga"
+        applicationId = "com.grouptwo.dyoga"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

@@ -1,3 +1,8 @@
 <resources>
+    <!--    To be later deleted-->
+    <string name="welcome_to_our_jump_navigation_screen_kindly_pick_an_activity_below">Welcome to our jump navigation screen, kindly pick an activity below:</string>
+    <string name="this_activity_screen_and_its_related_resources_will_be_delete_after_app_completion">This activity screen and its related resources will be delete after app completion</string>
+    <!--    To be later deleted-->
+
     <string name="app_name">d\'yoga</string>
 </resources>
