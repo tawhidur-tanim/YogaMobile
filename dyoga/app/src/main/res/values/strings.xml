@@ -8,4 +8,5 @@
 
 
     <string name="dashTitle">Your\nCourses</string>
+    <string name="searchHintCourse">Search Courses</string>
 </resources>

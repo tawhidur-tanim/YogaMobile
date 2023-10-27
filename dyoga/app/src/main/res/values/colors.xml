@@ -6,4 +6,8 @@
     <color name="colorSecondary">#FF000000</color>
     <color name="transparent">#00FFFFFF</color>
     <color name="titleBlack">#000000</color>
+
+    <color name="editextBackground">#EEF1F3</color>
+    <color name="coursebBackground">#0085FF</color>
+    <color name="white">#FFFFFF</color>
 </resources>
