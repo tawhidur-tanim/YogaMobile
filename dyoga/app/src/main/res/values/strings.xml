@@ -5,4 +5,7 @@
     <!--    To be later deleted-->
 
     <string name="app_name">d\'yoga</string>
+
+
+    <string name="dashTitle">Your\nCourses</string>
 </resources>
