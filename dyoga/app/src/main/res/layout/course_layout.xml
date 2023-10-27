@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:padding="15dp"
     android:layout_marginBottom="5dp"
-
-    android:background="@drawable/courseLayout_background"
+    android:background="@drawable/courselayout_background"
     >
 
 
@@ -26,14 +25,18 @@
             android:text="Family Yoga"
             android:textColor="@color/white"
             android:textFontWeight="600"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:id="@+id/courseName"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="£200"
             android:textColor="@color/white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:id="@+id/coursePrice"
+            />
 
     </LinearLayout>
 
@@ -51,6 +54,7 @@
             android:text="Tuesday 11:00 AM"
             android:textColor="@color/white"
             android:layout_weight="1"
+            android:id="@+id/courseDayTime"
             />
 
 

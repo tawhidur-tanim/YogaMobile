@@ -59,7 +59,13 @@ public class PlaygroundActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG
                 ).show();
 
-                startActivity(new Intent(getApplicationContext(), ACTIVITIES[itemPosition]));
+               try {
+                   startActivity(new Intent(getApplicationContext(), ACTIVITIES[itemPosition]));
+               }
+               catch (Exception e){
+
+                   Toast.makeText(PlaygroundActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+               }
             }
 
             @Override
