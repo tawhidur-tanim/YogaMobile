@@ -12,6 +12,7 @@ import com.google.android.material.color.DynamicColorsOptions;
 import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.CourseDao;
+import com.grouptwo.dyoga.interfaces.Callback;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -63,18 +64,26 @@ public class CourseRepository {
 
 
 
-    public LiveData<List<Course>> getAllCourses(){
-
-        return courseDao.getAllCourses();
+    public void getAllCourses(Callback<Course> callback){
+        executor.execute(() -> {
+            List<Course> courses = courseDao.getAllCourses();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                callback.onResult(courses);
+            });
+        });
     }
 
 
-    public LiveData<List<Course>> searchCourses(String type){
+    public void searchCourses(String type,Callback<Course> callback){
 
-        Log.d("from repo", type);
-        return courseDao.searchCourses(type);
-
+        executor.execute(() -> {
+            List<Course> courses = courseDao.searchCourses(type);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                callback.onResult(courses);
+            });
+        });
     }
+
 
 
 }

@@ -71,8 +71,6 @@ public class DashboardActivity extends AppCompatActivity {
                                 return;
                             }
                             courseAdapter.setCourseList(courses);
-
-                            Toast.makeText(DashboardActivity.this, courses.size()+"", Toast.LENGTH_SHORT).show();
                         }
                     });
 
@@ -128,14 +126,6 @@ public class DashboardActivity extends AppCompatActivity {
                 courseViewModel.searchCourse(s.toString());
             }
         });
-
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
 
     }
 }

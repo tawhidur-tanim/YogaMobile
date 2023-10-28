@@ -11,16 +11,14 @@ import androidx.lifecycle.Transformations;
 
 import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.repositories.CourseRepository;
+import com.grouptwo.dyoga.interfaces.Callback;
 
 import java.util.List;
 
 public class CourseViewModel extends AndroidViewModel {
 
     private CourseRepository courseRepository;
-
-    private MutableLiveData<String> searchQuery = new MutableLiveData<>();
-    private LiveData<List<Course>> allCourses = Transformations.switchMap(searchQuery,
-            query -> courseRepository.searchCourses(query));
+    private MutableLiveData<List<Course>> allCourses = new MutableLiveData<>();
 
 
     public CourseViewModel(@NonNull Application application) {
@@ -31,7 +29,17 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Course>> getAllCourses(){
-        allCourses = courseRepository.getAllCourses();
+
+        courseRepository.getAllCourses(new Callback<Course>() {
+            @Override
+            public void onResult(Course result) {
+            }
+
+            @Override
+            public void onResult(List<Course> result) {
+                allCourses.setValue(result);
+            }
+        });
         return allCourses;
     }
 
@@ -53,15 +61,16 @@ public class CourseViewModel extends AndroidViewModel {
 
     public void searchCourse(String type){
 
-        Log.d("from veiw model", type);
-        searchQuery.setValue(type);
+        courseRepository.searchCourses(type, new Callback<Course>() {
+            @Override
+            public void onResult(Course result) {
+            }
 
-        LiveData<List<Course>> liveData =  courseRepository.searchCourses(type);
-
-        if(liveData.getValue() == null){
-            Log.d("from veiw model 2", "nothing" + "");
-        }
-
+            @Override
+            public void onResult(List<Course> result) {
+                allCourses.setValue(result);
+            }
+        });
     }
 
 }
