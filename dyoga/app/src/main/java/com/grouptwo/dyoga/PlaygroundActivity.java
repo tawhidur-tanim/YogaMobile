@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.grouptwo.dyoga.activities.AddClassInstanceActivity;
 import com.grouptwo.dyoga.activities.AddCourseActivity;
 import com.grouptwo.dyoga.activities.DashboardActivity;
+import com.grouptwo.dyoga.activities.EditClassInstanceActivity;
 import com.grouptwo.dyoga.activities.EditCourseActivity;
 import com.grouptwo.dyoga.activities.GetStartedActivity;
 
@@ -26,6 +27,7 @@ public class PlaygroundActivity extends AppCompatActivity {
             "AddCourseActivity",
             "EditCourseActivity",
             "AddClassInstanceActivity",
+            "EditClassInstanceActivity",
     };
 
     private final Class<?>[] ACTIVITIES = {
@@ -34,6 +36,7 @@ public class PlaygroundActivity extends AppCompatActivity {
             AddCourseActivity.class,
             EditCourseActivity.class,
             AddClassInstanceActivity.class,
+            EditClassInstanceActivity.class,
     };
 
     @Override
