@@ -1,6 +1,7 @@
 package com.grouptwo.dyoga.data.viewmodels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -52,7 +53,14 @@ public class CourseViewModel extends AndroidViewModel {
 
     public void searchCourse(String type){
 
+        Log.d("from veiw model", type);
         searchQuery.setValue(type);
+
+        LiveData<List<Course>> liveData =  courseRepository.searchCourses(type);
+
+        if(liveData.getValue() == null){
+            Log.d("from veiw model 2", "nothing" + "");
+        }
 
     }
 
