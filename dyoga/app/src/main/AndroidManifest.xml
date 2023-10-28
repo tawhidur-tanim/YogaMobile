@@ -19,6 +19,9 @@
             android:name=".activities.AddCourseActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.EditCourseActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DashboardActivity"
             android:exported="false" />
         <activity

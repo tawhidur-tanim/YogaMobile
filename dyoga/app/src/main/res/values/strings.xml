@@ -5,8 +5,19 @@
     <!--    To be later deleted-->
 
     <string name="app_name">d\'yoga</string>
-
-
     <string name="dashTitle">Your\nCourses</string>
     <string name="searchHintCourse">Search Courses</string>
+    <string name="add_a_course">Add a course</string>
+    <string name="you_can_add_a_new_yoga_course">You can add a new yoga course.</string>
+    <string name="day_of_week">Day of week</string>
+    <string name="type">Type</string>
+    <string name="time">Time</string>
+    <string name="duration">Duration</string>
+    <string name="time_format">%d:%d %s</string>
+    <string name="price">Price</string>
+    <string name="capacity">Capacity</string>
+    <string name="review">Review</string>
+    <string name="description">Description</string>
+    <string name="add_a_description">Add a description</string>
+    <string name="edit_course">Edit Course</string>
 </resources>

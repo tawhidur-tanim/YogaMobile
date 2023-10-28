@@ -1,8 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.AddCourseActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/screen_padding_horizontal"
+        android:paddingVertical="@dimen/screen_padding_vertical">
+
+        <TextView
+            style="@style/ScreenHeading"
+            android:layout_height="wrap_content"
+            android:text="@string/add_a_course" />
+
+        <TextView
+            style="@style/ScreenParagraph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/you_can_add_a_new_yoga_course" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing" />
+
+        <TextView
+            style="@style/ScreenParagraphTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/day_of_week" />
+
+        <Spinner
+            style="@style/Theme.Dyoga.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            tools:listitem="@layout/spinner_list_item" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
+
+        <TextView
+            style="@style/ScreenParagraphTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/type" />
+
+        <Spinner
+            style="@style/Theme.Dyoga.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            tools:listitem="@layout/spinner_list_item" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:background="@drawable/edittext_background"
+                    android:backgroundTint="@color/buttonBackground"
+                    android:gravity="start|center"
+                    android:paddingVertical="13dp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:text="@string/time_format"
+                    android:textColor="@color/grey"
+                    app:background="@drawable/edittext_background"
+                    app:backgroundTint="@color/buttonBackground" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration" />
+
+                <Spinner
+                    style="@style/Theme.Dyoga.Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    tools:listitem="@layout/spinner_list_item" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="7dp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/price_label"
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price" />
+
+                <EditText
+                    style="@style/Theme.Dyoga.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:labelFor="@+id/price_label" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_weight=".5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/capacity_label"
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/capacity" />
+
+                <EditText
+                    style="@style/Theme.Dyoga.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edittext_height"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:labelFor="@+id/capacity_label" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/pen_sign"
+                    android:id="@+id/add_a_description_imageview"
+                    android:contentDescription="@string/add_a_description" />
+
+                <TextView
+                    android:id="@+id/add_a_description_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:text="@string/add_a_description" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/description_display"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/description_label"
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description" />
+
+                <EditText
+                    style="@style/Theme.Dyoga.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    android:labelFor="@+id/description_label" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="42dp" />
+
+        <Button
+            android:layout_width="270dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/colorSecondary"
+            android:text="@string/review"
+            app:backgroundTint="@color/colorSecondary" />
+    </LinearLayout>
+</ScrollView>
