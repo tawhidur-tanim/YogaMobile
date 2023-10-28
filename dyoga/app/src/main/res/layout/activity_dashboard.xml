@@ -7,7 +7,6 @@
     android:layout_margin="30dp"
     tools:context=".activities.DashboardActivity">
 
-
     <LinearLayout
         android:id="@+id/headerSection"
         android:layout_width="0dp"
@@ -17,21 +16,18 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:layout_width="wrap_content"
+            style="@style/ScreenHeading"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="3"
-            android:textFontWeight="600"
-            android:textColor="@color/titleBlack"
-            android:text="@string/dashTitle"
-            android:textSize="32sp" />
-
+            android:text="@string/dashTitle" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:src="@drawable/plus_sign" />
+            android:src="@drawable/plus_solid" />
 
     </LinearLayout>
 
@@ -43,7 +39,6 @@
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerSection">
-        >
 
         <EditText
             android:layout_width="match_parent"

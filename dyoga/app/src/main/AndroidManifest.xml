@@ -16,7 +16,13 @@
             android:name=".activities.AddClassInstanceActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.EditClassInstanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.AddCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EditCourseActivity"
             android:exported="false" />
         <activity
             android:name=".activities.DashboardActivity"
