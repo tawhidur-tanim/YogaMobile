@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:src="@drawable/plus_sign" />
+            android:src="@drawable/plus_solid" />
 
     </LinearLayout>
 

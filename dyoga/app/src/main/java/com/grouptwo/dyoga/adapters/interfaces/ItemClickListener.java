@@ -1,4 +1,4 @@
-package com.grouptwo.dyoga.interfaces;
+package com.grouptwo.dyoga.adapters.interfaces;
 
 import android.view.View;
 

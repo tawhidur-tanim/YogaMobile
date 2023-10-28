@@ -3,17 +3,15 @@ package com.grouptwo.dyoga.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
-import com.grouptwo.dyoga.data.dao.Course;
-import com.grouptwo.dyoga.interfaces.ItemClickListener;
+import com.grouptwo.dyoga.data.entities.Course;
+import com.grouptwo.dyoga.adapters.interfaces.ItemClickListener;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 

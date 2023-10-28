@@ -1,10 +1,9 @@
-package com.grouptwo.dyoga.data.dao;
+package com.grouptwo.dyoga.data.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class Course {
+
     public Course(String courseName, LocalDateTime courseDate, double price) {
         this.courseName = courseName;
         this.courseDate = courseDate;
@@ -16,9 +15,6 @@ public class Course {
     private LocalDateTime courseDate;
 
     private double price;
-
-
-
 
     public LocalDateTime getCourseDate() {
         return courseDate;

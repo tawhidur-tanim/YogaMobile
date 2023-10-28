@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
-import com.grouptwo.dyoga.data.dao.Course;
+import com.grouptwo.dyoga.data.entities.Course;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

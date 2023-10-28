@@ -1,2 +1,4 @@
-package com.grouptwo.dyoga.data.viewmodels;public class CourseViewModel {
+package com.grouptwo.dyoga.data.viewmodels;
+
+public class CourseViewModel {
 }

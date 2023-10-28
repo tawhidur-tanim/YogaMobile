@@ -4,9 +4,9 @@ import androidx.room.TypeConverter;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class LocalDateTimeConverter {
-
 
     private static final ThreadLocal<DateTimeFormatter> threadLocal = ThreadLocal.withInitial(() -> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.US);
