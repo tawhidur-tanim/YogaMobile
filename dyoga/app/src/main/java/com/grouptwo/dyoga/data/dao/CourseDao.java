@@ -1,2 +1,24 @@
-package com.grouptwo.dyoga.data.dao;public interface CourseDao {
+package com.grouptwo.dyoga.data.dao;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Query;
+
+import com.grouptwo.dyoga.data.Entities.Course;
+
+import java.util.List;
+
+
+@Dao
+public interface CourseDao extends BaseDao<Course>{
+
+    @Query("select * from course limit 1")
+    public Course FindFist();
+
+
+    @Query("select * from course")
+    public LiveData<List<Course>> getAllCourses();
+
+    @Query("select * from course where courseType like '%' || :type || '%'")
+    public LiveData<List<Course>> searchCourses(String type);
 }

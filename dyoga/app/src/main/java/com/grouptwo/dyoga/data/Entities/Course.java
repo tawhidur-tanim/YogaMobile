@@ -1,21 +1,72 @@
-package com.grouptwo.dyoga.data.dao;
+package com.grouptwo.dyoga.data.Entities;
 
-import java.time.LocalDate;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.time.LocalDateTime;
-import java.util.Date;
 
+
+@Entity
 public class Course {
-    public Course(String courseName, LocalDateTime courseDate, double price) {
-        this.courseName = courseName;
+
+    public Course(String courseType, LocalDateTime courseDate, double price, int capacity, int duration, String description) {
+        this.courseType = courseType;
         this.courseDate = courseDate;
         this.price = price;
+        this.capacity = capacity;
+        this.duration = duration;
+        this.description = description;
     }
 
-    private String courseName;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+
+    private String courseType;
 
     private LocalDateTime courseDate;
 
     private double price;
+    private int capacity;
+
+    private int duration;
+
+
+
+    private String description;
+
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
 
 
@@ -28,12 +79,12 @@ public class Course {
         return price;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getCourseType() {
+        return courseType;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
     }
 
     public void setCourseDate(LocalDateTime courseDate) {

@@ -3,17 +3,15 @@ package com.grouptwo.dyoga.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
-import com.grouptwo.dyoga.data.dao.Course;
+import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -48,7 +46,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
         Course course = courseList.get(position);
 
-        holder.courseName.setText(course.getCourseName());
+        holder.courseName.setText(course.getCourseType());
         holder.price.setText(course.getPrice() + "");
 
         holder.weekDayTime.setText(DateTimeFormatter.ofPattern("EEEE - hh:mm a").format(course.getCourseDate()));
@@ -60,7 +58,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         return courseList.size();
     }
 
-
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+        notifyDataSetChanged();
+    }
     public class MyViewHolder extends
             RecyclerView.ViewHolder implements View.OnClickListener  {
 
