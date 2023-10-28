@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
+//import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
@@ -76,17 +77,17 @@ public class DashboardActivity extends AppCompatActivity {
                     });
 
             // testing db connection
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    dYogaDatabase db =  dYogaDatabase.getInstance(getApplicationContext());
-//
-//                    db.courseDao().insertList(courses);
-//
-////                    Course course = db.courseDao().FindFist();
-////                    Log.d("Main Activity", "get completed \n"+course.getId() + "\n"+course.getCourseType());
-//                }
-//            }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    dYogaDatabase db =  dYogaDatabase.getInstance(getApplicationContext());
+
+                    db.courseDao().insertList(courses);
+
+//                    Course course = db.courseDao().FindFist();
+//                    Log.d("Main Activity", "get completed \n"+course.getId() + "\n"+course.getCourseType());
+                }
+            }).start();
 
 
 
