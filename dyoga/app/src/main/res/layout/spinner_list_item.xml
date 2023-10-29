@@ -2,6 +2,9 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/Theme.Dyoga.SpinnerText"
     android:text="@android:string/selectAll"
+    android:padding="10dp"
+    android:layout_gravity="center_vertical"
+    android:gravity="center_vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@android:id/text1" />

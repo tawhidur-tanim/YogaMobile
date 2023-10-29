@@ -4,17 +4,15 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
-import com.grouptwo.dyoga.data.Entities.Course;
+import com.grouptwo.dyoga.data.entities.Course;
 
 import java.util.List;
-
 
 @Dao
 public interface CourseDao extends BaseDao<Course>{
 
     @Query("select * from course limit 1")
-    public Course FindFist();
-
+    public Course findFirst();
 
     @Query("select * from course")
     public List<Course> getAllCourses();

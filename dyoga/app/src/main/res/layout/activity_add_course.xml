@@ -36,6 +36,7 @@
 
         <Spinner
             style="@style/Theme.Dyoga.Spinner"
+            android:id="@+id/daysOfWeekSpinner"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
             tools:listitem="@layout/spinner_list_item" />
@@ -53,6 +54,7 @@
         <Spinner
             style="@style/Theme.Dyoga.Spinner"
             android:layout_width="match_parent"
+            android:id="@+id/yogaTypesSpinner"
             android:layout_height="@dimen/edittext_height"
             tools:listitem="@layout/spinner_list_item" />
 
@@ -80,14 +82,14 @@
                     android:text="@string/time" />
 
                 <Button
+                    style="@style/Theme.Dyoga.Button"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
+                    android:id="@+id/timeButton"
                     android:background="@drawable/edittext_background"
                     android:backgroundTint="@color/buttonBackground"
                     android:gravity="start|center"
-                    android:paddingVertical="13dp"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:textSize="@dimen/text_default_size"
                     android:text="@string/time_format"
                     android:textColor="@color/grey"
                     app:background="@drawable/edittext_background"
@@ -109,6 +111,7 @@
 
                 <Spinner
                     style="@style/Theme.Dyoga.Spinner"
+                    android:id="@+id/durationSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     tools:listitem="@layout/spinner_list_item" />
@@ -141,6 +144,7 @@
 
                 <EditText
                     style="@style/Theme.Dyoga.EditText"
+                    android:id="@+id/priceEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:importantForAutofill="no"
@@ -156,7 +160,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/capacity_label"
+                    android:id="@+id/capacityLabel"
                     style="@style/ScreenParagraphTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -164,11 +168,12 @@
 
                 <EditText
                     style="@style/Theme.Dyoga.EditText"
+                    android:id="@+id/capacityEditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:importantForAutofill="no"
                     android:inputType="number"
-                    android:labelFor="@+id/capacity_label" />
+                    android:labelFor="@+id/capacityLabel" />
             </LinearLayout>
         </LinearLayout>
 
@@ -183,6 +188,33 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/descriptionDisplay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/descriptionLabel"
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/description" />
+
+                <EditText
+                    style="@style/Theme.Dyoga.EditText"
+                    android:id="@+id/descriptionEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:labelFor="@+id/descriptionLabel" />
+            </LinearLayout>
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
@@ -192,40 +224,16 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:src="@drawable/pen_sign"
-                    android:id="@+id/add_a_description_imageview"
+                    android:id="@+id/addDescriptionImageView"
                     android:contentDescription="@string/add_a_description" />
 
                 <TextView
-                    android:id="@+id/add_a_description_textview"
+                    android:id="@+id/addDescriptionTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="12dp"
                     android:paddingVertical="12dp"
                     android:text="@string/add_a_description" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/description_display"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="7dp"
-                android:visibility="gone"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/description_label"
-                    style="@style/ScreenParagraphTwo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/description" />
-
-                <EditText
-                    style="@style/Theme.Dyoga.EditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:labelFor="@+id/description_label" />
             </LinearLayout>
 
         </LinearLayout>
@@ -235,6 +243,7 @@
             android:layout_height="42dp" />
 
         <Button
+            android:id="@+id/reviewButton"
             android:layout_width="270dp"
             android:layout_height="56dp"
             android:layout_gravity="center"

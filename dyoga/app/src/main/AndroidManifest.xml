@@ -13,9 +13,6 @@
         android:theme="@style/Theme.Dyoga"
         tools:targetApi="31">
         <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AddClassInstanceActivity"
             android:exported="false" />
         <activity

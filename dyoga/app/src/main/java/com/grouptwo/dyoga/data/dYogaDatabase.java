@@ -5,19 +5,18 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
-import com.grouptwo.dyoga.data.Entities.Course;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.converters.Converters;
 import com.grouptwo.dyoga.data.dao.CourseDao;
 
-
-@Database(entities = {Course.class}, version = 1)
 @TypeConverters({Converters.class})
+@Database(entities = {Course.class}, version = 1, exportSchema = false)
 public abstract class dYogaDatabase extends RoomDatabase {
 
-    private static dYogaDatabase INSTANCE;
+    private static volatile dYogaDatabase INSTANCE;
+
     public abstract CourseDao courseDao();
 
     public static dYogaDatabase getInstance(Context context) {
@@ -34,3 +33,4 @@ public abstract class dYogaDatabase extends RoomDatabase {
     }
 
 }
+

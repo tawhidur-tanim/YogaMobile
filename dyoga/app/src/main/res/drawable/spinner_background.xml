@@ -9,9 +9,9 @@
                 </shape>
             </item>
 
-            <item android:right="14dp">
+            <item android:right="20dp">
                 <bitmap android:gravity="center_vertical|right"
-                    android:src="@android:drawable/arrow_down_float" />
+                    android:src="@raw/dropdown_arrow" />
             </item>
         </layer-list>
     </item>

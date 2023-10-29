@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import com.grouptwo.dyoga.data.Entities.Course;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.repositories.CourseRepository;
 import com.grouptwo.dyoga.interfaces.Callback;
 
