@@ -6,12 +6,10 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.color.DynamicColorsOptions;
-import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.CourseDao;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.Callback;
 
 import java.util.List;

@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_2"
-    tools:context=".MainActivity">
+    android:background="@raw/splash_2">
 
     <EditText
         android:id="@+id/btnCopyRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:drawableLeft="@drawable/baseline_copyright_24"
         android:drawablePadding="10dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Copyright 2023"
+        android:text="© Copyright 2023"
         android:textAlignment="textStart"
         android:textColor="#D9000000"
         android:textSize="20sp"
@@ -59,7 +57,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.776"
-        tools:srcCompat="@drawable/d_yoga" />
+        tools:srcCompat="@raw/dyoga" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

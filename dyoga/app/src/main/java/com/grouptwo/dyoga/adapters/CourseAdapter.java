@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
-import com.grouptwo.dyoga.data.Entities.Course;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
 import java.time.format.DateTimeFormatter;

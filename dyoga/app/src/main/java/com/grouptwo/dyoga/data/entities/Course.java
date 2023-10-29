@@ -1,10 +1,9 @@
-package com.grouptwo.dyoga.data.Entities;
+package com.grouptwo.dyoga.data.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
-
 
 @Entity
 public class Course {

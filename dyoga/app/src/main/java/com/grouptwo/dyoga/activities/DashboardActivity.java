@@ -1,28 +1,22 @@
 package com.grouptwo.dyoga.activities;
 
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.EditText;
-import android.widget.ListAdapter;
-import android.widget.Toast;
-
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
-//import com.grouptwo.dyoga.data.Entities.Course;
-import com.grouptwo.dyoga.data.Entities.Course;
 import com.grouptwo.dyoga.data.dYogaDatabase;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
-import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
