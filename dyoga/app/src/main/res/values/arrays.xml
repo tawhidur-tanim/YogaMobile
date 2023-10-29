@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="daysOfWeek">
+        <item name="monday">Monday</item>
+        <item name="tuesday">Tuesday</item>
+        <item name="wednesday">Wednesday</item>
+        <item name="thursday">Thursday</item>
+        <item name="friday">Friday</item>
+        <item name="saturday">Saturday</item>
+        <item name="sunday">Sunday</item>
+    </string-array>
+
+    <string-array name="yogaTypes">
+        <item name="flow">Flow Yoga</item>
+        <item name="aerial">Aerial Yoga</item>
+        <item name="family">Family Yoga</item>
+    </string-array>
+
+    <string-array name="durations">
+        <item name="10">10 minutes</item>
+        <item name="20">20 minutes</item>
+        <item name="30">30 minutes</item>
+        <item name="40">30 minutes</item>
+        <item name="50">30 minutes</item>
+        <item name="60">60 minutes</item>
+        <item name="2_hour">2 hours</item>
+        <item name="4_hour">4 hours</item>
+    </string-array>
+</resources>

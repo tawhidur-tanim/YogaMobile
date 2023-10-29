@@ -5,4 +5,5 @@
     <dimen name="screen_vertical_spacing">20dp</dimen>
     <dimen name="screen_vertical_spacing_two">14dp</dimen>
     <dimen name="edittext_height">52dp</dimen>
+    <dimen name="text_default_size">12sp</dimen>
 </resources>

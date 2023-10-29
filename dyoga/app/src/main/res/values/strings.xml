@@ -14,10 +14,14 @@
     <string name="time">Time</string>
     <string name="duration">Duration</string>
     <string name="time_format">%d:%d %s</string>
-    <string name="price">Price</string>
+    <string name="price">Price (£)</string>
     <string name="capacity">Capacity</string>
     <string name="review">Review</string>
     <string name="description">Description</string>
     <string name="add_a_description">Add a description</string>
     <string name="edit_course">Edit Course</string>
+    <string name="course_price_is_required">Course price is required</string>
+    <string name="course_capacity_is_required">Course capacity is required</string>
+    <string name="enter_a_valid_course_price">Enter a valid course price</string>
+    <string name="enter_a_valid_course_capacity">Enter a valid course capacity</string>
 </resources>
