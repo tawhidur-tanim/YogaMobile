@@ -35,13 +35,13 @@ dependencies {
     val room_version = "2.6.0";
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.appcompat:design:1.6.1")
+   // implementation("androidx.appcompat:design:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
-
+    implementation ("com.google.code.gson:gson:2.10.1")
 
     // optional - Paging 3 Integration
     implementation("androidx.room:room-paging:$room_version")
