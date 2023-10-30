@@ -16,10 +16,13 @@ import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.DaysOfWeekAdapter;
 import com.grouptwo.dyoga.adapters.YogaDurationAdapter;
 import com.grouptwo.dyoga.adapters.YogaTypesAdapter;
+import com.grouptwo.dyoga.components.CourseBottomSheet;
 import com.grouptwo.dyoga.components.YogaTimePicker;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class AddCourseActivity extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
     private LocalDateTime yogaTime;
 
+    private final String bottomSheetTag = "courseBottomSheet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +100,14 @@ public class AddCourseActivity extends AppCompatActivity {
         reviewButton.setOnClickListener(v -> {
             if (isInputsValid()) {
                 // todo: show review fragment here
+
+                try {
+                    CourseBottomSheet bottomSheet = CourseBottomSheet.getInstance(getCourse());
+                    bottomSheet.show(getSupportFragmentManager(), bottomSheetTag);
+                }
+                catch (Exception e){
+                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -121,5 +133,17 @@ public class AddCourseActivity extends AppCompatActivity {
         }
 
         return true;
+    }
+
+    private Course getCourse(){
+
+        LocalDateTime dateTime = LocalDateTime.parse("1900-01-01 "+timeButton.getText().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
+        Course course = new Course(yogaTypesSpinner.getSelectedItem().toString(),dateTime,DoubleConverter.convert(priceEditText.getText().toString())
+                , Integer.parseInt(capacityEditText.getText().toString())
+                ,Integer.parseInt((durationSpinner.getSelectedItem().toString().replace("minutes","").trim()))
+                ,descriptionEditText.getText().toString());
+
+
+        return course;
     }
 }

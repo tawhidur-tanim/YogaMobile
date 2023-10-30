@@ -17,6 +17,7 @@
     <string name="price">Price (£)</string>
     <string name="capacity">Capacity</string>
     <string name="review">Review</string>
+    <string name="save">Save</string>
     <string name="description">Description</string>
     <string name="add_a_description">Add a description</string>
     <string name="edit_course">Edit Course</string>
