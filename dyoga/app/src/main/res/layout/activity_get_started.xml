@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.522"
-        tools:srcCompat="@raw/d_yoga" />
+        tools:srcCompat="@raw/dyoga" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
