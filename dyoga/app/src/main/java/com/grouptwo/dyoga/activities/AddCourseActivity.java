@@ -138,10 +138,11 @@ public class AddCourseActivity extends AppCompatActivity {
     private Course getCourse(){
 
         LocalDateTime dateTime = LocalDateTime.parse("1900-01-01 "+timeButton.getText().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-        Course course = new Course(yogaTypesSpinner.getSelectedItem().toString(),dateTime,DoubleConverter.convert(priceEditText.getText().toString())
+        Course course = new Course(yogaTypesSpinner.getSelectedItem().toString()
+                ,dateTime,DoubleConverter.convert(priceEditText.getText().toString())
                 , Integer.parseInt(capacityEditText.getText().toString())
                 ,Integer.parseInt((durationSpinner.getSelectedItem().toString().replace("minutes","").trim()))
-                ,descriptionEditText.getText().toString());
+                ,descriptionEditText.getText().toString(),daysOfWeekSpinner.getSelectedItem().toString());
 
 
         return course;

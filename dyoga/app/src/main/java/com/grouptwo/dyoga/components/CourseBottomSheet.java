@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.WindowId;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -34,6 +35,13 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
 
 
             // todo: need to assign values
+
+            titleTextView.setText(course.getCourseType());
+            dayText.setText(course.getDayofWeek());
+            timeText.setText(course.getTime());
+            priceText.setText(String.valueOf(course.getPrice()));
+            durationText.setText(String.valueOf(course.getDuration()));
+            descriptionText.setText(course.getDescription());
         }
 
 
@@ -43,7 +51,7 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
 
     // todo: need to hook the button to parent activity
 
-    private void initControls(View view){
+    private void initControls(@NonNull View view){
 
         titleTextView = view.findViewById(R.id.bottom_sheetTitle);
         dayText = view.findViewById(R.id.bottom_sheetDay);
@@ -54,6 +62,7 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
     }
 
 
+    @NonNull
     public static CourseBottomSheet getInstance(Course course) {
         CourseBottomSheet fragment = new CourseBottomSheet();
         Bundle args = new Bundle();

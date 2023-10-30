@@ -4,17 +4,24 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Course {
 
-    public Course(String courseType, LocalDateTime courseDate, double price, int capacity, int duration, String description) {
+    public Course(String courseType, LocalDateTime courseDate
+            , double price, int capacity
+            , int duration
+            , String description
+            , String dayofWeek
+    ) {
         this.courseType = courseType;
         this.courseDate = courseDate;
         this.price = price;
         this.capacity = capacity;
         this.duration = duration;
         this.description = description;
+        this.DayofWeek = dayofWeek;
     }
 
     public int getId() {
@@ -37,7 +44,15 @@ public class Course {
 
     private int duration;
 
+    public String getDayofWeek() {
+        return DayofWeek;
+    }
 
+    public void setDayofWeek(String dayofWeek) {
+        DayofWeek = dayofWeek;
+    }
+
+    private String DayofWeek;
 
     private String description;
 
@@ -80,6 +95,11 @@ public class Course {
 
     public String getCourseType() {
         return courseType;
+    }
+
+
+    public String getTime() {
+        return this.courseDate.format(DateTimeFormatter.ofPattern("hh:mm a"));
     }
 
     public void setCourseType(String courseType) {

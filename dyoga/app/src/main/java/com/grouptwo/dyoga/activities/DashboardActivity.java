@@ -31,12 +31,12 @@ public class DashboardActivity extends AppCompatActivity {
 
     private ArrayList<Course> courses = new ArrayList<>(Arrays.asList(
 
-             new Course("Family Yoga 1", LocalDateTime.now(), 200.99,10,60,"-"),
-             new Course("Family Yoga 2", LocalDateTime.now(), 200.99,10,60,"-"),
-             new Course("Family Yoga 3", LocalDateTime.now(), 200.99,10,60,"-"),
-             new Course("Family Yoga 4", LocalDateTime.now(), 200.99,10,60,"-"),
-             new Course("Family Yoga 5", LocalDateTime.now(), 200.99,10,60,"-"),
-             new Course("Family Yoga 6", LocalDateTime.now(), 200.99,10,60,"-")
+             new Course("Family Yoga 1", LocalDateTime.now(), 200.99,10,60,"-","Monday"),
+             new Course("Family Yoga 2", LocalDateTime.now(), 200.99,10,60,"-","Monday"),
+             new Course("Family Yoga 3", LocalDateTime.now(), 200.99,10,60,"-","Monday"),
+             new Course("Family Yoga 4", LocalDateTime.now(), 200.99,10,60,"-","Monday"),
+             new Course("Family Yoga 5", LocalDateTime.now(), 200.99,10,60,"-","Monday"),
+             new Course("Family Yoga 6", LocalDateTime.now(), 200.99,10,60,"-","Monday")
      ));
 
      private CourseViewModel courseViewModel;
