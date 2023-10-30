@@ -12,11 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:drawableLeft="@drawable/baseline_copyright_24"
         android:drawablePadding="10dp"
         android:ems="10"
         android:inputType="text"
-        android:text="Copyright 2023"
+        android:text="© Copyright 2023"
         android:textAlignment="textStart"
         android:textColor="#D9000000"
         android:textSize="20sp"
@@ -60,7 +59,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.522"
-        tools:srcCompat="@drawable/d_yoga" />
+        tools:srcCompat="@raw/dyoga" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
