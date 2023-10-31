@@ -19,7 +19,10 @@ public class ClassInstance {
 
     private String comments;
 
-    public ClassInstance(LocalDateTime date, String instructor, String room, String comments) {
+    private int courseId;
+
+    public ClassInstance(int courseId, LocalDateTime date, String instructor, String room, String comments) {
+        this.courseId = courseId;
         this.date = date;
         this.instructor = instructor;
         this.room = room;
@@ -64,5 +67,13 @@ public class ClassInstance {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public int getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 }

@@ -16,9 +16,6 @@
             android:name=".activities.ViewCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".splash_Activity"
-            android:exported="false" />
-        <activity
             android:name=".activities.AddClassInstanceActivity"
             android:exported="false" />
         <activity

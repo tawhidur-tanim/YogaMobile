@@ -17,6 +17,7 @@ import com.grouptwo.dyoga.activities.EditClassInstanceActivity;
 import com.grouptwo.dyoga.activities.EditCourseActivity;
 import com.grouptwo.dyoga.activities.GetStartedActivity;
 import com.grouptwo.dyoga.activities.ViewCourseActivity;
+import com.grouptwo.dyoga.utils.SharedPreferenceManager;
 
 
 public class PlaygroundActivity extends AppCompatActivity {
@@ -46,6 +47,8 @@ public class PlaygroundActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_playground);
+
+        SharedPreferenceManager.saveData(this, "username", "johndoe");
 
         final Spinner activitySpinner = findViewById(R.id.activitiesSpinner);
 

@@ -33,8 +33,8 @@ public class ViewCourseActivity extends AppCompatActivity {
     private final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
     private final ArrayList<ClassInstance> exampleClassInstances = new ArrayList<>(Arrays.asList(
-            new ClassInstance(LocalDateTime.now(), "Daniel", "404", "No comments"),
-            new ClassInstance(LocalDateTime.now(), "Peter", "404", "No comments")
+            new ClassInstance(1, LocalDateTime.now(), "Daniel", "404", "No comments"),
+            new ClassInstance(1, LocalDateTime.now(), "Peter", "404", "No comments")
     ));
 
     @Override

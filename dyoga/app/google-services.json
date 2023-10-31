@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "13903446448",
+    "project_id": "dyoga-68ec6",
+    "storage_bucket": "dyoga-68ec6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13903446448:android:52f1ae49a6c4b5ece89675",
+        "android_client_info": {
+          "package_name": "com.grouptwo.dyoga"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeCtmP83DToxUVpqhiBWCIR_BmPt4IA9c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
