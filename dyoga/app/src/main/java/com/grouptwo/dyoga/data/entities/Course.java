@@ -24,14 +24,6 @@ public class Course {
         this.dayofWeek = dayofWeek;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @PrimaryKey(autoGenerate = true)
     private int id;
 
@@ -43,23 +35,23 @@ public class Course {
     private int capacity;
     private int duration;
 
-    public String getDayofWeek() {
-        return dayofWeek;
-    }
-
-    public void setDayofWeek(String dayofWeek) {
-        dayofWeek = dayofWeek;
-    }
-
     private String dayofWeek;
-
     private String description;
 
+    private LocalDateTime createdDatetime = LocalDateTime.now();
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getCapacity() {
         return capacity;
     }
-
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
@@ -80,8 +72,6 @@ public class Course {
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 
 
     public LocalDateTime getCourseDate() {
@@ -111,5 +101,21 @@ public class Course {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getDayofWeek() {
+        return dayofWeek;
+    }
+
+    public void setDayofWeek(String dayofWeek) {
+        dayofWeek = dayofWeek;
+    }
+
+    public LocalDateTime getCreatedDatetime() {
+        return createdDatetime;
+    }
+
+    public void setCreatedDatetime(LocalDateTime createdDatetime) {
+        this.createdDatetime = createdDatetime;
     }
 }
