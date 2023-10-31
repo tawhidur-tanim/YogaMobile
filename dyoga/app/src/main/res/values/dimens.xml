@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="screen_padding_vertical">40dp</dimen>
-    <dimen name="screen_padding_horizontal">30dp</dimen>
+    <dimen name="screen_padding_vertical">30dp</dimen>
+    <dimen name="screen_padding_horizontal">20dp</dimen>
     <dimen name="screen_vertical_spacing">20dp</dimen>
     <dimen name="screen_vertical_spacing_two">14dp</dimen>
     <dimen name="edittext_height">52dp</dimen>
     <dimen name="text_default_size">12sp</dimen>
+    <dimen name="recycler_view_vertical_padding">20dp</dimen>
+    <dimen name="recycler_view_item_bottom_margin">15dp</dimen>
 </resources>

@@ -2,7 +2,7 @@ package com.grouptwo.dyoga.interfaces;
 
 import android.view.View;
 
-public interface ItemClickListener {
+public interface ItemClickListener<T> {
 
-    void onCLick(View v, int pos);
+    void onItemClicked(View v, int itemPosition, T t);
 }

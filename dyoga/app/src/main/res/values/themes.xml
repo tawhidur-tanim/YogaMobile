@@ -63,7 +63,7 @@
 
     <style name="Theme.Dyoga.BottomSheetTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">24sp</item>
-        <item name="android:textColor">@color/coursebBackground</item>
+        <item name="android:textColor">@color/blue</item>
     </style>
 
 

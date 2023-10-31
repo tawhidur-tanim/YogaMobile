@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingVertical="@dimen/screen_padding_vertical"
+    android:paddingHorizontal="@dimen/screen_padding_horizontal"
+    tools:context=".activities.ViewCourseActivity">
+
+    <LinearLayout
+        android:id="@+id/headerSection"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            style="@style/ScreenHeading"
+            android:id="@+id/courseTitleTextView"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:textColor="@color/blue"
+            android:text="@string/family_nyoga" />
+
+        <ImageButton
+            android:id="@+id/addClassInstanceImageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/plus_solid" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/searchClassInstanceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edittext_height"
+            android:background="@drawable/edittext_background"
+            android:hint="@string/search_class_instances"
+            android:padding="15dp"
+            android:textSize="12sp"
+            android:id="@+id/searchClassInstanceEditText"
+            />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/recycler_view_vertical_padding"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchClassInstanceLayout"
+        tools:listitem="@layout/class_instance_layout_item"
+        android:id="@+id/classInstanceRecyclerView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

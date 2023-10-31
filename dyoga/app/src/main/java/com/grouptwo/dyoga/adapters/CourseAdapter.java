@@ -1,5 +1,6 @@
 package com.grouptwo.dyoga.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
+import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
@@ -19,12 +21,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     private List<Course> courseList;
 
-    public ItemClickListener clickListener;
-
-
-    public void setClickListener(ItemClickListener myListener){
-        this.clickListener = myListener;
-    }
+    public ItemClickListener<Course> clickListener;
 
 
     public CourseAdapter(List<Course> courseList) {
@@ -62,6 +59,11 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         this.courseList = courseList;
         notifyDataSetChanged();
     }
+
+    public void setClickListener(ItemClickListener<Course> myListener){
+        this.clickListener = myListener;
+    }
+
     public class MyViewHolder extends
             RecyclerView.ViewHolder implements View.OnClickListener  {
 
@@ -81,7 +83,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         @Override
         public void onClick(View v) {
             if (clickListener != null){
-                clickListener.onCLick(v,getAdapterPosition());
+                final Course course = courseList.get(getAdapterPosition());
+                clickListener.onItemClicked(v, getAdapterPosition(), course);
+            } else {
+                Log.e(this.getClass().getName(), "Item click listener is null");
             }
         }
     }

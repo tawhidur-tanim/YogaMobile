@@ -25,4 +25,11 @@
     <string name="course_capacity_is_required">Course capacity is required</string>
     <string name="enter_a_valid_course_price">Enter a valid course price</string>
     <string name="enter_a_valid_course_capacity">Enter a valid course capacity</string>
+    <string name="instructor">Instructor:</string>
+    <string name="room">Room:</string>
+    <string name="john_doe">John Doe</string>
+    <string name="queen_anne_404">Queen Anne 404</string>
+    <string name="october_24th_2023">24th October, 2023</string>
+    <string name="search_class_instances">Search class instances</string>
+    <string name="family_nyoga">Family \nYoga</string>
 </resources>

@@ -9,7 +9,7 @@
 
     <color name="editextBackground">#61F0F0F0</color>
     <color name="buttonBackground">#F0F0F0</color>
-    <color name="coursebBackground">#0085FF</color>
+    <color name="blue">#0085FF</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#575757</color>
 </resources>

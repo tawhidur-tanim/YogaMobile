@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="15dp"
-    android:layout_marginBottom="20dp"
-    android:background="@drawable/courselayout_background"
+    android:layout_marginBottom="@dimen/recycler_view_item_bottom_margin"
+    android:background="@drawable/rc_blue_background"
     >
 
     <LinearLayout
