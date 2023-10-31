@@ -12,7 +12,7 @@ import com.grouptwo.dyoga.data.converters.Converters;
 import com.grouptwo.dyoga.data.dao.CourseDao;
 
 @TypeConverters({Converters.class})
-@Database(entities = {Course.class}, version = 1, exportSchema = false)
+@Database(entities = {Course.class}, version = 2, exportSchema = false)
 public abstract class dYogaDatabase extends RoomDatabase {
 
     private static volatile dYogaDatabase INSTANCE;
@@ -25,6 +25,7 @@ public abstract class dYogaDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     dYogaDatabase.class, "dyoga_database")
+                            .fallbackToDestructiveMigration()
                             .build();
                 }
             }
