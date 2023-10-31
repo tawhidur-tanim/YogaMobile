@@ -33,4 +33,7 @@
     <string name="search_class_instances">Search class instances</string>
     <string name="family_nyoga">Family \nYoga</string>
     <string name="update_your_course_information">Update your course information</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="copyright_2023">© Copyright 2023</string>
+    <string name="product_of_group_ii">Product of Group II</string>
 </resources>
