@@ -6,3 +6,5 @@ public interface ItemClickListener<T> {
 
     void onItemClicked(View v, int itemPosition, T t);
 }
+
+

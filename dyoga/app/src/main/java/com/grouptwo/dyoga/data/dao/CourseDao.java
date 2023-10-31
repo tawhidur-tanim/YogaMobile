@@ -17,6 +17,10 @@ public interface CourseDao extends BaseDao<Course>{
     @Query("select * from course")
     public List<Course> getAllCourses();
 
+    @Query("select * from course where id=:id")
+    public Course getCourseById(int id);
+
+
     @Query("select * from course  where courseType like '%' || :type || '%'")
     public List<Course> searchCourses(String type);
 }

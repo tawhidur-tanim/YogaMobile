@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.grouptwo.dyoga.apiservice.CourseApiService;
 import com.grouptwo.dyoga.apiservice.HttpClient;
@@ -59,12 +60,21 @@ public class CourseRepository {
 
 
 
-    public void deleteCourse(Course course){
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                courseDao.delete(course);
-            }
+    public void deleteCourse(Course course, MutableLiveData<List<Course>> allCourses){
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                courseDao.delete(course);
+//
+//            }
+//        });
+
+        executor.execute(() -> {
+            courseDao.delete(course);
+            List<Course> courses = courseDao.getAllCourses();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                allCourses.setValue(courses);
+            });
         });
     }
 
@@ -75,6 +85,16 @@ public class CourseRepository {
             List<Course> courses = courseDao.getAllCourses();
             new Handler(Looper.getMainLooper()).post(() -> {
                 callback.onResult(courses);
+            });
+        });
+    }
+
+
+    public void getCourseById(int id, Callback<Course> callback){
+        executor.execute(() -> {
+            Course course = courseDao.getCourseById(id);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                callback.onResult(course);
             });
         });
     }

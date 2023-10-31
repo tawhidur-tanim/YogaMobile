@@ -55,8 +55,7 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public void deleteCourse(Course course){
-
-        courseRepository.deleteCourse(course);
+        courseRepository.deleteCourse(course,allCourses);
     }
 
     public void searchCourse(String type){
@@ -64,6 +63,20 @@ public class CourseViewModel extends AndroidViewModel {
         courseRepository.searchCourses(type, new Callback<Course>() {
             @Override
             public void onResult(Course result) {
+            }
+
+            @Override
+            public void onResult(List<Course> result) {
+                allCourses.setValue(result);
+            }
+        });
+    }
+
+    public void refreshData(){
+        courseRepository.getAllCourses(new Callback<Course>() {
+            @Override
+            public void onResult(Course result) {
+
             }
 
             @Override
