@@ -44,9 +44,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         Course course = courseList.get(position);
 
         holder.courseName.setText(course.getCourseType());
-        holder.price.setText(course.getPrice() + "");
+        holder.price.setText("£ "+course.getPrice() + "");
 
-        holder.weekDayTime.setText(DateTimeFormatter.ofPattern("EEEE - hh:mm a").format(course.getCourseDate()));
+        holder.weekDayTime.setText(course.getDayofWeek() + " - " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getCourseDate()));
 
     }
 
