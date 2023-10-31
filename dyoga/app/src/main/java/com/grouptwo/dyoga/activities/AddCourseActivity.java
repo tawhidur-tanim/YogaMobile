@@ -1,7 +1,8 @@
 package com.grouptwo.dyoga.activities;
 
+import static com.grouptwo.dyoga.components.CourseBottomSheet.DURATION_TEXT;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +24,8 @@ import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener {
 
@@ -41,7 +43,6 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
 
     private LocalDateTime yogaTime;
 
-    private final String bottomSheetTag = "courseBottomSheet";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,15 +101,7 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
 
         reviewButton.setOnClickListener(v -> {
             if (isInputsValid()) {
-                // todo: show review fragment here
-
-                try {
-                    CourseBottomSheet bottomSheet = CourseBottomSheet.getInstance(getCourse());
-                    bottomSheet.show(getSupportFragmentManager(), bottomSheetTag);
-                }
-                catch (Exception e){
-                    Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
-                }
+                CourseBottomSheet.show(getCourseData(), getSupportFragmentManager());
             }
         });
     }
@@ -136,16 +129,19 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         return true;
     }
 
-    private Course getCourse(){
+    private CourseBottomSheet.CourseData getCourseData() {
+        final String yogaType = yogaTypesSpinner.getSelectedItem().toString();
+        final double price = DoubleConverter.convert(priceEditText.getText().toString());
+        final int capacity = Integer.parseInt(capacityEditText.getText().toString());
+        final String description = descriptionEditText.getText().toString();
+        final String dayOfWeek = daysOfWeekSpinner.getSelectedItem().toString();
+        final int duration = yogaDurationAdapter.getDurationValues(durationSpinner.getSelectedItemPosition());
 
-        LocalDateTime dateTime = LocalDateTime.parse("1900-01-01 "+timeButton.getText().toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm a"));
-        Course course = new Course(yogaTypesSpinner.getSelectedItem().toString()
-                ,dateTime,DoubleConverter.convert(priceEditText.getText().toString())
-                , Integer.parseInt(capacityEditText.getText().toString())
-                ,Integer.parseInt((durationSpinner.getSelectedItem().toString().replace("minutes","").trim()))
-                ,descriptionEditText.getText().toString(),daysOfWeekSpinner.getSelectedItem().toString());
+        final Course course = new Course(yogaType, yogaTime, price, capacity, duration, description, dayOfWeek);
+        final HashMap<String, String> extras = new HashMap<>();
+        extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
 
-        return course;
+        return new CourseBottomSheet.CourseData(course, extras);
     }
 
     @Override

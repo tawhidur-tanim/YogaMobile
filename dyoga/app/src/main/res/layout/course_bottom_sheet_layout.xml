@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet_background"
-    android:padding="20dp"
-    >
+    android:padding="20dp">
 
     <LinearLayout
         android:id="@+id/bottom_sheetTitle"
@@ -17,11 +15,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            style="@style/Theme.Dyoga.BottomSheetTitle"
+            style="@style/ScreenHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/courseTypeTitle"
-            android:text="Family Yoga" />
+            android:textColor="@color/blue"
+            android:text="@string/app_name" />
 
     </LinearLayout>
 
@@ -32,8 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheetTitle"
-        >
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheetTitle">
 
         <LinearLayout
             android:orientation="vertical"
@@ -45,8 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/day_of_week"
-                style="@style/Theme.Dyoga.BottomSheetLabel"
-                />
+                style="@style/Theme.Dyoga.BottomSheetLabel" />
 
             <TextView
                 android:layout_width="wrap_content"

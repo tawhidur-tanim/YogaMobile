@@ -10,7 +10,7 @@ import com.grouptwo.dyoga.R;
 public class YogaDurationAdapter extends ArrayAdapter<String> {
 
     private final int[] durationValues = {
-            10, 20, 30, 40, 50, 60, 2, 4
+            10, 20, 30, 40, 50, 60, 120, 240
     };
 
     private final String[] durations;
@@ -27,7 +27,7 @@ public class YogaDurationAdapter extends ArrayAdapter<String> {
         return durations;
     }
 
-    public int[] getDurationValues() {
-        return durationValues;
+    public int getDurationValues(int position) {
+        return durationValues[position];
     }
 }

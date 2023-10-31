@@ -23,7 +23,7 @@
         <item name="40">30 minutes</item>
         <item name="50">30 minutes</item>
         <item name="60">60 minutes</item>
-        <item name="2_hour">2 hours</item>
-        <item name="4_hour">4 hours</item>
+        <item name="120">2 hours</item>
+        <item name="240">4 hours</item>
     </string-array>
 </resources>
