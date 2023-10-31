@@ -27,7 +27,8 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
 
     public final static String DURATION_TEXT = "DURATION_TEXT";
 
-    private TextView titleTextView, dayText, timeText, priceText, durationTextView, descriptionText;
+    private TextView titleTextView, dayText, timeText, priceText, durationTextView, descriptionText, descriptionLabel;
+
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.course_bottom_sheet_layout, container, false);
@@ -46,6 +47,8 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
         priceText = view.findViewById(R.id.bottom_sheetPrice);
         durationTextView = view.findViewById(R.id.bottom_sheetduration);
         descriptionText = view.findViewById(R.id.bottom_sheetDesc);
+        descriptionLabel = view.findViewById(R.id.btmdescriptionLabel);
+
 
         final Button courseSaveButton = view.findViewById(R.id.courseSaveButton);
         courseSaveButton.setOnClickListener(v -> {
@@ -68,7 +71,16 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
             priceText.setText(String.valueOf(course.getPrice()));
             descriptionText.setText(course.getDescription());
             durationTextView.setText(durationText);
+
+            // set visibility based on data
+            descriptionLabel.setVisibility(course.getDescription().isEmpty()
+                    ? View.GONE : View.VISIBLE);
+
+            descriptionText.setVisibility(course.getDescription().isEmpty()
+                    ? View.GONE : View.VISIBLE);
         }
+
+
     }
 
     public static void show(CourseData courseData, FragmentManager fragmentManager) {

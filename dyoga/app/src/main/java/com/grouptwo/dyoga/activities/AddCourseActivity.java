@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.grouptwo.dyoga.R;
@@ -21,6 +22,7 @@ import com.grouptwo.dyoga.adapters.YogaTypesAdapter;
 import com.grouptwo.dyoga.components.CourseBottomSheet;
 import com.grouptwo.dyoga.components.YogaTimePicker;
 import com.grouptwo.dyoga.data.entities.Course;
+import com.grouptwo.dyoga.data.repositories.CourseRepository;
 import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
@@ -41,6 +43,8 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     protected EditText priceEditText, capacityEditText, descriptionEditText;
 
     private LocalDateTime yogaTime;
+
+    private CourseRepository courseRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,10 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         // init view
         setViewItems();
         setButtonListeners();
+
+        //initialize repos
+
+        courseRepository = new CourseRepository(getApplication());
     }
 
     private void setViewItems() {
@@ -131,6 +139,15 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     }
 
     private CourseBottomSheet.CourseData getCourseData() {
+        final Course course = getCourse();
+        final HashMap<String, String> extras = new HashMap<>();
+        extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
+
+        return new CourseBottomSheet.CourseData(course, extras);
+    }
+
+    @NonNull
+    private Course getCourse() {
         final String yogaType = yogaTypesSpinner.getSelectedItem().toString();
         final double price = DoubleConverter.convert(priceEditText.getText().toString());
         final int capacity = Integer.parseInt(capacityEditText.getText().toString());
@@ -139,15 +156,17 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         final int duration = yogaDurationAdapter.getDurationValues(durationSpinner.getSelectedItemPosition());
 
         final Course course = new Course(yogaType, yogaTime, price, capacity, duration, description, dayOfWeek);
-        final HashMap<String, String> extras = new HashMap<>();
-        extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
-
-        return new CourseBottomSheet.CourseData(course, extras);
+        return course;
     }
 
     @Override
     public void onButtonClicked(View view) {
 
-        Toast.makeText(this, "Confirmed", Toast.LENGTH_SHORT).show();
+        Course course = getCourse();
+        courseRepository.addCourse(course);
+
+        Toast.makeText(this, "Course has been added !", Toast.LENGTH_SHORT).show();
+
+        // todo: maybe navigate to dashboard or change the current layout for edit
     }
 }

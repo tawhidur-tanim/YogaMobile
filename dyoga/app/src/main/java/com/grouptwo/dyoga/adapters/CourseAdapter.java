@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
+import com.grouptwo.dyoga.interfaces.ButtonClickListener;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
 import java.time.format.DateTimeFormatter;
@@ -21,7 +23,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
 
     private List<Course> courseList;
 
-    public ItemClickListener<Course> clickListener;
+    public ButtonClickListener<Course> clickListener;
 
 
     public CourseAdapter(List<Course> courseList) {
@@ -44,9 +46,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         Course course = courseList.get(position);
 
         holder.courseName.setText(course.getCourseType());
-        holder.price.setText(course.getPrice() + "");
+        holder.price.setText("£ "+course.getPrice() + "");
 
-        holder.weekDayTime.setText(DateTimeFormatter.ofPattern("EEEE - hh:mm a").format(course.getCourseDate()));
+        holder.weekDayTime.setText(course.getDayofWeek() + " - " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getCourseDate()));
 
     }
 
@@ -60,7 +62,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         notifyDataSetChanged();
     }
 
-    public void setClickListener(ItemClickListener<Course> myListener){
+    public void setClickListener(ButtonClickListener<Course> myListener){
         this.clickListener = myListener;
     }
 
@@ -71,22 +73,42 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         TextView price;
         TextView weekDayTime;
 
+        ImageButton editButton, deleteButton;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             courseName = itemView.findViewById(R.id.courseName);
             price = itemView.findViewById(R.id.coursePrice);
             weekDayTime = itemView.findViewById(R.id.courseDayTime);
+            editButton = itemView.findViewById(R.id.rvEditButton);
+            deleteButton = itemView.findViewById(R.id.rvDeleteButton);
 
             itemView.setOnClickListener(this);
+            editButton.setOnClickListener(this);
+            deleteButton.setOnClickListener(this);
+
         }
 
         @Override
-        public void onClick(View v) {
-            if (clickListener != null){
-                final Course course = courseList.get(getAdapterPosition());
-                clickListener.onItemClicked(v, getAdapterPosition(), course);
-            } else {
+        public void onClick(View view) {
+
+            if(clickListener == null){
                 Log.e(this.getClass().getName(), "Item click listener is null");
+                return;
+            }
+
+            final Course course = courseList.get(getAdapterPosition());
+
+           // clickListener.onItemClicked(view, getAdapterPosition(), course); could be useful in future with some additional logic
+
+            if(view.getId() == R.id.rvDeleteButton){
+                clickListener.onDeleteClick(view, getAdapterPosition(),course);
+                return;
+            }
+
+            if(view.getId() == R.id.rvEditButton){
+                clickListener.onDeleteClick(view, getAdapterPosition(),course);
+                return;
             }
         }
     }

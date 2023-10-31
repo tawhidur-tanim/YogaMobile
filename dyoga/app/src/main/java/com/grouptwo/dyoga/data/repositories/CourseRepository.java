@@ -6,28 +6,37 @@ import android.os.Looper;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
+import com.grouptwo.dyoga.apiservice.CourseApiService;
+import com.grouptwo.dyoga.apiservice.HttpClient;
+import com.grouptwo.dyoga.apiservice.models.Result;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.CourseDao;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.Callback;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class CourseRepository {
     private final CourseDao courseDao;
     ExecutorService executor;
     Handler handler;
 
-
+    Application application;
     public CourseRepository(Application application) {
 
         dYogaDatabase contactDatabase = dYogaDatabase.getInstance(application);
         this.courseDao = contactDatabase.courseDao();
         executor = Executors.newSingleThreadExecutor();
         handler = new Handler(Looper.getMainLooper());
+        this.application = application;
     }
 
 
@@ -51,12 +60,21 @@ public class CourseRepository {
 
 
 
-    public void deleteCourse(Course course){
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                courseDao.delete(course);
-            }
+    public void deleteCourse(Course course, MutableLiveData<List<Course>> allCourses){
+//        executor.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                courseDao.delete(course);
+//
+//            }
+//        });
+
+        executor.execute(() -> {
+            courseDao.delete(course);
+            List<Course> courses = courseDao.getAllCourses();
+            new Handler(Looper.getMainLooper()).post(() -> {
+                allCourses.setValue(courses);
+            });
         });
     }
 
@@ -72,6 +90,16 @@ public class CourseRepository {
     }
 
 
+    public void getCourseById(int id, Callback<Course> callback){
+        executor.execute(() -> {
+            Course course = courseDao.getCourseById(id);
+            new Handler(Looper.getMainLooper()).post(() -> {
+                callback.onResult(course);
+            });
+        });
+    }
+
+
     public void searchCourses(String type,Callback<Course> callback){
 
         executor.execute(() -> {
@@ -81,6 +109,24 @@ public class CourseRepository {
             });
         });
     }
+
+     public void saveCourseAPI(Course course)
+     {
+         CourseApiService courseApiService = HttpClient.getInstance().create(CourseApiService.class);
+         Call<Result> call = courseApiService.saveCourse(course);
+
+         call.enqueue(new retrofit2.Callback<Result>() {
+             @Override
+             public void onResponse(Call<Result> call, Response<Result> response) {
+                 Result result = response.body();
+             }
+
+             @Override
+             public void onFailure(Call<Result> call, Throwable t) {
+
+             }
+         });
+     }
 
 
 

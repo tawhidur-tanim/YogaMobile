@@ -1,8 +1,11 @@
 package com.grouptwo.dyoga.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,7 +19,10 @@ import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.entities.Course;
+import com.grouptwo.dyoga.data.repositories.CourseRepository;
 import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
+import com.grouptwo.dyoga.interfaces.ButtonClickListener;
+import com.grouptwo.dyoga.interfaces.Callback;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,57 +47,72 @@ public class DashboardActivity extends AppCompatActivity {
 
      private CourseViewModel courseViewModel;
 
+     private CourseRepository courseRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        try {
+        initializeControls();
+        pullAndObserveData();
 
-            initializeControls();
-
-            courseViewModel = new ViewModelProvider(this)
-                    .get(CourseViewModel.class);
-
-            CourseAdapter courseAdapter = new CourseAdapter(courses);
-            rc_courseList.setAdapter(courseAdapter);
-            courseViewModel.getAllCourses().observe(this,
-                    new Observer<List<Course>>() {
-                        @Override
-                        public void onChanged(List<Course> courses) {
-
-                            if(courses == null){
-                                Toast.makeText(DashboardActivity.this, "null", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
-                            courseAdapter.setCourseList(courses);
-                        }
-                    });
-
-            // testing db connection
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    dYogaDatabase db =  dYogaDatabase.getInstance(getApplicationContext());
-//
-//                    db.courseDao().insertList(courses);
-//
-////                    Course course = db.courseDao().FindFist();
-////                    Log.d("Main Activity", "get completed \n"+course.getId() + "\n"+course.getCourseType());
-//                }
-//            }).start();
-
-
-
-        }
-        catch (Exception e){
-
-            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
-        }
+        courseRepository = new CourseRepository(getApplication());
 
 
     }
 
+    private void pullAndObserveData() {
+        courseViewModel = new ViewModelProvider(this)
+                .get(CourseViewModel.class);
+
+        CourseAdapter courseAdapter = new CourseAdapter(courses);
+        rc_courseList.setAdapter(courseAdapter);
+        courseViewModel.getAllCourses().observe(this,
+                courses -> courseAdapter.setCourseList(courses));
+
+
+        courseAdapter.setClickListener(new ButtonClickListener<Course>() {
+            @Override
+            public void onEditClick(View view, int itemPosition, Course item) {
+
+            }
+
+            @Override
+            public void onDeleteClick(View view, int itemPosition, Course item) {
+
+                showAlertAndDelete(item);
+
+            }
+        });
+    }
+
+    private void showAlertAndDelete(Course item) {
+        new AlertDialog.Builder(DashboardActivity.this)
+                .setTitle("Delete Course")
+                .setMessage("Do you really want to delete course?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        courseRepository.getCourseById(item.getId(), new Callback<Course>() {
+                            @Override
+                            public void onResult(Course result) {
+                                courseViewModel.deleteCourse(result);
+
+
+                                Toast.makeText(DashboardActivity.this, "Course has been deleted"
+                                        , Toast.LENGTH_SHORT).show();
+
+                            }
+
+                            @Override
+                            public void onResult(List<Course> result) {
+                            }
+                        });
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+    }
 
 
     void initializeControls() {
@@ -99,7 +120,6 @@ public class DashboardActivity extends AppCompatActivity {
         rc_courseList = findViewById(R.id.rc_courseList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rc_courseList.setLayoutManager(layoutManager);
-
 
         dashSearch = findViewById(R.id.searchCourse);
 
