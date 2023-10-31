@@ -15,11 +15,13 @@
 
         <TextView
             style="@style/ScreenHeading"
+            android:id="@+id/screenTitle"
             android:layout_height="wrap_content"
             android:text="@string/add_a_course" />
 
         <TextView
             style="@style/ScreenParagraph"
+            android:id="@+id/screenDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/you_can_add_a_new_yoga_course" />

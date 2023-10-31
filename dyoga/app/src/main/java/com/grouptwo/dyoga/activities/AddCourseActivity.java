@@ -25,7 +25,6 @@ import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.Map;
 
 public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener {
 
@@ -34,19 +33,19 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     private DaysOfWeekAdapter daysOfWeekAdapter;
     private YogaDurationAdapter yogaDurationAdapter;
 
-    private Spinner yogaTypesSpinner, daysOfWeekSpinner, durationSpinner;
-    private Button timeButton, reviewButton;
-    private ImageView addDescriptionImageView;
-    private TextView addDescriptionTextView;
-    private LinearLayout descriptionDisplay;
-    private EditText priceEditText, capacityEditText, descriptionEditText;
+    protected Spinner yogaTypesSpinner, daysOfWeekSpinner, durationSpinner;
+    protected Button timeButton, reviewButton;
+    protected ImageView addDescriptionImageView;
+    protected TextView screenTitle, screenDescription, addDescriptionTextView;
+    protected LinearLayout descriptionDisplay;
+    protected EditText priceEditText, capacityEditText, descriptionEditText;
 
     private LocalDateTime yogaTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_course);
+        setContentView(R.layout.activity_add_edit_course);
 
         yogaTime = LocalDateTime.now();
 
@@ -61,6 +60,8 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         timeButton = findViewById(R.id.timeButton);
         reviewButton = findViewById(R.id.reviewButton);
 
+        screenTitle = findViewById(R.id.screenTitle);
+        screenDescription = findViewById(R.id.screenDescription);
         addDescriptionTextView = findViewById(R.id.addDescriptionTextView);
         addDescriptionImageView = findViewById(R.id.addDescriptionImageView);
         descriptionDisplay = findViewById(R.id.descriptionDisplay);
