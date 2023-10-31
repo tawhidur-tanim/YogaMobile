@@ -21,7 +21,7 @@ public class Course {
         this.capacity = capacity;
         this.duration = duration;
         this.description = description;
-        this.DayofWeek = dayofWeek;
+        this.dayofWeek = dayofWeek;
     }
 
     public int getId() {
@@ -41,18 +41,17 @@ public class Course {
 
     private double price;
     private int capacity;
-
     private int duration;
 
     public String getDayofWeek() {
-        return DayofWeek;
+        return dayofWeek;
     }
 
     public void setDayofWeek(String dayofWeek) {
-        DayofWeek = dayofWeek;
+        dayofWeek = dayofWeek;
     }
 
-    private String DayofWeek;
+    private String dayofWeek;
 
     private String description;
 

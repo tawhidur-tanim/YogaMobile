@@ -61,7 +61,7 @@
 
 
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_weight="1.2"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -134,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="£ 200"
+                android:text="200"
                 android:id="@+id/bottom_sheetPrice"
                 style="@style/Theme.Dyoga.BottomSheetValue"
                 />

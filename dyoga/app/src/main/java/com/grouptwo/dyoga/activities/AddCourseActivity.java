@@ -1,6 +1,7 @@
 package com.grouptwo.dyoga.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,7 +25,7 @@ import com.grouptwo.dyoga.utils.DoubleConverter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class AddCourseActivity extends AppCompatActivity {
+public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener {
 
     // view adapters
     private YogaTypesAdapter yogaTypesAdapter;
@@ -144,7 +145,12 @@ public class AddCourseActivity extends AppCompatActivity {
                 ,Integer.parseInt((durationSpinner.getSelectedItem().toString().replace("minutes","").trim()))
                 ,descriptionEditText.getText().toString(),daysOfWeekSpinner.getSelectedItem().toString());
 
-
         return course;
+    }
+
+    @Override
+    public void onButtonClicked(View view) {
+
+        Toast.makeText(this, "Confirmed", Toast.LENGTH_SHORT).show();
     }
 }
