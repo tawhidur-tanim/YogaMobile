@@ -4,62 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/splash_2"
-    tools:context=".MainActivity">
+    android:background="@raw/splash_1"
+    tools:context=".activities.GetStartedActivity">
 
-    <EditText
-        android:id="@+id/btnCopyRight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:drawablePadding="10dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="© Copyright 2023"
-        android:textAlignment="textStart"
-        android:textColor="#D9000000"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
-
-    <EditText
-        android:id="@+id/ProductofGroupll"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Product of Group ll"
-        android:textColor="#00000F"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/btnCopyRight"
-        app:layout_constraintStart_toStartOf="@+id/btnCopyRight"
-        app:layout_constraintTop_toBottomOf="@+id/btnCopyRight" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="156dp"
-        android:text="Continue With Google"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="@+id/imageView3"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="176dp"
-        android:layout_height="142dp"
+        android:layout_width="380dp"
+        android:layout_height="203dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.522"
         tools:srcCompat="@raw/dyoga" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="276dp"
+        android:layout_height="56dp"
+        android:text="@string/continue_with_google"
+        android:textSize="16sp"
+        android:layout_marginBottom="40dp"
+        app:backgroundTint="@color/colorSecondary"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintBottom_toTopOf="@id/btnCopyRight" />
+
+    <TextView
+        android:id="@+id/btnCopyRight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/copyright_2023"
+        android:layout_marginBottom="8dp"
+        android:textColor="#82000000"
+        android:textSize="11sp"
+        app:layout_constraintEnd_toEndOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintBottom_toTopOf="@id/productOfGroupii" />
+
+
+    <TextView
+        android:id="@+id/productOfGroupii"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/product_of_group_ii"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="8dp"
+        android:textColor="#8200000F"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
