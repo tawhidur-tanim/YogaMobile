@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet_background"
-    android:padding="20dp">
+    android:padding="40dp">
 
     <LinearLayout
         android:id="@+id/bottom_sheetTitle"
@@ -15,163 +16,167 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/courseTypeTitle"
             style="@style/ScreenHeading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/courseTypeTitle"
-            android:textColor="@color/blue"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            android:textColor="@color/blue" />
 
     </LinearLayout>
 
 
     <LinearLayout
-        android:layout_marginTop="@dimen/screen_padding_horizontal"
-        android:id="@+id/row_1"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bottom_sheetTitle">
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheetTitle">
 
         <LinearLayout
-            android:orientation="vertical"
-           android:layout_weight="1"
+            android:id="@+id/row_1"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/day_of_week"
-                style="@style/Theme.Dyoga.BottomSheetLabel" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday"
-                android:id="@+id/bottom_sheetDay"
-                style="@style/Theme.Dyoga.BottomSheetValue"
-                />
-
-        </LinearLayout>
-
-
-
-        <LinearLayout
-            android:layout_weight="1.2"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time"
-                style="@style/Theme.Dyoga.BottomSheetLabel"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="02:00 PM"
-                android:id="@+id/bottom_sheetTime"
-                style="@style/Theme.Dyoga.BottomSheetValue"
-                />
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/row_2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/row_1"
-        >
-        <LinearLayout
-            android:orientation="vertical"
-       android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/duration"
-                style="@style/Theme.Dyoga.BottomSheetLabel"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="60 Minutes"
-                android:id="@+id/bottom_sheetduration"
-                style="@style/Theme.Dyoga.BottomSheetValue"
-                />
-
-        </LinearLayout>
-
- #
-
-        <LinearLayout
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bottom_sheetTitle">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Theme.Dyoga.BottomSheetLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/day_of_week" />
+
+                <TextView
+                    android:id="@+id/bottom_sheetDay"
+                    style="@style/Theme.Dyoga.BottomSheetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Monday" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Theme.Dyoga.BottomSheetLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/duration" />
+
+                <TextView
+                    android:id="@+id/bottom_sheetduration"
+                    style="@style/Theme.Dyoga.BottomSheetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60 Minutes" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/row_2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
 
-            <TextView
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toEndOf="@+id/row_1"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/price"
-                style="@style/Theme.Dyoga.BottomSheetLabel"
-                />
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    style="@style/Theme.Dyoga.BottomSheetLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time" />
+
+                <TextView
+                    android:id="@+id/bottom_sheetTime"
+                    style="@style/Theme.Dyoga.BottomSheetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="02:00 PM" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="200"
-                android:id="@+id/bottom_sheetPrice"
-                style="@style/Theme.Dyoga.BottomSheetValue"
-                />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Theme.Dyoga.BottomSheetLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price" />
+
+                <TextView
+                    android:id="@+id/bottom_sheetPrice"
+                    style="@style/Theme.Dyoga.BottomSheetValue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
 
     </LinearLayout>
 
-
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="20dp"
-        android:id="@+id/row_3"
+        android:layout_weight="1"
+        android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/row_2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
-        >
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/btmdescriptionLabel"
+            style="@style/Theme.Dyoga.BottomSheetLabel"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:text="@string/description" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description"
-                style="@style/Theme.Dyoga.BottomSheetLabel"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Come along with your yoga mats pleases"
-                android:id="@+id/bottom_sheetDesc"
-                style="@style/Theme.Dyoga.BottomSheetValue"
-                />
-        </LinearLayout>
-
+        <TextView
+            android:id="@+id/bottom_sheetDesc"
+            style="@style/Theme.Dyoga.BottomSheetValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Come along with your yoga mats pleases" />
     </LinearLayout>
 
     <Button
@@ -179,12 +184,13 @@
         android:layout_width="270dp"
         android:layout_height="56dp"
         android:layout_gravity="center"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/colorSecondary"
         android:text="@string/save"
+        android:textColor="@color/white"
         app:backgroundTint="@color/colorSecondary"
         app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/white"
+        app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/row_3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 </androidx.constraintlayout.widget.ConstraintLayout>
