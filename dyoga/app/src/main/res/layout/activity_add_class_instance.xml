@@ -17,14 +17,14 @@
             style="@style/ScreenHeading"
             android:id="@+id/screenTitle"
             android:layout_height="wrap_content"
-            android:text="Add_a_class" />
+            android:text="Add a class" />
 
         <TextView
             style="@style/ScreenParagraph"
             android:id="@+id/screenDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="add_a_new_class_instance_to_family_yoga_by_11_00am" />
+            android:text="add a new class instance to family yoga by 11:00am" />
 
         <Space
             android:layout_width="match_parent"
@@ -35,7 +35,7 @@
             style="@style/ScreenParagraphTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/date" />
+            android:text="date" />
 
         <Spinner
             style="@style/Theme.Dyoga.Spinner"
@@ -121,7 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/circle_plus_solid_1"
+                android:src="@drawable/circle_plus_solid"
                 android:id="@+id/addDescriptionImageView"
                 android:contentDescription="@string/add_a_description" />
 
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="12dp"
-                android:text="@string/add_a_comment" />
+                android:text="add a comment" />
         </LinearLayout>
 
         <Space
