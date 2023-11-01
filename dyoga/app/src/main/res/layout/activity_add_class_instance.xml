@@ -15,8 +15,10 @@
 
         <TextView
             style="@style/ScreenHeading"
-            android:id="@+id/screenTitle"
+            android:layout_width="364dp"
             android:layout_height="wrap_content"
+            android:drawableEnd="@drawable/trash_icon"
+            android:paddingRight="20dp"
             android:text="Add a class" />
 
         <TextView
@@ -24,7 +26,7 @@
             android:id="@+id/screenDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="add a new class instance to family yoga by 11:00am" />
+            android:text="Add a new class instance to family yoga by 11:00am" />
 
         <Space
             android:layout_width="match_parent"
@@ -35,7 +37,7 @@
             style="@style/ScreenParagraphTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="date" />
+            android:text="Date" />
 
         <Spinner
             style="@style/Theme.Dyoga.Spinner"
@@ -131,7 +133,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="12dp"
-                android:text="add a comment" />
+                android:text="Add a comment" />
         </LinearLayout>
 
         <Space
@@ -145,7 +147,7 @@
             android:layout_height="56dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/colorSecondary"
-            android:text="save"
+            android:text="Save"
             app:backgroundTint="@color/colorSecondary" />
     </LinearLayout>
 </ScrollView>
