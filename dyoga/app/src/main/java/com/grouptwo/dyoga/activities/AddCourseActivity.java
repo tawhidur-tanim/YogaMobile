@@ -12,7 +12,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.grouptwo.dyoga.R;
@@ -23,17 +22,14 @@ import com.grouptwo.dyoga.components.CourseBottomSheet;
 import com.grouptwo.dyoga.components.YogaTimePicker;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.repositories.CourseRepository;
+import com.grouptwo.dyoga.enums.CourseActions;
+import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener {
-
-    // view adapters
-    private YogaTypesAdapter yogaTypesAdapter;
-    private DaysOfWeekAdapter daysOfWeekAdapter;
-    private YogaDurationAdapter yogaDurationAdapter;
+public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener, Callback<Boolean> {
 
     protected Spinner yogaTypesSpinner, daysOfWeekSpinner, durationSpinner;
     protected Button timeButton, reviewButton;
@@ -41,10 +37,15 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     protected TextView screenTitle, screenDescription, addDescriptionTextView;
     protected LinearLayout descriptionDisplay;
     protected EditText priceEditText, capacityEditText, descriptionEditText;
+    protected CourseActions courseAction;
 
     private LocalDateTime yogaTime;
-
     private CourseRepository courseRepository;
+
+    // view adapters
+    private YogaTypesAdapter yogaTypesAdapter;
+    private DaysOfWeekAdapter daysOfWeekAdapter;
+    private YogaDurationAdapter yogaDurationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         setContentView(R.layout.activity_add_edit_course);
 
         yogaTime = LocalDateTime.now();
+        courseAction = CourseActions.NEW;
+        courseRepository = new CourseRepository(this);
 
         yogaTypesAdapter = new YogaTypesAdapter(this);
         daysOfWeekAdapter = new DaysOfWeekAdapter(this);
@@ -77,10 +80,6 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         // init view
         setViewItems();
         setButtonListeners();
-
-        //initialize repos
-
-        courseRepository = new CourseRepository(getApplication());
     }
 
     private void setViewItems() {
@@ -138,35 +137,48 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         return true;
     }
 
-    private CourseBottomSheet.CourseData getCourseData() {
-        final Course course = getCourse();
-        final HashMap<String, String> extras = new HashMap<>();
-        extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
-
-        return new CourseBottomSheet.CourseData(course, extras);
-    }
-
-    @NonNull
-    private Course getCourse() {
+    protected CourseBottomSheet.CourseData getCourseData() {
         final String yogaType = yogaTypesSpinner.getSelectedItem().toString();
         final double price = DoubleConverter.convert(priceEditText.getText().toString());
         final int capacity = Integer.parseInt(capacityEditText.getText().toString());
         final String description = descriptionEditText.getText().toString();
         final String dayOfWeek = daysOfWeekSpinner.getSelectedItem().toString();
         final int duration = yogaDurationAdapter.getDurationValues(durationSpinner.getSelectedItemPosition());
+        final Course course =  new Course(yogaType, yogaTime, price, capacity, duration, description, dayOfWeek);
 
-        final Course course = new Course(yogaType, yogaTime, price, capacity, duration, description, dayOfWeek);
-        return course;
+        final HashMap<String, String> extras = new HashMap<>();
+        extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
+
+        return new CourseBottomSheet.CourseData(course, extras);
     }
 
     @Override
-    public void onButtonClicked(View view) {
+    public void onButtonClicked(CourseBottomSheet.CourseData courseData) {
+        Course course = courseData.getCourse();
+        if (courseAction == CourseActions.NEW) {
+            courseRepository.save(course, this);
+        } else {
+            courseRepository.update(1, course, this);
+        }
+    }
 
-        Course course = getCourse();
-        courseRepository.addCourse(course);
+    @Override
+    public void onResult(Boolean value) {
+        if (value != null && value) {
+            // show success message
+            Toast.makeText(getApplicationContext(),
+                    R.string.course_has_been_added,
+                    Toast.LENGTH_LONG
+            ).show();
 
-        Toast.makeText(this, "Course has been added !", Toast.LENGTH_SHORT).show();
-
-        // todo: maybe navigate to dashboard or change the current layout for edit
+            // close the current activity and return to source activity
+            finish();
+        } else {
+            // show an error message, unable to save course
+            Toast.makeText(getApplicationContext(),
+                    R.string.an_error_occurred_saving_course_please_try_again,
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 }

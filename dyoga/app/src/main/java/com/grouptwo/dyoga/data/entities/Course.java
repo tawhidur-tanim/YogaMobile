@@ -7,39 +7,31 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Entity
-public class Course {
+public class Course implements RemoteEntity {
 
-    public Course(String courseType, LocalDateTime courseDate
-            , double price, int capacity
-            , int duration
-            , String description
-            , String dayofWeek
-    ) {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String courseType;
+    private LocalDateTime courseDate;
+    private double price;
+    private int capacity;
+    private int duration;
+    private String dayOfWeek;
+    private String description;
+    private String reference;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public Course(final String courseType, final LocalDateTime courseDate, final double price,
+                  final int capacity, final int duration, final String description, final String dayOfWeek) {
         this.courseType = courseType;
         this.courseDate = courseDate;
         this.price = price;
         this.capacity = capacity;
         this.duration = duration;
         this.description = description;
-        this.dayofWeek = dayofWeek;
+        this.dayOfWeek = dayOfWeek;
     }
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-
-    private String courseType;
-
-    private LocalDateTime courseDate;
-
-    private double price;
-    private int capacity;
-    private int duration;
-
-    private String dayofWeek;
-    private String description;
-
-    private LocalDateTime createdDatetime = LocalDateTime.now();
-
 
     public int getId() {
         return id;
@@ -49,9 +41,34 @@ public class Course {
         this.id = id;
     }
 
+    public String getCourseType() {
+        return courseType;
+    }
+
+    public void setCourseType(String courseType) {
+        this.courseType = courseType;
+    }
+
+    public LocalDateTime getCourseDate() {
+        return courseDate;
+    }
+
+    public void setCourseDate(LocalDateTime courseDate) {
+        this.courseDate = courseDate;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     public int getCapacity() {
         return capacity;
     }
+
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
@@ -64,6 +81,13 @@ public class Course {
         this.duration = duration;
     }
 
+    public String getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
 
     public String getDescription() {
         return description;
@@ -73,49 +97,30 @@ public class Course {
         this.description = description;
     }
 
-
-    public LocalDateTime getCourseDate() {
-        return courseDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public double getPrice() {
-        return price;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public String getCourseType() {
-        return courseType;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-
-    public String getTime() {
-        return this.courseDate.format(DateTimeFormatter.ofPattern("hh:mm a"));
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public void setCourseType(String courseType) {
-        this.courseType = courseType;
+    @Override
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 
-    public void setCourseDate(LocalDateTime courseDate) {
-        this.courseDate = courseDate;
+    @Override
+    public String getReference() {
+        return reference;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public String getDayofWeek() {
-        return dayofWeek;
-    }
-
-    public void setDayofWeek(String dayofWeek) {
-        dayofWeek = dayofWeek;
-    }
-
-    public LocalDateTime getCreatedDatetime() {
-        return createdDatetime;
-    }
-
-    public void setCreatedDatetime(LocalDateTime createdDatetime) {
-        this.createdDatetime = createdDatetime;
-    }
 }

@@ -1,6 +1,5 @@
 package com.grouptwo.dyoga.data.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
@@ -12,15 +11,14 @@ import java.util.List;
 public interface CourseDao extends BaseDao<Course>{
 
     @Query("select * from course limit 1")
-    public Course findFirst();
+    Course findFirst();
 
     @Query("select * from course")
-    public List<Course> getAllCourses();
+    List<Course> getAllCourses();
 
     @Query("select * from course where id=:id")
-    public Course getCourseById(int id);
-
+    Course getCourseById(int id);
 
     @Query("select * from course  where courseType like '%' || :type || '%'")
-    public List<Course> searchCourses(String type);
+    List<Course> searchCourses(String type);
 }

@@ -3,6 +3,7 @@ package com.grouptwo.dyoga.activities;
 import android.os.Bundle;
 
 import com.grouptwo.dyoga.R;
+import com.grouptwo.dyoga.enums.CourseActions;
 
 public class EditCourseActivity extends AddCourseActivity {
 
@@ -10,7 +11,9 @@ public class EditCourseActivity extends AddCourseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        screenTitle.setText(R.string.edit_course);
-        screenDescription.setText(R.string.update_your_course_information);
+        // change parameters for course activity into UPDATE
+        this.courseAction = CourseActions.UPDATE;
+        this.screenTitle.setText(R.string.edit_course);
+        this.screenDescription.setText(R.string.update_your_course_information);
     }
 }

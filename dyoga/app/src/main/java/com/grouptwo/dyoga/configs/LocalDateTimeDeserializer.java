@@ -1,4 +1,4 @@
-package com.grouptwo.dyoga.customconfigs;
+package com.grouptwo.dyoga.configs;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

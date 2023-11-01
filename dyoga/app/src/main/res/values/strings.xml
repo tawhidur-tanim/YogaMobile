@@ -36,4 +36,6 @@
     <string name="continue_with_google">Continue with Google</string>
     <string name="copyright_2023">© Copyright 2023</string>
     <string name="product_of_group_ii">Product of Group II</string>
+    <string name="an_error_occurred_saving_course_please_try_again">An error occurred saving course. Please try again!</string>
+    <string name="course_has_been_added">Course has been added!</string>
 </resources>

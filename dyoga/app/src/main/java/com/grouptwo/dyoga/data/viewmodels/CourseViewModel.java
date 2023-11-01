@@ -1,13 +1,11 @@
 package com.grouptwo.dyoga.data.viewmodels;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.repositories.CourseRepository;
@@ -17,73 +15,45 @@ import java.util.List;
 
 public class CourseViewModel extends AndroidViewModel {
 
-    private CourseRepository courseRepository;
-    private MutableLiveData<List<Course>> allCourses = new MutableLiveData<>();
-
+    private final CourseRepository courseRepository;
+    private final MutableLiveData<List<Course>> allCourses;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
-        this.courseRepository = new CourseRepository(application);
+        allCourses = new MutableLiveData<>();
+        courseRepository = new CourseRepository(application);
 
+        findAllCourses();
+    }
 
+    private void findAllCourses() {
+        courseRepository.findAll(new Callback<Course>() {
+            @Override
+            public void onResult(List<Course> result) {
+                allCourses.setValue(result);
+            }
+        });
     }
 
     public LiveData<List<Course>> getAllCourses(){
-
-        courseRepository.getAllCourses(new Callback<Course>() {
-            @Override
-            public void onResult(Course result) {
-            }
-
-            @Override
-            public void onResult(List<Course> result) {
-                allCourses.setValue(result);
-            }
-        });
         return allCourses;
     }
 
-
-    public void addCourse(Course course){
-
-        courseRepository.addCourse(course);
-    }
-
-    public void addCourseList(List<Course> courses){
-
-        courseRepository.addCourseList(courses);
-    }
-
     public void deleteCourse(Course course){
-        courseRepository.deleteCourse(course,allCourses);
+        courseRepository.delete(course, new Callback<Course>() {
+            @Override
+            public void onResult(Course result) {
+                findAllCourses();
+            }
+        });
     }
 
     public void searchCourse(String type){
-
         courseRepository.searchCourses(type, new Callback<Course>() {
             @Override
-            public void onResult(Course result) {
-            }
-
-            @Override
             public void onResult(List<Course> result) {
                 allCourses.setValue(result);
             }
         });
     }
-
-    public void refreshData(){
-        courseRepository.getAllCourses(new Callback<Course>() {
-            @Override
-            public void onResult(Course result) {
-
-            }
-
-            @Override
-            public void onResult(List<Course> result) {
-                allCourses.setValue(result);
-            }
-        });
-    }
-
 }

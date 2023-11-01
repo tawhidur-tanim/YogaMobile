@@ -11,14 +11,14 @@ import java.util.List;
 public interface BaseDao <T>{
 
     @Insert
-    public void insert(T obj);
+    void insert(T obj);
 
     @Insert
-    public void insertList(List<T> obj);
+    void insertList(List<T> obj);
 
     @Update
-    public void update(T obj);
+    void update(T obj);
 
     @Delete
-    public void delete(T obj);
+    void delete(T obj);
 }

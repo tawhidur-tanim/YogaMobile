@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 import java.time.LocalDateTime;
 
 @Entity
-public class ClassInstance {
+public class ClassInstance implements RemoteEntity {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -20,6 +20,8 @@ public class ClassInstance {
     private String comments;
 
     private int courseId;
+
+    private String reference;
 
     public ClassInstance(int courseId, LocalDateTime date, String instructor, String room, String comments) {
         this.courseId = courseId;
@@ -75,5 +77,15 @@ public class ClassInstance {
 
     public void setCourseId(int courseId) {
         this.courseId = courseId;
+    }
+
+    @Override
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
+    @Override
+    public String getReference() {
+        return reference;
     }
 }

@@ -3,7 +3,11 @@ package com.grouptwo.dyoga.interfaces;
 import java.util.List;
 
 public interface Callback<T> {
-    void onResult(T result);
+    default void onResult(T result) {
+        throw new UnsupportedOperationException();
+    }
 
-    void onResult(List<T> result);
+    default void onResult(List<T> result) {
+        throw new UnsupportedOperationException();
+    }
 }

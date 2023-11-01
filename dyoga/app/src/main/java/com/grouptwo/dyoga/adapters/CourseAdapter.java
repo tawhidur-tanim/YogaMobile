@@ -1,6 +1,5 @@
 package com.grouptwo.dyoga.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,45 +10,59 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
-import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
-import com.grouptwo.dyoga.interfaces.ButtonClickListener;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
-public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHolder>{
+public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseAdapterViewHolder> {
 
-    private List<Course> courseList;
+    private final List<Course> courseList;
+    private ItemClickListener<Course> onItemClickListener;
+    private ItemClickListener<Course> onEditClickListener;
+    private ItemClickListener<Course> onDeleteClickListener;
 
-    public ButtonClickListener<Course> clickListener;
-
-
-    public CourseAdapter(List<Course> courseList) {
-        this.courseList = courseList;
+    public CourseAdapter() {
+        courseList = new ArrayList<>();
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater
-                .from(parent.getContext())
-                .inflate(R.layout.course_layout,parent, false);
+    public CourseAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.course_layout, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new CourseAdapterViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CourseAdapterViewHolder holder, int itemPosition) {
+        final Course course = courseList.get(itemPosition);
 
-        Course course = courseList.get(position);
-
+        // todo: extract these strings into strings.xml
         holder.courseName.setText(course.getCourseType());
-        holder.price.setText("£ "+course.getPrice() + "");
+        holder.price.setText("£ " + course.getPrice() + "");
+        holder.weekDayTime.setText(course.getDayOfWeek() + " · " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getCourseDate()));
 
-        holder.weekDayTime.setText(course.getDayofWeek() + " - " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getCourseDate()));
+        holder.itemView.setOnClickListener(v -> {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClicked(v, itemPosition, course);
+            }
+        });
 
+        holder.editButton.setOnClickListener(v -> {
+            if (onEditClickListener != null) {
+                onEditClickListener.onItemClicked(v, itemPosition, course);
+            }
+        });
+
+        holder.deleteButton.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onItemClicked(v, itemPosition, course);
+            }
+        });
     }
 
     @Override
@@ -57,59 +70,39 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.MyViewHold
         return courseList.size();
     }
 
-    public void setCourseList(List<Course> courseList) {
-        this.courseList = courseList;
+    public void setCourseList(List<Course> newCourseList) {
+        courseList.clear();
+        courseList.addAll(newCourseList);
         notifyDataSetChanged();
     }
 
-    public void setClickListener(ButtonClickListener<Course> myListener){
-        this.clickListener = myListener;
+    public void setOnItemClickListener(ItemClickListener<Course> onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 
-    public class MyViewHolder extends
-            RecyclerView.ViewHolder implements View.OnClickListener  {
+    public void setOnEditClickListener(ItemClickListener<Course> onEditClickListener) {
+        this.onEditClickListener = onEditClickListener;
+    }
 
-        TextView courseName;
-        TextView price;
-        TextView weekDayTime;
+    public void setOnDeleteClickListener(ItemClickListener<Course> onDeleteClickListener) {
+        this.onDeleteClickListener = onDeleteClickListener;
+    }
 
-        ImageButton editButton, deleteButton;
+    public static class CourseAdapterViewHolder extends RecyclerView.ViewHolder {
 
-        public MyViewHolder(@NonNull View itemView) {
+        private final TextView courseName;
+        private final TextView price;
+        private final TextView weekDayTime;
+        private final ImageButton editButton, deleteButton;
+
+        public CourseAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
+
             courseName = itemView.findViewById(R.id.courseName);
             price = itemView.findViewById(R.id.coursePrice);
             weekDayTime = itemView.findViewById(R.id.courseDayTime);
             editButton = itemView.findViewById(R.id.rvEditButton);
             deleteButton = itemView.findViewById(R.id.rvDeleteButton);
-
-            itemView.setOnClickListener(this);
-            editButton.setOnClickListener(this);
-            deleteButton.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            if(clickListener == null){
-                Log.e(this.getClass().getName(), "Item click listener is null");
-                return;
-            }
-
-            final Course course = courseList.get(getAdapterPosition());
-
-           // clickListener.onItemClicked(view, getAdapterPosition(), course); could be useful in future with some additional logic
-
-            if(view.getId() == R.id.rvDeleteButton){
-                clickListener.onDeleteClick(view, getAdapterPosition(),course);
-                return;
-            }
-
-            if(view.getId() == R.id.rvEditButton){
-                clickListener.onDeleteClick(view, getAdapterPosition(),course);
-                return;
-            }
         }
     }
 }
