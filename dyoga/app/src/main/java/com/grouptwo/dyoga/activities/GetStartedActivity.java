@@ -16,7 +16,6 @@ public class GetStartedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
-        ImageView imageView =(ImageView)findViewById(R.id.imageView3);
-        imageView.setBackgroundResource(R.raw.dyoga);
+
     }
 }
