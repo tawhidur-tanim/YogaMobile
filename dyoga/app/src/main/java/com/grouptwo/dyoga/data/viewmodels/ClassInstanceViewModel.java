@@ -24,19 +24,16 @@ public class ClassInstanceViewModel extends AndroidViewModel {
         this.classInstanceRepository = new ClassInstanceRepository(application);
     }
 
-    public LiveData<List<ClassInstance>> findAll(){
-        classInstanceRepository.findAll(new Callback<ClassInstance>() {
-            @Override
-            public void onResult(ClassInstance result) {
-
-            }
-
+    public void queryAllByCourseId(int id){
+        classInstanceRepository.queryAllByCourseId(id, new Callback<ClassInstance>() {
             @Override
             public void onResult(List<ClassInstance> result) {
-                allClassInstances.setValue(result);
+                allClassInstances.postValue(result);
             }
         });
+    }
 
+    public LiveData<List<ClassInstance>> getClassInstances(){
         return allClassInstances;
     }
 
@@ -45,8 +42,8 @@ public class ClassInstanceViewModel extends AndroidViewModel {
         classInstanceRepository.add(classInstance);
     }
 
-    public void add(List<ClassInstance> classInstances){
-        classInstanceRepository.add(classInstances);
+    public void update(ClassInstance classInstance){
+        classInstanceRepository.add(classInstance);
     }
 
     public void delete(ClassInstance classInstance){
@@ -55,10 +52,6 @@ public class ClassInstanceViewModel extends AndroidViewModel {
 
     public void search(String type){
         classInstanceRepository.search(type, new Callback<ClassInstance>() {
-            @Override
-            public void onResult(ClassInstance result) {
-            }
-
             @Override
             public void onResult(List<ClassInstance> result) {
                 allClassInstances.setValue(result);

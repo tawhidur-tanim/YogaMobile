@@ -1,6 +1,7 @@
 package com.grouptwo.dyoga.activities;
 
 import static com.grouptwo.dyoga.utils.Constants.CLASS_INSTANCE;
+import static com.grouptwo.dyoga.utils.Constants.COURSE;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.ClassInstanceAdapter;
-import com.grouptwo.dyoga.data.entities.ClassInstance;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.viewmodels.ClassInstanceViewModel;
-
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ViewCourseActivity extends AppCompatActivity {
 
@@ -36,22 +33,24 @@ public class ViewCourseActivity extends AppCompatActivity {
 
     private final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-    private final ArrayList<ClassInstance> exampleClassInstances = new ArrayList<>(Arrays.asList(
-            new ClassInstance(1, LocalDateTime.now(), "Daniel", "404", "No comments"),
-            new ClassInstance(1, LocalDateTime.now(), "Peter", "404", "No comments")
-    ));
+    private Course course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_course);
 
+        final Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+             course = (Course) bundle.getSerializable(COURSE);
+        }
+
         emptyClassView = findViewById(R.id.emptyClassView);
         addClassInstanceButton = findViewById(R.id.addClassInstanceImageButton);
         classInstanceRecyclerView = findViewById(R.id.classInstanceRecyclerView);
         classInstanceSearchEditText = findViewById(R.id.searchClassInstanceEditText);
 
-        classInstanceAdapter = new ClassInstanceAdapter(exampleClassInstances);
+        classInstanceAdapter = new ClassInstanceAdapter();
         classInstanceViewModel = new ViewModelProvider(this).get(ClassInstanceViewModel.class);
 
         initViews();
@@ -62,7 +61,8 @@ public class ViewCourseActivity extends AppCompatActivity {
         classInstanceRecyclerView.setLayoutManager(layoutManager);
         classInstanceRecyclerView.setAdapter(classInstanceAdapter);
 
-        classInstanceViewModel.findAll().observe(this, classInstances -> {
+        classInstanceViewModel.queryAllByCourseId(course.getId());
+        classInstanceViewModel.getClassInstances().observe(this, classInstances -> {
             if(classInstances.isEmpty()) {
                 classInstanceSearchEditText.setVisibility(View.GONE);
                 emptyClassView.setVisibility(View.VISIBLE);

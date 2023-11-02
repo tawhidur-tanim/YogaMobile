@@ -31,19 +31,19 @@ public class ClassInstanceRepository {
         executor.execute(() -> classInstanceDao.insert(classInstance));
     }
 
-    public void add(final List<ClassInstance> classInstances){
-        executor.execute(() -> classInstanceDao.insertList(classInstances));
+    public void update(final ClassInstance classInstance){
+        executor.execute(() -> classInstanceDao.insert(classInstance));
+    }
+
+    public void queryAllByCourseId(int courseId, Callback<ClassInstance> callback) {
+        executor.execute(() -> {
+            final List<ClassInstance> classInstances = classInstanceDao.findAllByCourseId(courseId);
+            handler.post(() -> callback.onResult(classInstances));
+        });
     }
 
     public void delete(final ClassInstance classInstance){
         executor.execute(() -> classInstanceDao.delete(classInstance));
-    }
-
-    public void findAll(final Callback<ClassInstance> callback){
-        executor.execute(() -> {
-            final List<ClassInstance> classInstances = classInstanceDao.findAll();
-            handler.post(() -> callback.onResult(classInstances));
-        });
     }
 
     public void search(String keyword, Callback<ClassInstance> callback){

@@ -14,6 +14,7 @@ import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassInstanceAdapter extends RecyclerView.Adapter<ClassInstanceAdapter.ClassInstanceViewHolder>{
@@ -22,8 +23,8 @@ public class ClassInstanceAdapter extends RecyclerView.Adapter<ClassInstanceAdap
 
     public ItemClickListener<ClassInstance> itemClickListener;
 
-    public ClassInstanceAdapter(List<ClassInstance> classInstances) {
-        this.classInstances = classInstances;
+    public ClassInstanceAdapter() {
+        this.classInstances = new ArrayList<>();
     }
 
     @NonNull

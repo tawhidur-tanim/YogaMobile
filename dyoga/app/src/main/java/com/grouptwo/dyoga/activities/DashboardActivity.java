@@ -92,8 +92,9 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         courseAdapter.setOnItemClickListener((v, itemPosition, course) -> {
-            // todo: send intent with data to view course activity
-            startActivity(new Intent(this, ViewCourseActivity.class));
+            Intent intent = new Intent(this, ViewCourseActivity.class);
+            intent.putExtra(COURSE, course);
+            startActivity(intent);
         });
 
         courseAdapter.setOnEditClickListener((v, itemPosition, course) -> {
