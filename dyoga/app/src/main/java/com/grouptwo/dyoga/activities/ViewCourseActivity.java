@@ -1,9 +1,12 @@
 package com.grouptwo.dyoga.activities;
 
+import static com.grouptwo.dyoga.utils.Constants.CLASS_INSTANCE;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -26,6 +29,7 @@ public class ViewCourseActivity extends AppCompatActivity {
     private ImageButton addClassInstanceButton;
     private EditText classInstanceSearchEditText;
     private RecyclerView classInstanceRecyclerView;
+    private View emptyClassView;
 
     private ClassInstanceAdapter classInstanceAdapter;
     private ClassInstanceViewModel classInstanceViewModel;
@@ -42,6 +46,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_course);
 
+        emptyClassView = findViewById(R.id.emptyClassView);
         addClassInstanceButton = findViewById(R.id.addClassInstanceImageButton);
         classInstanceRecyclerView = findViewById(R.id.classInstanceRecyclerView);
         classInstanceSearchEditText = findViewById(R.id.searchClassInstanceEditText);
@@ -58,6 +63,14 @@ public class ViewCourseActivity extends AppCompatActivity {
         classInstanceRecyclerView.setAdapter(classInstanceAdapter);
 
         classInstanceViewModel.findAll().observe(this, classInstances -> {
+            if(classInstances.isEmpty()) {
+                classInstanceSearchEditText.setVisibility(View.GONE);
+                emptyClassView.setVisibility(View.VISIBLE);
+            } else {
+                classInstanceSearchEditText.setVisibility(View.VISIBLE);
+                emptyClassView.setVisibility(View.GONE);
+            }
+
             classInstanceAdapter.setClassInstances(classInstances);
         });
 
@@ -80,12 +93,13 @@ public class ViewCourseActivity extends AppCompatActivity {
     }
 
     private void initViewClicks() {
-        addClassInstanceButton.setOnClickListener(v -> {
-
-        });
+        addClassInstanceButton.setOnClickListener(v
+                -> startActivity(new Intent(this, AddClassInstanceActivity.class)));
 
         classInstanceAdapter.setItemClickListener((v, itemPosition, classInstance) -> {
-            Log.i(this.getClass().getName(), "Item clicked is " + classInstance.getInstructor());
+            Intent intent = new Intent(this, EditClassInstanceActivity.class);
+            intent.putExtra(CLASS_INSTANCE, classInstance);
+            startActivity(intent);
         });
     }
 }

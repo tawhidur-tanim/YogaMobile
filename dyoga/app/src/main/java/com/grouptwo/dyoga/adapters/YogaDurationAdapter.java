@@ -23,11 +23,17 @@ public class YogaDurationAdapter extends ArrayAdapter<String> {
         this.addAll(durations);
     }
 
-    public String[] getDurations() {
-        return durations;
+    public int getDurationValue(int position) {
+        return durationValues[position];
     }
 
-    public int getDurationValues(int position) {
-        return durationValues[position];
+    public int getPosition(int duration) {
+        for (int i = 0; i < durationValues.length; i++) {
+            if (durationValues[i] == duration) {
+                return i;
+            }
+        }
+
+        return 0;
     }
 }

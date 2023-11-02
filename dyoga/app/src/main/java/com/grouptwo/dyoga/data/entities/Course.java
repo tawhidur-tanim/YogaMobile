@@ -3,16 +3,16 @@ package com.grouptwo.dyoga.data.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
-public class Course implements RemoteEntity {
+public class Course implements RemoteEntity, Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String courseType;
-    private LocalDateTime courseDate;
+    private String type;
+    private LocalDateTime time;
     private double price;
     private int capacity;
     private int duration;
@@ -22,10 +22,10 @@ public class Course implements RemoteEntity {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Course(final String courseType, final LocalDateTime courseDate, final double price,
+    public Course(final String type, final LocalDateTime time, final double price,
                   final int capacity, final int duration, final String description, final String dayOfWeek) {
-        this.courseType = courseType;
-        this.courseDate = courseDate;
+        this.type = type;
+        this.time = time;
         this.price = price;
         this.capacity = capacity;
         this.duration = duration;
@@ -41,20 +41,20 @@ public class Course implements RemoteEntity {
         this.id = id;
     }
 
-    public String getCourseType() {
-        return courseType;
+    public String getType() {
+        return type;
     }
 
-    public void setCourseType(String courseType) {
-        this.courseType = courseType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public LocalDateTime getCourseDate() {
-        return courseDate;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setCourseDate(LocalDateTime courseDate) {
-        this.courseDate = courseDate;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public double getPrice() {

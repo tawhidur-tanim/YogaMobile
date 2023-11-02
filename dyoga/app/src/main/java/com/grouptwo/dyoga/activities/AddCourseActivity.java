@@ -3,6 +3,8 @@ package com.grouptwo.dyoga.activities;
 import static com.grouptwo.dyoga.components.CourseBottomSheet.DURATION_TEXT;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.DaysOfWeekAdapter;
@@ -21,7 +24,7 @@ import com.grouptwo.dyoga.adapters.YogaTypesAdapter;
 import com.grouptwo.dyoga.components.CourseBottomSheet;
 import com.grouptwo.dyoga.components.YogaTimePicker;
 import com.grouptwo.dyoga.data.entities.Course;
-import com.grouptwo.dyoga.data.repositories.CourseRepository;
+import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
 import com.grouptwo.dyoga.enums.CourseActions;
 import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.DoubleConverter;
@@ -39,22 +42,28 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     protected EditText priceEditText, capacityEditText, descriptionEditText;
     protected CourseActions courseAction;
 
-    private LocalDateTime yogaTime;
-    private CourseRepository courseRepository;
+    protected int courseId;
+    protected LocalDateTime yogaTime, createdAt;
 
     // view adapters
-    private YogaTypesAdapter yogaTypesAdapter;
-    private DaysOfWeekAdapter daysOfWeekAdapter;
-    private YogaDurationAdapter yogaDurationAdapter;
+    protected YogaTypesAdapter yogaTypesAdapter;
+    protected DaysOfWeekAdapter daysOfWeekAdapter;
+    protected YogaDurationAdapter yogaDurationAdapter;
+
+    private Handler handler;
+    private CourseViewModel courseViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_course);
 
+        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
+
         yogaTime = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
         courseAction = CourseActions.NEW;
-        courseRepository = new CourseRepository(this);
+        handler = new Handler(Looper.getMainLooper());
 
         yogaTypesAdapter = new YogaTypesAdapter(this);
         daysOfWeekAdapter = new DaysOfWeekAdapter(this);
@@ -92,9 +101,7 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
 
     private void setButtonListeners() {
         final View.OnClickListener descriptionClickListener = v -> {
-            descriptionDisplay.setVisibility(View.VISIBLE);
-            addDescriptionTextView.setVisibility(View.GONE);
-            addDescriptionImageView.setVisibility(View.GONE);
+            hideDescriptionCTA();
 
             descriptionEditText.requestFocus();
         };
@@ -112,6 +119,12 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
                 CourseBottomSheet.show(getCourseData(), getSupportFragmentManager());
             }
         });
+    }
+
+    protected void hideDescriptionCTA() {
+        descriptionDisplay.setVisibility(View.VISIBLE);
+        addDescriptionTextView.setVisibility(View.GONE);
+        addDescriptionImageView.setVisibility(View.GONE);
     }
 
     private boolean isInputsValid() {
@@ -143,8 +156,9 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
         final int capacity = Integer.parseInt(capacityEditText.getText().toString());
         final String description = descriptionEditText.getText().toString();
         final String dayOfWeek = daysOfWeekSpinner.getSelectedItem().toString();
-        final int duration = yogaDurationAdapter.getDurationValues(durationSpinner.getSelectedItemPosition());
+        final int duration = yogaDurationAdapter.getDurationValue(durationSpinner.getSelectedItemPosition());
         final Course course =  new Course(yogaType, yogaTime, price, capacity, duration, description, dayOfWeek);
+        course.setCreatedAt(createdAt);
 
         final HashMap<String, String> extras = new HashMap<>();
         extras.put(DURATION_TEXT, durationSpinner.getSelectedItem().toString());
@@ -156,9 +170,9 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     public void onButtonClicked(CourseBottomSheet.CourseData courseData) {
         Course course = courseData.getCourse();
         if (courseAction == CourseActions.NEW) {
-            courseRepository.save(course, this);
+            courseViewModel.save(course, this);
         } else {
-            courseRepository.update(1, course, this);
+            courseViewModel.update(courseId, course, this);
         }
     }
 
@@ -166,19 +180,22 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     public void onResult(Boolean value) {
         if (value != null && value) {
             // show success message
-            Toast.makeText(getApplicationContext(),
-                    R.string.course_has_been_added,
-                    Toast.LENGTH_LONG
-            ).show();
+            if (courseAction == CourseActions.NEW) {
+                showToast(R.string.course_has_been_added);
+            } else {
+                showToast(R.string.course_has_been_updated);
+            }
 
             // close the current activity and return to source activity
             finish();
         } else {
             // show an error message, unable to save course
-            Toast.makeText(getApplicationContext(),
-                    R.string.an_error_occurred_saving_course_please_try_again,
-                    Toast.LENGTH_LONG
-            ).show();
+            showToast(R.string.an_error_occurred_saving_course_please_try_again);
         }
+    }
+
+    private void showToast(int message) {
+        handler.post(() -> Toast.makeText(getApplicationContext(),
+                message, Toast.LENGTH_LONG).show());
     }
 }

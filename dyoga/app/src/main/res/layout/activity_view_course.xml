@@ -35,6 +35,15 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/emptyClassView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/empty_class_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection"/>
+
     <LinearLayout
         android:id="@+id/searchClassInstanceLayout"
         android:layout_width="match_parent"

@@ -1,12 +1,16 @@
 package com.grouptwo.dyoga.activities;
 
+import static com.grouptwo.dyoga.utils.Constants.COURSE;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,8 +27,10 @@ public class DashboardActivity extends AppCompatActivity {
 
     private CourseAdapter courseAdapter;
     private CourseViewModel courseViewModel;
+    private ImageButton addCourseButton;
     private EditText searchEditText;
     private RecyclerView courseListRecyclerView;
+    private View emptyCourseView;
     private final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
     @Override
@@ -35,8 +41,10 @@ public class DashboardActivity extends AppCompatActivity {
         courseAdapter = new CourseAdapter();
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
+        emptyCourseView = findViewById(R.id.emptyCourseView);
+        addCourseButton = findViewById(R.id.addCourseButton);
         searchEditText = findViewById(R.id.searchCourse);
-        courseListRecyclerView = findViewById(R.id.rc_courseList);
+        courseListRecyclerView = findViewById(R.id.courseListRecyclerView);
 
         initAdapter();
         initializeControls();
@@ -47,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity {
         courseListRecyclerView.setLayoutManager(layoutManager);
         courseListRecyclerView.setAdapter(courseAdapter);
 
-        // test search
+        // text search
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -61,14 +69,27 @@ public class DashboardActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                courseViewModel.searchCourse(s.toString());
+                courseViewModel.queryCourses(s.toString());
             }
         });
+
+        addCourseButton.setOnClickListener(v -> startActivity(new Intent(this, AddCourseActivity.class)));
     }
 
     private void initAdapter() {
-        courseViewModel.getAllCourses().observe(this, courses ->
-                courseAdapter.setCourseList(courses));
+        // trigger view modal data model
+        courseViewModel.queryCourses();
+        courseViewModel.getAllCourses().observe(this, courses -> {
+            if(courses.isEmpty()) {
+                searchEditText.setVisibility(View.GONE);
+                emptyCourseView.setVisibility(View.VISIBLE);
+            } else {
+                searchEditText.setVisibility(View.VISIBLE);
+                emptyCourseView.setVisibility(View.GONE);
+            }
+
+            courseAdapter.setCourseList(courses);
+        });
 
         courseAdapter.setOnItemClickListener((v, itemPosition, course) -> {
             // todo: send intent with data to view course activity
@@ -76,13 +97,13 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         courseAdapter.setOnEditClickListener((v, itemPosition, course) -> {
-            // todo: send intent with data to edit activity
-            startActivity(new Intent(this, EditCourseActivity.class));
+            Intent intent = new Intent(this, EditCourseActivity.class);
+            intent.putExtra(COURSE, course);
+            startActivity(intent);
         });
 
-        courseAdapter.setOnDeleteClickListener((v, itemPosition, course) -> {
-            showAlertAndDelete(course);
-        });
+        courseAdapter.setOnDeleteClickListener((v, itemPosition, course)
+                -> showAlertAndDelete(course));
     }
 
     private void showAlertAndDelete(final Course course) {

@@ -38,4 +38,8 @@
     <string name="product_of_group_ii">Product of Group II</string>
     <string name="an_error_occurred_saving_course_please_try_again">An error occurred saving course. Please try again!</string>
     <string name="course_has_been_added">Course has been added!</string>
+    <string name="get_started">Get Started</string>
+    <string name="ops_your_account_creation_failed_please_try_again">Ops, your account creation failed. Please try again!</string>
+    <string name="ops_authentication_failed_kindly_try_another_login_credentials">Ops, authentication failed. Kindly try another login credentials</string>
+    <string name="course_has_been_updated">Course has been updated!</string>
 </resources>

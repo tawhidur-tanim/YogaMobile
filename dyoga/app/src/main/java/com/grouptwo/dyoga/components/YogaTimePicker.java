@@ -63,4 +63,8 @@ public class YogaTimePicker extends DialogFragment implements TimePickerDialog.O
     public static String getCurrentTimeText() {
         return DateTimeFormatter.ofPattern(TIME_FORMAT).format(LocalDateTime.now());
     }
+
+    public static String getTimeText(LocalDateTime yogaTime) {
+        return DateTimeFormatter.ofPattern(TIME_FORMAT).format(yogaTime);
+    }
 }

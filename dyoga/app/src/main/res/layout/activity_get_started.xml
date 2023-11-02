@@ -4,28 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@raw/splash_1"
+    android:animateLayoutChanges="true"
+    android:background="@color/grey"
     tools:context=".activities.GetStartedActivity">
 
+    <ImageView
+        android:id="@+id/screenLayout"
+        android:contentDescription="@string/app_name"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:background="@raw/splash_1"
+        android:src="@raw/splash_1" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="355dp"
         android:layout_height="267dp"
+        android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@raw/dyoga" />
 
-
     <Button
-        android:id="@+id/button"
+        android:id="@+id/getStarted"
         android:layout_width="276dp"
         android:layout_height="56dp"
-        android:text="@string/continue_with_google"
+        android:text="@string/get_started"
         android:textSize="16sp"
+        android:textColor="@color/offWhite"
         android:layout_marginBottom="40dp"
+        android:visibility="gone"
         app:backgroundTint="@color/colorSecondary"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="@+id/imageView3"
@@ -40,10 +51,9 @@
         android:layout_marginBottom="8dp"
         android:textColor="#82000000"
         android:textSize="11sp"
-        app:layout_constraintEnd_toEndOf="@+id/button"
-        app:layout_constraintStart_toStartOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/getStarted"
+        app:layout_constraintStart_toStartOf="@+id/getStarted"
         app:layout_constraintBottom_toTopOf="@id/productOfGroupii" />
-
 
     <TextView
         android:id="@+id/productOfGroupii"

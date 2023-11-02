@@ -42,9 +42,9 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseAdap
         final Course course = courseList.get(itemPosition);
 
         // todo: extract these strings into strings.xml
-        holder.courseName.setText(course.getCourseType());
+        holder.courseName.setText(course.getType());
         holder.price.setText("£ " + course.getPrice() + "");
-        holder.weekDayTime.setText(course.getDayOfWeek() + " · " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getCourseDate()));
+        holder.weekDayTime.setText(course.getDayOfWeek() + " · " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getTime()));
 
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {

@@ -3,10 +3,11 @@ package com.grouptwo.dyoga.data.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-public class ClassInstance implements RemoteEntity {
+public class ClassInstance implements RemoteEntity, Serializable {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

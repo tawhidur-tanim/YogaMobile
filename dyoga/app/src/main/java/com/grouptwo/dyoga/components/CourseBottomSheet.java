@@ -59,9 +59,9 @@ public class CourseBottomSheet extends BottomSheetDialogFragment {
         final Map<String, String> extras = courseData.getExtras();
         final String durationText = extras.getOrDefault(DURATION_TEXT, "-");
 
-        titleTextView.setText(course.getCourseType());
+        titleTextView.setText(course.getType());
         dayText.setText(course.getDayOfWeek());
-        timeText.setText(course.getCourseDate().format(DateTimeFormatter.ofPattern("hh:mm a")));
+        timeText.setText(course.getTime().format(DateTimeFormatter.ofPattern("hh:mm a")));
         priceText.setText(String.valueOf(course.getPrice()));
         descriptionText.setText(course.getDescription());
         durationTextView.setText(durationText);

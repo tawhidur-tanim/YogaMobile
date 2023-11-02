@@ -3,6 +3,7 @@ package com.grouptwo.dyoga.data.viewmodels;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -16,21 +17,27 @@ import java.util.List;
 public class CourseViewModel extends AndroidViewModel {
 
     private final CourseRepository courseRepository;
-    private final MutableLiveData<List<Course>> allCourses;
+    private final static MutableLiveData<List<Course>> allCourses = new MutableLiveData<>();
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
-        allCourses = new MutableLiveData<>();
         courseRepository = new CourseRepository(application);
-
-        findAllCourses();
     }
 
-    private void findAllCourses() {
+    public void queryCourses() {
         courseRepository.findAll(new Callback<Course>() {
             @Override
             public void onResult(List<Course> result) {
-                allCourses.setValue(result);
+                allCourses.postValue(result);
+            }
+        });
+    }
+
+    public void queryCourses(@Nullable String type){
+        courseRepository.searchCourses(type, new Callback<Course>() {
+            @Override
+            public void onResult(List<Course> result) {
+                allCourses.postValue(result);
             }
         });
     }
@@ -43,16 +50,27 @@ public class CourseViewModel extends AndroidViewModel {
         courseRepository.delete(course, new Callback<Course>() {
             @Override
             public void onResult(Course result) {
-                findAllCourses();
+                queryCourses();
             }
         });
     }
 
-    public void searchCourse(String type){
-        courseRepository.searchCourses(type, new Callback<Course>() {
+    public void save(final Course course, final Callback<Boolean> callback) {
+        courseRepository.save(course, new Callback<Boolean>() {
             @Override
-            public void onResult(List<Course> result) {
-                allCourses.setValue(result);
+            public void onResult(Boolean result) {
+                queryCourses();
+                callback.onResult(result);
+            }
+        });
+    }
+
+    public void update(final int id, final Course course, Callback<Boolean> callback) {
+        courseRepository.update(id, course, new Callback<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                queryCourses();
+                callback.onResult(result);
             }
         });
     }

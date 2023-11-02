@@ -24,6 +24,8 @@
             android:text="@string/dashTitle" />
 
         <ImageButton
+            android:id="@+id/addCourseButton"
+            android:padding="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/transparent"
@@ -31,6 +33,15 @@
             android:src="@drawable/plus_solid" />
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/emptyCourseView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        layout="@layout/empty_course_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/headerSection"/>
 
     <LinearLayout
         android:id="@+id/dashSearch"
@@ -58,7 +69,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dashSearch"
         tools:listitem="@layout/course_layout"
-        android:id="@+id/rc_courseList"
+        android:id="@+id/courseListRecyclerView"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,21 +1,86 @@
 package com.grouptwo.dyoga.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.grouptwo.dyoga.R;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GetStartedActivity extends AppCompatActivity {
 
-    @SuppressLint("ResourceType")
+    private ImageView screenLayout;
+    private Button getStarted;
+
+    private Handler handler;
+    private int backgroundIndex = 0;
+    private final int[] backgroundImages = {
+            R.raw.splash_1,
+            R.raw.splash_2
+    };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(currentUser != null){
+            startActivity(new Intent(this, DashboardActivity.class));
+            finishAfterTransition();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_started);
 
+        screenLayout = findViewById(R.id.screenLayout);
+        getStarted = findViewById(R.id.getStarted);
 
+        handler = new Handler(Looper.getMainLooper());
+
+        prepareBackgroundSwitcher();
+
+        getStarted.setOnClickListener(v -> startActivity(new Intent(this, AuthActivity.class)));
+    }
+
+    private void prepareBackgroundSwitcher() {
+        final Timer timer = new Timer();
+        final TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> changeScreenBackground());
+            }
+        };
+        timer.scheduleAtFixedRate(timerTask, 10000, 10000);
+
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(() -> getStarted.setVisibility(View.VISIBLE));
+            }
+        }, 2000);
+    }
+
+    private void changeScreenBackground() {
+        screenLayout.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_out));
+        if (backgroundIndex == 0) {
+            screenLayout.setImageResource(backgroundImages[++backgroundIndex]);
+        } else {
+            screenLayout.setImageResource(backgroundImages[--backgroundIndex]);
+        }
+        screenLayout.startAnimation(AnimationUtils.loadAnimation(this, android.R.anim.fade_in));
     }
 }

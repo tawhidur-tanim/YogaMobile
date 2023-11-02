@@ -16,13 +16,12 @@ import java.util.List;
 public class ClassInstanceViewModel extends AndroidViewModel {
 
     private final ClassInstanceRepository classInstanceRepository;
-    private final MutableLiveData<List<ClassInstance>> allClassInstances;
+    private final static MutableLiveData<List<ClassInstance>> allClassInstances = new MutableLiveData<>();
 
     public ClassInstanceViewModel(@NonNull final Application application) {
         super(application);
 
         this.classInstanceRepository = new ClassInstanceRepository(application);
-        this.allClassInstances = new MutableLiveData<>();
     }
 
     public LiveData<List<ClassInstance>> findAll(){
