@@ -42,4 +42,8 @@
     <string name="ops_your_account_creation_failed_please_try_again">Ops, your account creation failed. Please try again!</string>
     <string name="ops_authentication_failed_kindly_try_another_login_credentials">Ops, authentication failed. Kindly try another login credentials</string>
     <string name="course_has_been_updated">Course has been updated!</string>
+    <string name="pound_sign">£</string>
+
+    <string name="course_price_format">£ %1$s</string>
+    <string name="course_weekday_time_format">%1$s · %2$s</string>
 </resources>

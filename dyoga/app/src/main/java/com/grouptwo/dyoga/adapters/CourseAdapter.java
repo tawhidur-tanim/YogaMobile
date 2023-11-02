@@ -1,5 +1,6 @@
 package com.grouptwo.dyoga.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,11 +41,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseAdap
     @Override
     public void onBindViewHolder(@NonNull CourseAdapterViewHolder holder, int itemPosition) {
         final Course course = courseList.get(itemPosition);
+        Context context = holder.itemView.getContext();
 
-        // todo: extract these strings into strings.xml
+
         holder.courseName.setText(course.getType());
-        holder.price.setText("£ " + course.getPrice() + "");
-        holder.weekDayTime.setText(course.getDayOfWeek() + " · " + DateTimeFormatter.ofPattern("hh:mm a").format(course.getTime()));
+        holder.price.setText(context.getString(R.string.course_price_format, course.getPrice()+""));
+        holder.weekDayTime.setText(context.getString(R.string.course_weekday_time_format,
+                course.getDayOfWeek(),
+                course.getTimeText()));
 
         holder.itemView.setOnClickListener(v -> {
             if (onItemClickListener != null) {

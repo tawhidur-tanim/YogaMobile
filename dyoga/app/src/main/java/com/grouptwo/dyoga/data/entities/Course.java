@@ -3,8 +3,11 @@ package com.grouptwo.dyoga.data.entities;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.grouptwo.dyoga.R;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Course implements RemoteEntity, Serializable {
@@ -53,6 +56,11 @@ public class Course implements RemoteEntity, Serializable {
         return time;
     }
 
+
+    public String getTimeText() {
+        return DateTimeFormatter.ofPattern("hh:mm a").format(getTime());
+    }
+
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
@@ -60,6 +68,7 @@ public class Course implements RemoteEntity, Serializable {
     public double getPrice() {
         return price;
     }
+
 
     public void setPrice(double price) {
         this.price = price;
@@ -84,6 +93,7 @@ public class Course implements RemoteEntity, Serializable {
     public String getDayOfWeek() {
         return dayOfWeek;
     }
+
 
     public void setDayOfWeek(String dayOfWeek) {
         this.dayOfWeek = dayOfWeek;
