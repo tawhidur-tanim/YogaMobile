@@ -87,7 +87,7 @@ public class ViewCourseActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                classInstanceViewModel.search(s.toString());
             }
         });
     }
