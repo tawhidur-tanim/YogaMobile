@@ -11,6 +11,6 @@ public class AddClassInstanceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_class_instance);
+        setContentView(R.layout.activity_add_edit_class_instance);
     }
 }
