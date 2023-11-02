@@ -9,19 +9,16 @@
     tools:context=".activities.DashboardActivity"
     tools:ignore="ExtraText">
 
-    android:paddingVertical="@dimen/screen_padding_vertical"
-    android:paddingHorizontal="@dimen/screen_padding_horizontal"
-    tools:context=".activities.EmptyClassActivity"
-    tools:ignore="ExtraText">
 
-    <LinearLayout
-        android:id="@+id/headerSection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="58.29dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
 
     <TextView
         android:id="@+id/textView3"
@@ -29,11 +26,10 @@
         android:layout_height="wrap_content"
         android:text="You have no courses"
         android:textSize="12sp"
-        app:drawableTopCompat="@android:drawable/ic_dialog_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headerSection" />
-
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.04000002" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
