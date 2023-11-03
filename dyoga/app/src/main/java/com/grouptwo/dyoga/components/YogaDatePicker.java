@@ -72,4 +72,8 @@ public class YogaDatePicker extends DialogFragment implements DatePickerDialog.O
         return DateTimeFormatter.ofPattern(DATE_FORMAT).format(LocalDateTime.now());
     }
 
+    public static String getDateText(LocalDateTime yogaTime) {
+        return DateTimeFormatter.ofPattern(DATE_FORMAT).format(yogaTime);
+    }
+
 }

@@ -52,4 +52,7 @@
     <string name="an_error_occurred_saving_class_info_please_try_again">An error occurred saving class info. Please try again!</string>
     <string name="class_has_been_added">Class has been added !</string>
     <string name="class_has_been_updated">Class has been updated</string>
+    <string name="edit_class">Edit Class</string>
+    <string name="s_a_new_class_instance_to_family_yoga_by_time">%1s a new class instance to family yoga by %2s</string>
+    <string name="update_button">Update</string>
 </resources>

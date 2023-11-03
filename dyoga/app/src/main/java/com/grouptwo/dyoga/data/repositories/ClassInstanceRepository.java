@@ -45,7 +45,7 @@ public class ClassInstanceRepository {
 
             classInstance.setId(id);
             classInstance.setUpdatedAt(LocalDateTime.now());
-            classInstanceDao.insert(classInstance);
+            classInstanceDao.update(classInstance);
             callback.onResult(true);
         });
     }

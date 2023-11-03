@@ -5,9 +5,11 @@ import static com.grouptwo.dyoga.utils.Constants.COURSE;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,7 +52,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
     private Handler handler;
     private ClassInstanceViewModel classInstanceViewModel;
 
-    private Course course;
+    protected Course course;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,10 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
 
         // set current date
         dateButton.setText(YogaDatePicker.getCurrentDateText());
+
+        // set screen description
+        this.screenDescription.setText(String.format(getApplicationContext().getString(R.string.s_a_new_class_instance_to_family_yoga_by_time)
+                ,"Add",course.getTimeText()));
     }
 
 
@@ -148,8 +154,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
         final String room = roomEditText.getText().toString();
 
         final ClassInstance classInstance = new ClassInstance(course.getId(),yogaDate,instructor,room,comments);
-
-
+        classInstance.setCreatedAt(createdAt);
         return classInstance;
     }
 

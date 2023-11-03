@@ -106,6 +106,7 @@ public class ViewCourseActivity extends AppCompatActivity {
         classInstanceAdapter.setItemClickListener((v, itemPosition, classInstance) -> {
             Intent intent = new Intent(this, EditClassInstanceActivity.class);
             intent.putExtra(CLASS_INSTANCE, classInstance);
+            intent.putExtra(COURSE, course);
             startActivity(intent);
         });
     }
