@@ -5,7 +5,9 @@ import static com.grouptwo.dyoga.utils.Constants.COURSE;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -41,6 +44,7 @@ import java.time.LocalDateTime;
 public class AddClassInstanceActivity extends AppCompatActivity implements Callback<Boolean> {
 
     protected Button dateButton, saveButton;
+    protected ImageButton deleteButton;
     protected ImageView addDescriptionImageView;
     protected TextView screenTitle, screenDescription, addDescriptionTextView;
     protected LinearLayout descriptionDisplay;
@@ -75,7 +79,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
 
         saveButton = findViewById(R.id.saveClassButton);
         dateButton = findViewById(R.id.dateButton);
-
+        deleteButton = findViewById(R.id.deleteButton);
         screenTitle = findViewById(R.id.clasScreenHeading);
         screenDescription = findViewById(R.id.screenDescription);
         addDescriptionTextView = findViewById(R.id.classAddDescriptionTextView);
@@ -115,7 +119,6 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
             if(!isInputsValid()){
                 return;
             }
-
             ClassInstance classInstance = getClassInstance();
 
             if (classInstanceAction == ClassInstanceActions.NEW) {
@@ -126,6 +129,33 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
             }
 
         });
+
+        deleteButton.setOnClickListener(v -> {
+
+
+            ClassInstance classInstance = getClassInstance();
+            classInstance.setId(classId);
+            classInstanceAction = ClassInstanceActions.DELETED;
+
+            showAlertAndDelete(classInstance);
+
+
+        });
+    }
+
+    private void showAlertAndDelete(final ClassInstance classInstance) {
+
+        final DialogInterface.OnClickListener positiveButtonDialogInterface = (dialog, whichButton) -> {
+            classInstanceViewModel.delete(classInstance, AddClassInstanceActivity.this);
+        };
+
+        final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Delete Class")
+                .setMessage("Do you really want to delete this class?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, positiveButtonDialogInterface)
+                .setNegativeButton(android.R.string.no, null).create();
+        alertDialog.show();
     }
 
     @Override
@@ -141,6 +171,10 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
 
         if (classInstanceAction == ClassInstanceActions.UPDATE) {
             showToast(R.string.class_has_been_updated);
+        }
+
+        if (classInstanceAction == ClassInstanceActions.DELETED) {
+            showToast(R.string.course_has_been_deleted);
         }
 
         finish();

@@ -57,8 +57,11 @@ public class ClassInstanceRepository {
         });
     }
 
-    public void delete(final ClassInstance classInstance){
-        executor.execute(() -> classInstanceDao.delete(classInstance));
+    public void delete(final ClassInstance classInstance, Callback<Boolean> callback){
+        executor.execute(() -> {
+            classInstanceDao.delete(classInstance);
+            callback.onResult(true);
+        });
     }
 
     public void search(String keyword, Callback<ClassInstance> callback){
@@ -67,4 +70,5 @@ public class ClassInstanceRepository {
             handler.post(() -> callback.onResult(classInstances));
         });
     }
+
 }

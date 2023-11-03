@@ -4,6 +4,7 @@ import static com.grouptwo.dyoga.utils.Constants.CLASS_INSTANCE;
 import static com.grouptwo.dyoga.utils.Constants.COURSE;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.components.YogaDatePicker;
@@ -49,6 +50,10 @@ public class EditClassInstanceActivity extends AddClassInstanceActivity {
                 hideDescriptionCTA();
                 descriptionEditText.setText(description);
             }
+
+
+            // show delete icon
+            deleteButton.setVisibility(View.VISIBLE);
         }
     }
 }

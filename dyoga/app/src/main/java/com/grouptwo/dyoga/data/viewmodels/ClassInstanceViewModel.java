@@ -59,8 +59,14 @@ public class ClassInstanceViewModel extends AndroidViewModel {
         });
     }
 
-    public void delete(ClassInstance classInstance){
-        classInstanceRepository.delete(classInstance);
+    public void delete(ClassInstance classInstance, Callback<Boolean> callback){
+        classInstanceRepository.delete(classInstance, new Callback<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                queryAllByCourseId(classInstance.getCourseId());
+                callback.onResult(result);
+            }
+        });
     }
 
     public void search(String type){

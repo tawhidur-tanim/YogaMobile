@@ -56,4 +56,5 @@
     <string name="s_a_new_class_instance_to_family_yoga_by_time">%1s a new class instance to family yoga by %2s</string>
     <string name="update_button">Update</string>
     <string name="day_of_the_week_must_match_the_course">Day of the week must match the course (%s)</string>
+    <string name="course_has_been_deleted">Course has been deleted !</string>
 </resources>
