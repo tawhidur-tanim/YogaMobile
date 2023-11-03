@@ -30,14 +30,14 @@ public class YogaDatePicker extends DialogFragment implements DatePickerDialog.O
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         return new DatePickerDialog(getContext(), this
-                ,localDateTime.getYear(),localDateTime.getMonthValue()
+                ,localDateTime.getYear(),localDateTime.getMonthValue()-1
                 ,localDateTime.getDayOfMonth());
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-        localDateTime = localDateTime.withYear(year).withMonth(month).withDayOfMonth(dayOfMonth);
+        localDateTime = localDateTime.withYear(year).withMonth(month+1).withDayOfMonth(dayOfMonth);
         onDateSetListener.onDateSet(view,year,month,dayOfMonth);
     }
 
