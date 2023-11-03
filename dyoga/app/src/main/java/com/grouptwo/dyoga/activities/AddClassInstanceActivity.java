@@ -172,6 +172,14 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
             return false;
         }
 
+//        if(yogaDate.getDayOfWeek().toString().toLowerCase() !=  course.getDayOfWeek()) {
+//            Toast.makeText(getApplicationContext(),
+//                    String.format(getApplicationContext().getString(R.string.day_of_the_week_must_match_the_course)
+//                            ,course.getDayOfWeek())
+//                    , Toast.LENGTH_LONG).show();
+//            return false;
+//        }
+
         return true;
     }
 

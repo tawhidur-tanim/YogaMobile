@@ -6,6 +6,7 @@ import static com.grouptwo.dyoga.utils.Constants.COURSE;
 import android.os.Bundle;
 
 import com.grouptwo.dyoga.R;
+import com.grouptwo.dyoga.components.YogaDatePicker;
 import com.grouptwo.dyoga.components.YogaTimePicker;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
@@ -39,7 +40,7 @@ public class EditClassInstanceActivity extends AddClassInstanceActivity {
             roomEditText.setText(String.valueOf(classInstance.getRoom()));
 
             yogaDate = classInstance.getDate();
-            dateButton.setText(YogaTimePicker.getTimeText(yogaDate));
+            dateButton.setText(YogaDatePicker.getDateText(yogaDate));
             saveButton.setText(R.string.update_button);
 
 
