@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import com.grouptwo.dyoga.interfaces.YogaPickerSetListener;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 public class YogaDatePicker extends DialogFragment implements DatePickerDialog.OnDateSetListener {
@@ -29,9 +30,14 @@ public class YogaDatePicker extends DialogFragment implements DatePickerDialog.O
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        return new DatePickerDialog(getContext(), this
+        DatePickerDialog dialog = new DatePickerDialog(getContext(), this
                 ,localDateTime.getYear(),localDateTime.getMonthValue()-1
                 ,localDateTime.getDayOfMonth());
+
+        dialog.getDatePicker()
+                .setMinDate(localDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() - 1000);
+
+        return dialog;
     }
 
     @Override

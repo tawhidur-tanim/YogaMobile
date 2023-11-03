@@ -16,7 +16,9 @@ public interface ClassInstanceDao extends BaseDao<ClassInstance>{
     @Query("select * from ClassInstance")
     List<ClassInstance> findAll();
 
-    @Query("select * from ClassInstance where instructor like :keyword or comments like :keyword")
+    @Query("select * from ClassInstance where " +
+            "instructor like '%' || :keyword || '%'" +
+            " or comments like '%' || :keyword || '%'")
     List<ClassInstance> findClassInstance(String keyword);
 
     @Query("select * from ClassInstance where courseId = :courseId")
