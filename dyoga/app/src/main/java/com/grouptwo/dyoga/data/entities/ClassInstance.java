@@ -24,6 +24,25 @@ public class ClassInstance implements RemoteEntity, Serializable {
 
     private String reference;
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
     public ClassInstance(int courseId, LocalDateTime date, String instructor, String room, String comments) {
         this.courseId = courseId;
         this.date = date;

@@ -38,12 +38,25 @@ public class ClassInstanceViewModel extends AndroidViewModel {
     }
 
 
-    public void add(ClassInstance classInstance){
-        classInstanceRepository.add(classInstance);
+    public void add(ClassInstance classInstance,final Callback<Boolean> callback){
+        classInstanceRepository.add(classInstance, new Callback<Boolean>() {
+
+            @Override
+            public void onResult(Boolean result) {
+                queryAllByCourseId(classInstance.getCourseId());
+                callback.onResult(result);
+            }
+        });
     }
 
-    public void update(ClassInstance classInstance){
-        classInstanceRepository.add(classInstance);
+    public void update(final int id, ClassInstance classInstance, Callback<Boolean> callback){
+        classInstanceRepository.update(id,classInstance, new Callback<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                queryAllByCourseId(classInstance.getCourseId());
+                callback.onResult(result);
+            }
+        });
     }
 
     public void delete(ClassInstance classInstance){

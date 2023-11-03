@@ -40,12 +40,19 @@
             android:layout_height="wrap_content"
             android:text="Date" />
 
-        <Spinner
-            style="@style/Theme.Dyoga.Spinner"
-            android:id="@+id/classDaysOfWeekSpinner"
+        <Button
+            style="@style/Theme.Dyoga.Button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
-            tools:listitem="@layout/spinner_list_item" />
+            android:id="@+id/dateButton"
+            android:background="@drawable/edittext_background"
+            android:backgroundTint="@color/buttonBackground"
+            android:gravity="start|center"
+            android:textSize="@dimen/text_default_size"
+            android:text="@string/date_format"
+            android:textColor="@color/grey"
+            app:background="@drawable/edittext_background"
+            app:backgroundTint="@color/buttonBackground" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,7 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:importantForAutofill="no"
-                    android:inputType="number"
                     android:labelFor="@+id/classInstanceInstructorLabel_label" />
             </LinearLayout>
 

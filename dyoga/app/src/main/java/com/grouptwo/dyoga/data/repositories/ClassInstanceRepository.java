@@ -3,12 +3,14 @@ package com.grouptwo.dyoga.data.repositories;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
+import android.telecom.Call;
 
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.ClassInstanceDao;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.interfaces.Callback;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,12 +29,25 @@ public class ClassInstanceRepository {
         handler = new Handler(Looper.getMainLooper());
     }
 
-    public void add(final ClassInstance classInstance){
-        executor.execute(() -> classInstanceDao.insert(classInstance));
+    public void add(final ClassInstance classInstance, Callback<Boolean> callback){
+        executor.execute(() -> {
+            classInstance.setCreatedAt(LocalDateTime.now());
+            classInstance.setUpdatedAt(LocalDateTime.now());
+
+            classInstanceDao.insert(classInstance);
+            callback.onResult(true);
+
+        });
     }
 
-    public void update(final ClassInstance classInstance){
-        executor.execute(() -> classInstanceDao.insert(classInstance));
+    public void update(final int id, final ClassInstance classInstance, Callback<Boolean> callback){
+        executor.execute(() -> {
+
+            classInstance.setId(id);
+            classInstance.setUpdatedAt(LocalDateTime.now());
+            classInstanceDao.insert(classInstance);
+            callback.onResult(true);
+        });
     }
 
     public void queryAllByCourseId(int courseId, Callback<ClassInstance> callback) {

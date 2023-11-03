@@ -10,7 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.grouptwo.dyoga.interfaces.YogaTimePickerSetListener;
+import com.grouptwo.dyoga.interfaces.YogaPickerSetListener;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,8 +53,9 @@ public class YogaTimePicker extends DialogFragment implements TimePickerDialog.O
     }
 
     public static void show(final LocalDateTime localDateTime,
-                            final YogaTimePickerSetListener yogaTimePickerSetListener,
+                            final YogaPickerSetListener<YogaTimePicker> yogaTimePickerSetListener,
                             final FragmentManager fragmentManager) {
+
         final YogaTimePicker yogaTimePicker = new YogaTimePicker(localDateTime);
         yogaTimePicker.setOnTimeSetListener((view, hourOfDay, minute) ->
                 yogaTimePickerSetListener.set(yogaTimePicker));

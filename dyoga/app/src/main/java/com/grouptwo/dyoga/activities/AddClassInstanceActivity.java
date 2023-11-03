@@ -22,25 +22,29 @@ import com.grouptwo.dyoga.adapters.DaysOfWeekAdapter;
 import com.grouptwo.dyoga.adapters.YogaDurationAdapter;
 import com.grouptwo.dyoga.adapters.YogaTypesAdapter;
 import com.grouptwo.dyoga.components.CourseBottomSheet;
+import com.grouptwo.dyoga.components.YogaDatePicker;
 import com.grouptwo.dyoga.components.YogaTimePicker;
+import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.viewmodels.ClassInstanceViewModel;
 import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
 import com.grouptwo.dyoga.enums.ClassInstanceActions;
 import com.grouptwo.dyoga.enums.CourseActions;
+import com.grouptwo.dyoga.interfaces.Callback;
+import com.grouptwo.dyoga.interfaces.YogaPickerSetListener;
 import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
 
-public class AddClassInstanceActivity extends AppCompatActivity {
+public class AddClassInstanceActivity extends AppCompatActivity implements Callback<Boolean> {
 
-    protected Button timeButton, saveButton;
+    protected Button dateButton, saveButton;
     protected ImageView addDescriptionImageView;
     protected TextView screenTitle, screenDescription, addDescriptionTextView;
     protected LinearLayout descriptionDisplay;
     protected EditText instrcutorEditText, roomEditText, descriptionEditText;
     protected ClassInstanceActions classInstanceAction;
-
+    protected LocalDateTime yogaDate, createdAt;
     protected int classId;
 
     private Handler handler;
@@ -64,7 +68,11 @@ public class AddClassInstanceActivity extends AppCompatActivity {
         handler = new Handler(Looper.getMainLooper());
         classInstanceAction = ClassInstanceActions.NEW;
 
+        yogaDate = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+
         saveButton = findViewById(R.id.saveClassButton);
+        dateButton = findViewById(R.id.dateButton);
 
         screenTitle = findViewById(R.id.clasScreenHeading);
         screenDescription = findViewById(R.id.screenDescription);
@@ -77,6 +85,9 @@ public class AddClassInstanceActivity extends AppCompatActivity {
         roomEditText = findViewById(R.id.roomEditText);
 
         setButtonListeners();
+
+        // set current date
+        dateButton.setText(YogaDatePicker.getCurrentDateText());
     }
 
 
@@ -89,14 +100,57 @@ public class AddClassInstanceActivity extends AppCompatActivity {
         addDescriptionTextView.setOnClickListener(descriptionClickListener);
         addDescriptionImageView.setOnClickListener(descriptionClickListener);
 
+        dateButton.setOnClickListener(v -> YogaDatePicker.show(yogaDate, yogaDatePicker -> {
+            dateButton.setText(yogaDatePicker.getDateText());
+            yogaDate = yogaDatePicker.getLocalDate();
+        }, getSupportFragmentManager()));
+
         saveButton.setOnClickListener(v -> {
             if(!isInputsValid()){
                 return;
             }
 
-            Toast.makeText(this, "Valid input", Toast.LENGTH_SHORT).show();
+            ClassInstance classInstance = getClassInstance();
+
+            if (classInstanceAction == ClassInstanceActions.NEW) {
+                classInstanceViewModel.add(classInstance,this);
+
+            } else {
+                classInstanceViewModel.update(classId,classInstance, this);
+            }
 
         });
+    }
+
+    @Override
+    public void onResult(Boolean result) {
+        if(result == null || !result){
+            showToast(R.string.an_error_occurred_saving_class_info_please_try_again);
+            return;
+        }
+
+        if (classInstanceAction == ClassInstanceActions.NEW) {
+            showToast(R.string.class_has_been_added);
+        }
+
+        if (classInstanceAction == ClassInstanceActions.UPDATE) {
+            showToast(R.string.class_has_been_updated);
+        }
+
+        finish();
+
+    }
+
+    private ClassInstance getClassInstance(){
+
+        final String comments = descriptionEditText.getText().toString();
+        final String instructor = instrcutorEditText.getText().toString();
+        final String room = roomEditText.getText().toString();
+
+        final ClassInstance classInstance = new ClassInstance(course.getId(),yogaDate,instructor,room,comments);
+
+
+        return classInstance;
     }
 
     private boolean isInputsValid() {
@@ -120,5 +174,10 @@ public class AddClassInstanceActivity extends AppCompatActivity {
         descriptionDisplay.setVisibility(View.VISIBLE);
         addDescriptionTextView.setVisibility(View.GONE);
         addDescriptionImageView.setVisibility(View.GONE);
+    }
+
+    private void showToast(int message) {
+        handler.post(() -> Toast.makeText(getApplicationContext(),
+                message, Toast.LENGTH_LONG).show());
     }
 }

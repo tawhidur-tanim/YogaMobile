@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -94,7 +95,13 @@ public class ViewCourseActivity extends AppCompatActivity {
 
     private void initViewClicks() {
         addClassInstanceButton.setOnClickListener(v
-                -> startActivity(new Intent(this, AddClassInstanceActivity.class)));
+                -> {
+
+            Intent intent = new Intent(this, AddClassInstanceActivity.class);
+            intent.putExtra(COURSE, course);
+            startActivity(intent);
+
+        });
 
         classInstanceAdapter.setItemClickListener((v, itemPosition, classInstance) -> {
             Intent intent = new Intent(this, EditClassInstanceActivity.class);
