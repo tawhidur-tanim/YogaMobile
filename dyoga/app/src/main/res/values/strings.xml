@@ -46,4 +46,6 @@
 
     <string name="course_price_format">£ %1$s</string>
     <string name="course_weekday_time_format">%1$s · %2$s</string>
+    <string name="instructor_is_required">Instructor is required</string>
+    <string name="room_number_is_required">Room number is required</string>
 </resources>
