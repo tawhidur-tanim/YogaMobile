@@ -38,7 +38,7 @@
         android:id="@+id/textView4"
         android:layout_width="217dp"
         android:layout_height="36dp"
-        android:text="have an account? enter your email and a password"
+        android:text="have an account?                    enter your email and a password"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         tools:layout_editor_absoluteY="101dp" />
