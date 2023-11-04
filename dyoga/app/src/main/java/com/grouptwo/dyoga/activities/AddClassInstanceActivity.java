@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -125,6 +126,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
         deleteButton.setOnClickListener(v -> {
             ClassInstance classInstance = getClassInstance();
             classInstance.setId(classId);
+
             classInstanceAction = ClassInstanceActions.DELETED;
 
             showAlertAndDelete(classInstance);

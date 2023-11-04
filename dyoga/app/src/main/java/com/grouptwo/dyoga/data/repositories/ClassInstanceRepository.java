@@ -48,8 +48,11 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
             classInstance.setCreatedAt(LocalDateTime.now());
             classInstance.setUpdatedAt(LocalDateTime.now());
 
-            classInstanceDao.insert(classInstance);
+            long classId = classInstanceDao.insert(classInstance);
+            classInstance.setId(classId);
             callback.onResult(true);
+
+            classInstanceRemoteService.syncEntity(classInstance);
 
         });
     }
@@ -62,6 +65,8 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
 
             classInstanceDao.update(classInstance);
             callback.onResult(true);
+
+            classInstanceRemoteService.syncEntity(classInstance);
         });
     }
 
@@ -75,8 +80,11 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
     public void delete(final ClassInstance classInstance, Callback<Boolean> callback) {
         executor.execute(() -> {
             classInstance.setDeleted(true);
+            classInstance.setUpdatedAt(LocalDateTime.now());
             classInstanceDao.update(classInstance);
             callback.onResult(true);
+
+            classInstanceRemoteService.syncEntity(classInstance);
         });
     }
 
