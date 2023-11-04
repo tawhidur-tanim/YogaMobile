@@ -42,7 +42,7 @@ public class AddCourseActivity extends AppCompatActivity implements CourseBottom
     protected EditText priceEditText, capacityEditText, descriptionEditText;
     protected CourseActions courseAction;
 
-    protected int courseId;
+    protected long courseId;
     protected LocalDateTime yogaTime, createdAt;
 
     // view adapters

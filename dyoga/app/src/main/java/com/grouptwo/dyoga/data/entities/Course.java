@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 public class Course implements RemoteEntity, Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private String type;
     private LocalDateTime time;
     private double price;
@@ -22,6 +22,9 @@ public class Course implements RemoteEntity, Serializable {
     private String dayOfWeek;
     private String description;
     private String reference;
+    private String userId;
+    private boolean synced;
+    private boolean deleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -36,11 +39,11 @@ public class Course implements RemoteEntity, Serializable {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -124,6 +127,16 @@ public class Course implements RemoteEntity, Serializable {
     }
 
     @Override
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String getUserId() {
+        return userId;
+    }
+
+    @Override
     public void setReference(String reference) {
         this.reference = reference;
     }
@@ -133,4 +146,22 @@ public class Course implements RemoteEntity, Serializable {
         return reference;
     }
 
+    @Override
+    public void setSynced(boolean synced) {
+        this.synced = synced;
+    }
+
+    @Override
+    public boolean isSynced() {
+        return synced;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    @Override
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
 }

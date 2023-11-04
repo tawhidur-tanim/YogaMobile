@@ -3,7 +3,7 @@ package com.grouptwo.dyoga.apiservice;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HttpClient {
+public class dYogaApiClient {
 
     private static Retrofit retrofit = null;
     private static String BASE_URL = "";

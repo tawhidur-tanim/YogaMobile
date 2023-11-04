@@ -13,62 +13,63 @@
         android:paddingHorizontal="@dimen/screen_padding_horizontal"
         android:paddingVertical="@dimen/screen_padding_vertical">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <TextView
+                android:id="@+id/clasScreenHeading"
                 style="@style/ScreenHeading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="20dp"
-                android:id="@+id/clasScreenHeading"
-                android:text="Add a class" />
+                android:text="@string/add_a_class" />
 
-          <ImageButton
-              android:padding="12dp"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:background="@color/transparent"
-              android:layout_gravity="center"
-              android:visibility="gone"
-              android:id="@+id/deleteButton"
-              android:src="@drawable/trash_icon"/>
+            <ImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/transparent"
+                android:padding="12dp"
+                android:src="@drawable/trash_icon"
+                android:visibility="gone"
+                android:contentDescription="@string/delete_class_instance" />
 
         </LinearLayout>
 
-
         <TextView
-            style="@style/ScreenParagraph"
             android:id="@+id/screenDescription"
+            style="@style/ScreenParagraph"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add a new class instance to family yoga by 11:00am" />
+            android:layout_height="wrap_content" />
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="42dp" />
 
-
         <TextView
             style="@style/ScreenParagraphTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:text="@string/date" />
 
         <Button
+            android:id="@+id/dateButton"
             style="@style/Theme.Dyoga.Button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edittext_height"
-            android:id="@+id/dateButton"
             android:background="@drawable/edittext_background"
             android:backgroundTint="@color/buttonBackground"
             android:gravity="start|center"
-            android:textSize="@dimen/text_default_size"
             android:text="@string/date_format"
             android:textColor="@color/grey"
+            android:textSize="@dimen/text_default_size"
             app:background="@drawable/edittext_background"
             app:backgroundTint="@color/buttonBackground" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,26 +83,23 @@
                 android:layout_marginEnd="7dp"
                 android:layout_weight=".5"
                 android:orientation="vertical">
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp" />
 
                 <TextView
                     android:id="@+id/price_label"
                     style="@style/ScreenParagraphTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Instructor" />
+                    android:text="@string/instructor" />
 
                 <EditText
-                    style="@style/Theme.Dyoga.EditText"
                     android:id="@+id/classInstructorEditText"
+                    style="@style/Theme.Dyoga.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:importantForAutofill="no"
-                    android:labelFor="@+id/classInstanceInstructorLabel_label" />
+                    android:labelFor="@+id/classInstanceInstructorLabel_label"
+                    android:inputType="text" />
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -110,95 +108,88 @@
                 android:layout_marginStart="7dp"
                 android:layout_weight=".5"
                 android:orientation="vertical">
-                <Space
-                    android:layout_width="match_parent"
-                    android:layout_height="42dp" />
 
                 <TextView
                     android:id="@+id/roomLabel"
                     style="@style/ScreenParagraphTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Room" />
+                    android:text="@string/room" />
 
                 <EditText
-                    style="@style/Theme.Dyoga.EditText"
                     android:id="@+id/roomEditText"
+                    style="@style/Theme.Dyoga.EditText"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/edittext_height"
                     android:importantForAutofill="no"
                     android:inputType="number"
                     android:labelFor="@+id/roomLabel" />
             </LinearLayout>
-
-
         </LinearLayout>
+
         <Space
             android:layout_width="match_parent"
-            android:layout_height="42dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:orientation="vertical">
+            android:layout_height="@dimen/screen_vertical_spacing_two" />
 
         <LinearLayout
-            android:id="@+id/classDescriptionDisplay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:baselineAligned="false"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/classDescriptionLabel"
-                style="@style/ScreenParagraphTwo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/description" />
-
-            <EditText
-                style="@style/Theme.Dyoga.EditText"
-                android:id="@+id/classDescriptionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:layout_gravity="start"
-                android:gravity="start"
-                android:labelFor="@+id/descriptionLabel" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/circle_plus_solid"
-                android:id="@+id/classAddDescriptionImageView"
-                android:contentDescription="@string/add_a_description" />
-
-            <TextView
-                android:id="@+id/classAddDescriptionTextView"
+            <LinearLayout
+                android:id="@+id/classDescriptionDisplay"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="12dp"
-                android:text="Add a comment" />
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/classDescriptionLabel"
+                    style="@style/ScreenParagraphTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/comment" />
+
+                <EditText
+                    android:id="@+id/classDescriptionEditText"
+                    style="@style/Theme.Dyoga.EditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="start"
+                    android:gravity="start"
+                    android:importantForAutofill="no"
+                    android:inputType="text"
+                    android:labelFor="@+id/descriptionLabel" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:id="@+id/classAddDescriptionImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/add_a_comment"
+                    android:src="@drawable/circle_plus_solid" />
+
+                <TextView
+                    android:id="@+id/classAddDescriptionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="12dp"
+                    android:text="@string/add_a_comment" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
-
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="42dp" />
-
 
         <Button
             android:id="@+id/saveClassButton"
@@ -206,7 +197,7 @@
             android:layout_height="56dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/colorSecondary"
-            android:text="Save"
+            android:text="@string/save"
             app:backgroundTint="@color/colorSecondary" />
     </LinearLayout>
 </ScrollView>

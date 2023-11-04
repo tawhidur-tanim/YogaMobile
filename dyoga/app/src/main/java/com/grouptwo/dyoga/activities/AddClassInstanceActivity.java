@@ -2,42 +2,30 @@ package com.grouptwo.dyoga.activities;
 
 import static com.grouptwo.dyoga.utils.Constants.COURSE;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.grouptwo.dyoga.R;
-import com.grouptwo.dyoga.adapters.DaysOfWeekAdapter;
-import com.grouptwo.dyoga.adapters.YogaDurationAdapter;
-import com.grouptwo.dyoga.adapters.YogaTypesAdapter;
-import com.grouptwo.dyoga.components.CourseBottomSheet;
 import com.grouptwo.dyoga.components.YogaDatePicker;
-import com.grouptwo.dyoga.components.YogaTimePicker;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.data.viewmodels.ClassInstanceViewModel;
-import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
 import com.grouptwo.dyoga.enums.ClassInstanceActions;
-import com.grouptwo.dyoga.enums.CourseActions;
 import com.grouptwo.dyoga.interfaces.Callback;
-import com.grouptwo.dyoga.interfaces.YogaPickerSetListener;
-import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
 
@@ -51,7 +39,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
     protected EditText instrcutorEditText, roomEditText, descriptionEditText;
     protected ClassInstanceActions classInstanceAction;
     protected LocalDateTime yogaDate, createdAt;
-    protected int classId;
+    protected long classId;
 
     private Handler handler;
     private ClassInstanceViewModel classInstanceViewModel;
@@ -96,8 +84,12 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
         dateButton.setText(YogaDatePicker.getCurrentDateText());
 
         // set screen description
-        this.screenDescription.setText(String.format(getApplicationContext().getString(R.string.s_a_new_class_instance_to_family_yoga_by_time)
-                ,"Add",course.getTimeText()));
+        this.screenDescription.setText(String.format(
+                getString(R.string.s_a_new_class_instance_to_family_yoga_by_time),
+                getString(R.string.add),
+                course.getType(),
+                course.getTimeText())
+        );
     }
 
 
@@ -116,42 +108,37 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
         }, getSupportFragmentManager()));
 
         saveButton.setOnClickListener(v -> {
-            if(!isInputsValid()){
+            if (!isInputsValid()) {
                 return;
             }
             ClassInstance classInstance = getClassInstance();
 
             if (classInstanceAction == ClassInstanceActions.NEW) {
-                classInstanceViewModel.add(classInstance,this);
+                classInstanceViewModel.add(classInstance, this);
 
             } else {
-                classInstanceViewModel.update(classId,classInstance, this);
+                classInstanceViewModel.update(classId, classInstance, this);
             }
 
         });
 
         deleteButton.setOnClickListener(v -> {
-
-
             ClassInstance classInstance = getClassInstance();
             classInstance.setId(classId);
             classInstanceAction = ClassInstanceActions.DELETED;
 
             showAlertAndDelete(classInstance);
-
-
         });
     }
 
     private void showAlertAndDelete(final ClassInstance classInstance) {
-
         final DialogInterface.OnClickListener positiveButtonDialogInterface = (dialog, whichButton) -> {
             classInstanceViewModel.delete(classInstance, AddClassInstanceActivity.this);
         };
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle("Delete Class")
-                .setMessage("Do you really want to delete this class?")
+                .setTitle(R.string.delete_class)
+                .setMessage(R.string.do_you_really_want_to_delete_this_class)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, positiveButtonDialogInterface)
                 .setNegativeButton(android.R.string.no, null).create();
@@ -160,7 +147,7 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
 
     @Override
     public void onResult(Boolean result) {
-        if(result == null || !result){
+        if (result == null || !result) {
             showToast(R.string.an_error_occurred_saving_class_info_please_try_again);
             return;
         }
@@ -174,20 +161,18 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
         }
 
         if (classInstanceAction == ClassInstanceActions.DELETED) {
-            showToast(R.string.course_has_been_deleted);
+            showToast(R.string.class_has_been_deleted);
         }
 
         finish();
-
     }
 
-    private ClassInstance getClassInstance(){
-
+    private ClassInstance getClassInstance() {
         final String comments = descriptionEditText.getText().toString();
         final String instructor = instrcutorEditText.getText().toString();
         final String room = roomEditText.getText().toString();
 
-        final ClassInstance classInstance = new ClassInstance(course.getId(),yogaDate,instructor,room,comments);
+        final ClassInstance classInstance = new ClassInstance(course.getId(), yogaDate, instructor, room, comments);
         classInstance.setCreatedAt(createdAt);
         return classInstance;
     }
@@ -206,11 +191,9 @@ public class AddClassInstanceActivity extends AppCompatActivity implements Callb
             return false;
         }
 
-        if(!yogaDate.getDayOfWeek().toString().equalsIgnoreCase(course.getDayOfWeek())) {
-            Toast.makeText(getApplicationContext(),
-                    String.format(getApplicationContext().getString(R.string.day_of_the_week_must_match_the_course)
-                            ,course.getDayOfWeek())
-                    , Toast.LENGTH_LONG).show();
+        if (!yogaDate.getDayOfWeek().toString().equalsIgnoreCase(course.getDayOfWeek())) {
+            Toast.makeText(getApplicationContext(), String.format(getApplicationContext().getString(R.string.day_of_the_week_must_match_the_course),
+                    course.getDayOfWeek()), Toast.LENGTH_LONG).show();
             return false;
         }
 

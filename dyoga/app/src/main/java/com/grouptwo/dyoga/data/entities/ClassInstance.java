@@ -10,19 +10,16 @@ import java.time.LocalDateTime;
 public class ClassInstance implements RemoteEntity, Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
-
+    private long id;
     private LocalDateTime date;
-
     private String instructor;
-
     private String room;
-
     private String comments;
-
-    private int courseId;
-
+    private long courseId;
     private String reference;
+    private boolean deleted;
+    private String userId;
+    private boolean synced;
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -43,7 +40,7 @@ public class ClassInstance implements RemoteEntity, Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public ClassInstance(int courseId, LocalDateTime date, String instructor, String room, String comments) {
+    public ClassInstance(long courseId, LocalDateTime date, String instructor, String room, String comments) {
         this.courseId = courseId;
         this.date = date;
         this.instructor = instructor;
@@ -51,11 +48,11 @@ public class ClassInstance implements RemoteEntity, Serializable {
         this.comments = comments;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -91,7 +88,7 @@ public class ClassInstance implements RemoteEntity, Serializable {
         this.comments = comments;
     }
 
-    public int getCourseId() {
+    public long getCourseId() {
         return courseId;
     }
 
@@ -107,5 +104,35 @@ public class ClassInstance implements RemoteEntity, Serializable {
     @Override
     public String getReference() {
         return reference;
+    }
+
+    @Override
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @Override
+    public String getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void setSynced(boolean synced) {
+        this.synced = synced;
+    }
+
+    @Override
+    public boolean isSynced() {
+        return synced;
+    }
+
+    @Override
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    @Override
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

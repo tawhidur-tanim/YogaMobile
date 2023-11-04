@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
 import com.grouptwo.dyoga.data.entities.Course;
@@ -25,9 +26,11 @@ import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
 
 public class DashboardActivity extends AppCompatActivity {
 
+    private FirebaseAuth firebaseAuth;
+
     private CourseAdapter courseAdapter;
     private CourseViewModel courseViewModel;
-    private ImageButton addCourseButton;
+    private ImageButton addCourseButton, logoutButton;
     private EditText searchEditText;
     private RecyclerView courseListRecyclerView;
     private View emptyCourseView;
@@ -38,11 +41,14 @@ public class DashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         courseAdapter = new CourseAdapter();
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         emptyCourseView = findViewById(R.id.emptyCourseView);
         addCourseButton = findViewById(R.id.addCourseButton);
+        logoutButton = findViewById(R.id.logoutButton);
         searchEditText = findViewById(R.id.searchCourse);
         courseListRecyclerView = findViewById(R.id.courseListRecyclerView);
 
@@ -74,6 +80,12 @@ public class DashboardActivity extends AppCompatActivity {
         });
 
         addCourseButton.setOnClickListener(v -> startActivity(new Intent(this, AddCourseActivity.class)));
+
+        logoutButton.setOnClickListener(v -> {
+            firebaseAuth.signOut();
+            startActivity(new Intent(this, GetStartedActivity.class));
+            finishAfterTransition();
+        });
     }
 
     private void initAdapter() {

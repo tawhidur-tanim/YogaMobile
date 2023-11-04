@@ -30,7 +30,20 @@
             android:layout_height="wrap_content"
             android:background="@color/transparent"
             android:layout_gravity="center"
-            android:src="@drawable/plus_solid" />
+            android:src="@drawable/plus_solid"
+            android:importantForAccessibility="no" />
+
+        <ImageButton
+            android:id="@+id/logoutButton"
+            android:padding="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:layout_gravity="center"
+            android:src="@drawable/log_out_icon"
+            android:contentDescription="@string/logout"
+            android:importantForAccessibility="no" />
 
     </LinearLayout>
 

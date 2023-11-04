@@ -13,17 +13,17 @@ public interface CourseDao extends BaseDao<Course> {
     @Query("select * from course limit 1")
     Course findFirst();
 
-    @Query("select * from course order by id desc")
+    @Query("select * from course where deleted = 0 order by id desc")
     List<Course> getAllCourses();
 
     @Query("select * from course where id = :id")
     Course getCourseById(int id);
 
-    @Query("select * from course where " +
+    @Query("select * from course where deleted = 0 and (" +
             "type like '%' || :type || '%' or " +
             "description like '%' || :type || '%' or " +
             "price like '%' || :type || '%' or " +
             "dayOfWeek like '%' || :type || '%' or " +
-            "capacity like '%' || :type || '%'")
+            "capacity like '%' || :type || '%')")
     List<Course> searchCourses(String type);
 }

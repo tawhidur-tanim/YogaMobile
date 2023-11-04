@@ -10,17 +10,11 @@ import java.util.List;
 @Dao
 public interface ClassInstanceDao extends BaseDao<ClassInstance>{
 
-    @Query("select * from ClassInstance limit 1")
-    ClassInstance findFirst();
-
-    @Query("select * from ClassInstance")
-    List<ClassInstance> findAll();
-
-    @Query("select * from ClassInstance where " +
+    @Query("select * from ClassInstance where deleted = 0 and (" +
             "instructor like '%' || :keyword || '%'" +
-            " or comments like '%' || :keyword || '%'")
+            " or comments like '%' || :keyword || '%')")
     List<ClassInstance> findClassInstance(String keyword);
 
-    @Query("select * from ClassInstance where courseId = :courseId")
-    List<ClassInstance> findAllByCourseId(int courseId);
+    @Query("select * from ClassInstance where courseId = :courseId and deleted = 0")
+    List<ClassInstance> findAllByCourseId(long courseId);
 }
