@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface BaseDao <T>{
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(T obj);
 
     @Insert
