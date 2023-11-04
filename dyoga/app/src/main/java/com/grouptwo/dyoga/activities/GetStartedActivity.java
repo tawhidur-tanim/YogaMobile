@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.grouptwo.dyoga.R;
+import com.grouptwo.dyoga.utils.Constants;
+import com.grouptwo.dyoga.utils.SharedPreferenceManager;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,7 +37,9 @@ public class GetStartedActivity extends AppCompatActivity {
         super.onStart();
 
         final FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
         if(currentUser != null){
+            SharedPreferenceManager.saveData(this, Constants.USERNAME, currentUser.getUid());
             startActivity(new Intent(this, DashboardActivity.class));
             finishAfterTransition();
         }

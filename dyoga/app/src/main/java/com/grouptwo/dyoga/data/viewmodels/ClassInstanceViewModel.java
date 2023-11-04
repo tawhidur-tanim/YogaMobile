@@ -24,7 +24,7 @@ public class ClassInstanceViewModel extends AndroidViewModel {
         this.classInstanceRepository = new ClassInstanceRepository(application);
     }
 
-    public void queryAllByCourseId(int id){
+    public void queryAllByCourseId(long id){
         classInstanceRepository.queryAllByCourseId(id, new Callback<ClassInstance>() {
             @Override
             public void onResult(List<ClassInstance> result) {
@@ -49,7 +49,7 @@ public class ClassInstanceViewModel extends AndroidViewModel {
         });
     }
 
-    public void update(final int id, ClassInstance classInstance, Callback<Boolean> callback){
+    public void update(final long id, ClassInstance classInstance, Callback<Boolean> callback){
         classInstanceRepository.update(id,classInstance, new Callback<Boolean>() {
             @Override
             public void onResult(Boolean result) {

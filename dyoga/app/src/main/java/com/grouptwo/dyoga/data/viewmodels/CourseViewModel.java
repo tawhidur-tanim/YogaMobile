@@ -65,7 +65,7 @@ public class CourseViewModel extends AndroidViewModel {
         });
     }
 
-    public void update(final int id, final Course course, Callback<Boolean> callback) {
+    public void update(final long id, final Course course, Callback<Boolean> callback) {
         courseRepository.update(id, course, new Callback<Boolean>() {
             @Override
             public void onResult(Boolean result) {
