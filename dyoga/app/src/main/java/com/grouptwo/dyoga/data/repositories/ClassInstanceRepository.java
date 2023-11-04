@@ -1,7 +1,6 @@
 package com.grouptwo.dyoga.data.repositories;
 
 import static com.grouptwo.dyoga.utils.Constants.classInstanceCollectionName;
-import static com.grouptwo.dyoga.utils.Constants.courseCollectionName;
 
 import android.app.Application;
 import android.os.Handler;
