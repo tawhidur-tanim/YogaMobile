@@ -103,11 +103,9 @@ public class CourseRepository implements RemoteRepository<Course> {
             course.setCreatedAt(LocalDateTime.now());
             course.setUpdatedAt(LocalDateTime.now());
 
-            final long courseId = courseDao.insert(course);
-            course.setId(courseId);
+            courseDao.insert(course);
         });
     }
-
 
     public void findAll(Callback<Course> callback) {
         executor.execute(() -> {
@@ -118,9 +116,7 @@ public class CourseRepository implements RemoteRepository<Course> {
 
 
     public void truncate() {
-        executor.execute(() -> {
-            courseDao.truncate();
-        });
+        executor.execute(courseDao::truncate);
     }
 
     public void searchCourses(String type, Callback<Course> callback) {
@@ -143,11 +139,11 @@ public class CourseRepository implements RemoteRepository<Course> {
                 for (Map<String, Object> data : result) {
                     final String jsonString = gson.toJson(data);
                     final Course course = gson.fromJson(jsonString, Course.class);
+
                     saveOnly(course);
 
-                    Log.d("syncCourse", course.getType() + "\n"+jsonString);
+                    Log.d("course", course.getId() + " => " + jsonString);
                 }
-
 
                 callback.onResult(true);
             }

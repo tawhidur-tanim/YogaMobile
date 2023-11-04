@@ -3,7 +3,6 @@ package com.grouptwo.dyoga.activities;
 import static com.grouptwo.dyoga.utils.Constants.COURSE;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.components.YogaTimePicker;

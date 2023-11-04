@@ -7,11 +7,11 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
+import com.grouptwo.dyoga.data.converters.Converters;
 import com.grouptwo.dyoga.data.dao.ClassInstanceDao;
+import com.grouptwo.dyoga.data.dao.CourseDao;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
-import com.grouptwo.dyoga.data.converters.Converters;
-import com.grouptwo.dyoga.data.dao.CourseDao;
 
 @TypeConverters({Converters.class})
 @Database(entities = {Course.class, ClassInstance.class}, version = 9, exportSchema = false)

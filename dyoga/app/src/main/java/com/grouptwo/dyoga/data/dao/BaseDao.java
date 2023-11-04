@@ -3,7 +3,6 @@ package com.grouptwo.dyoga.data.dao;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
@@ -19,6 +18,5 @@ public interface BaseDao <T>{
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
     void update(T obj);
-
 
 }

@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.grouptwo.dyoga.R;
+import com.grouptwo.dyoga.data.repositories.ClassInstanceRepository;
+import com.grouptwo.dyoga.data.repositories.CourseRepository;
 import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 import com.grouptwo.dyoga.utils.SharedPreferenceManager;
@@ -123,8 +125,13 @@ public class AuthActivity extends AppCompatActivity {
                     SharedPreferenceManager.saveData(this, Constants.USERNAME, currentUser.getUid());
                 }
 
-                // Sign in is success, finish the current activity to navigate to dashboard
-                finishAfterTransition();
+                // Sign in is success, pull user remote information
+                CourseRepository.sync(getApplicationContext(), new Callback<Boolean>() {
+                    @Override
+                    public void onResult(Boolean result) {
+                        syncNextData();
+                    }
+                });
                 return;
             }
 
@@ -136,6 +143,16 @@ public class AuthActivity extends AppCompatActivity {
             ).show();
 
             callback.onResult(false);
+        });
+    }
+
+    private void syncNextData() {
+        ClassInstanceRepository.sync(getApplicationContext(), new Callback<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                // Sign in is success, finish the current activity to navigate to dashboard
+                finishAfterTransition();
+            }
         });
     }
 }

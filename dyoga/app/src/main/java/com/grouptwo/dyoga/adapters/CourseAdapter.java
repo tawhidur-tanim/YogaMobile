@@ -14,7 +14,6 @@ import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.ItemClickListener;
 
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 

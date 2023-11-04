@@ -2,10 +2,10 @@ package com.grouptwo.dyoga.data.repositories;
 
 import static com.grouptwo.dyoga.utils.Constants.classInstanceCollectionName;
 
-import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.grouptwo.dyoga.apiservice.RemoteService;
@@ -13,7 +13,6 @@ import com.grouptwo.dyoga.configs.GsonConfig;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.ClassInstanceDao;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
-import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 import com.grouptwo.dyoga.utils.SharedPreferenceManager;
@@ -32,7 +31,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
     private final Handler handler;
     private final String username;
 
-    public ClassInstanceRepository(final Application application) {
+    public ClassInstanceRepository(final Context application) {
         dYogaDatabase database = dYogaDatabase.getInstance(application);
         this.classInstanceDao = database.classInstanceDao();
 
@@ -111,14 +110,21 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
         });
     }
 
-    public void truncate() {
+    public void saveOnly(final ClassInstance classInstance) {
         executor.execute(() -> {
-            classInstanceDao.truncate();
+            classInstance.setUserId(username);
+            classInstance.setCreatedAt(LocalDateTime.now());
+            classInstance.setUpdatedAt(LocalDateTime.now());
+
+            classInstanceDao.insert(classInstance);
         });
     }
 
+    public void truncate() {
+        executor.execute(classInstanceDao::truncate);
+    }
 
-    public static void sync(Application context, Callback<Boolean> callback) {
+    public static void sync(Context context, Callback<Boolean> callback) {
         final ClassInstanceRepository classInstanceRepository = new ClassInstanceRepository(context);
         classInstanceRepository.syncData(callback);
     }
@@ -131,8 +137,12 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
                 for (Map<String, Object> data : result) {
                     final String jsonString = gson.toJson(data);
                     final ClassInstance classInstance = gson.fromJson(jsonString, ClassInstance.class);
-                    updateOnly(classInstance.getId(), classInstance);
+
+                    saveOnly(classInstance);
+
+                    Log.d("classInstance", classInstance.getId() + " => " + jsonString);
                 }
+
                 callback.onResult(true);
             }
         });

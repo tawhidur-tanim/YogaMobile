@@ -7,8 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.grouptwo.dyoga.R;
 
-import java.util.Objects;
-
 public class DaysOfWeekAdapter extends ArrayAdapter<String> {
 
     private final String[] daysOfWeek;
