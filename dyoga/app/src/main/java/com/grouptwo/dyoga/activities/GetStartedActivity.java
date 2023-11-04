@@ -116,16 +116,12 @@ public class GetStartedActivity extends AppCompatActivity {
     }
 
     private void syncNextData() {
-//        ClassInstanceRepository.sync(this, new Callback<Boolean>() {
-//            @Override
-//            public void onResult(Boolean result) {
-//                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
-//                finishAfterTransition();
-//            }
-//        });
-
-        // todo: remove the below
-        startActivity(new Intent(this, DashboardActivity.class));
-        finishAfterTransition();
+        ClassInstanceRepository.sync(getApplication(), new Callback<Boolean>() {
+            @Override
+            public void onResult(Boolean result) {
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+                finishAfterTransition();
+            }
+        });
     }
 }

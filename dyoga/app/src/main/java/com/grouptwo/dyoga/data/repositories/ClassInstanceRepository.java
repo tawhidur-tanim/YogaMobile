@@ -3,19 +3,24 @@ package com.grouptwo.dyoga.data.repositories;
 import static com.grouptwo.dyoga.utils.Constants.classInstanceCollectionName;
 
 import android.app.Application;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.gson.Gson;
 import com.grouptwo.dyoga.apiservice.RemoteService;
+import com.grouptwo.dyoga.configs.GsonConfig;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.ClassInstanceDao;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 import com.grouptwo.dyoga.utils.SharedPreferenceManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -103,6 +108,27 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
             data.setUpdatedAt(LocalDateTime.now());
 
             classInstanceDao.update(data);
+        });
+    }
+
+
+    public static void sync(Application context, Callback<Boolean> callback) {
+        final ClassInstanceRepository classInstanceRepository = new ClassInstanceRepository(context);
+        classInstanceRepository.syncData(callback);
+    }
+
+    private void syncData(Callback<Boolean> callback) {
+        classInstanceRemoteService.syncRemoteEntities(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResult(List<Map<String, Object>> result) {
+                final Gson gson = GsonConfig.gson();
+                for (Map<String, Object> data : result) {
+                    final String jsonString = gson.toJson(data);
+                    final ClassInstance classInstance = gson.fromJson(jsonString, ClassInstance.class);
+                    updateOnly(classInstance.getId(), classInstance);
+                }
+                callback.onResult(true);
+            }
         });
     }
 }
