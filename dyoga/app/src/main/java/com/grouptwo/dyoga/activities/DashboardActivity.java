@@ -84,20 +84,31 @@ public class DashboardActivity extends AppCompatActivity {
         addCourseButton.setOnClickListener(v -> startActivity(new Intent(this, AddCourseActivity.class)));
 
         logoutButton.setOnClickListener(v -> {
-            // todo: clear local database upon logout
-            firebaseAuth.signOut();
-            clearAllFromDb();
+            final DialogInterface.OnClickListener positiveCallback = (dialog, whichButton) -> {
+                firebaseAuth.signOut();
+                clearAllFromDb();
 
-            startActivity(new Intent(this, GetStartedActivity.class));
-            finishAfterTransition();
+                startActivity(new Intent(this, GetStartedActivity.class));
+                finishAfterTransition();
+            };
+
+            final AlertDialog alertDialog = new AlertDialog.Builder(this)
+                    .setTitle("Log out")
+                    .setMessage("Are sure to log out?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, positiveCallback)
+                    .setNegativeButton(android.R.string.no, null).create();
+            alertDialog.show();
         });
     }
 
     private void clearAllFromDb() {
+
         CourseRepository courseRepository = new CourseRepository(getApplicationContext());
         ClassInstanceRepository classInstanceRepository = new ClassInstanceRepository(getApplication());
         courseRepository.truncate();
         classInstanceRepository.truncate();
+
     }
 
     private void initAdapter() {
