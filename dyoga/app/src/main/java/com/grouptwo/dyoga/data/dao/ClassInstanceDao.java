@@ -17,4 +17,8 @@ public interface ClassInstanceDao extends BaseDao<ClassInstance>{
 
     @Query("select * from ClassInstance where courseId = :courseId and deleted = 0")
     List<ClassInstance> findAllByCourseId(long courseId);
+
+
+    @Query("delete from classinstance")
+    void truncate();
 }

@@ -111,6 +111,12 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
         });
     }
 
+    public void truncate() {
+        executor.execute(() -> {
+            classInstanceDao.truncate();
+        });
+    }
+
 
     public static void sync(Application context, Callback<Boolean> callback) {
         final ClassInstanceRepository classInstanceRepository = new ClassInstanceRepository(context);

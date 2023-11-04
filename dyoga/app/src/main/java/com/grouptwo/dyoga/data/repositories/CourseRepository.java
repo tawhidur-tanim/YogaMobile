@@ -5,6 +5,7 @@ import static com.grouptwo.dyoga.utils.Constants.courseCollectionName;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.grouptwo.dyoga.apiservice.RemoteService;
@@ -96,10 +97,29 @@ public class CourseRepository implements RemoteRepository<Course> {
         });
     }
 
+    public void saveOnly(final Course course) {
+        executor.execute(() -> {
+            course.setUserId(username);
+            course.setCreatedAt(LocalDateTime.now());
+            course.setUpdatedAt(LocalDateTime.now());
+
+            final long courseId = courseDao.insert(course);
+            course.setId(courseId);
+        });
+    }
+
+
     public void findAll(Callback<Course> callback) {
         executor.execute(() -> {
             List<Course> courses = courseDao.getAllCourses();
             handler.post(() -> callback.onResult(courses));
+        });
+    }
+
+
+    public void truncate() {
+        executor.execute(() -> {
+            courseDao.truncate();
         });
     }
 
@@ -123,8 +143,12 @@ public class CourseRepository implements RemoteRepository<Course> {
                 for (Map<String, Object> data : result) {
                     final String jsonString = gson.toJson(data);
                     final Course course = gson.fromJson(jsonString, Course.class);
-                    updateOnly(course.getId(), course);
+                    saveOnly(course);
+
+                    Log.d("syncCourse", course.getType() + "\n"+jsonString);
                 }
+
+
                 callback.onResult(true);
             }
         });

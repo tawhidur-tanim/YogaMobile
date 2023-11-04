@@ -26,4 +26,9 @@ public interface CourseDao extends BaseDao<Course> {
             "dayOfWeek like '%' || :type || '%' or " +
             "capacity like '%' || :type || '%')")
     List<Course> searchCourses(String type);
+
+
+
+    @Query("delete from course")
+    void truncate();
 }

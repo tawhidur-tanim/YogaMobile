@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.grouptwo.dyoga.R;
 import com.grouptwo.dyoga.adapters.CourseAdapter;
 import com.grouptwo.dyoga.data.entities.Course;
+import com.grouptwo.dyoga.data.repositories.ClassInstanceRepository;
+import com.grouptwo.dyoga.data.repositories.CourseRepository;
 import com.grouptwo.dyoga.data.viewmodels.CourseViewModel;
 
 public class DashboardActivity extends AppCompatActivity {
@@ -84,9 +86,18 @@ public class DashboardActivity extends AppCompatActivity {
         logoutButton.setOnClickListener(v -> {
             // todo: clear local database upon logout
             firebaseAuth.signOut();
+            clearAllFromDb();
+
             startActivity(new Intent(this, GetStartedActivity.class));
             finishAfterTransition();
         });
+    }
+
+    private void clearAllFromDb() {
+        CourseRepository courseRepository = new CourseRepository(getApplicationContext());
+        ClassInstanceRepository classInstanceRepository = new ClassInstanceRepository(getApplication());
+        courseRepository.truncate();
+        classInstanceRepository.truncate();
     }
 
     private void initAdapter() {
