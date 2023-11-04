@@ -1,5 +1,6 @@
 package com.grouptwo.dyoga.data.repositories;
 
+import static com.grouptwo.dyoga.utils.Constants.classInstanceCollectionName;
 import static com.grouptwo.dyoga.utils.Constants.courseCollectionName;
 
 import android.app.Application;
@@ -36,7 +37,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
                 Constants.USERNAME,
                 Constants.generateReference()
         );
-        this.classInstanceRemoteService = new RemoteService<>(courseCollectionName(username), this);
+        this.classInstanceRemoteService = new RemoteService<>(classInstanceCollectionName(username), this);
 
         executor = Executors.newSingleThreadExecutor();
         handler = new Handler(Looper.getMainLooper());
