@@ -124,6 +124,7 @@ public class GetStartedActivity extends AppCompatActivity {
 //            }
 //        });
 
+        // todo: remove the below
         startActivity(new Intent(this, DashboardActivity.class));
         finishAfterTransition();
     }
