@@ -82,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity {
         addCourseButton.setOnClickListener(v -> startActivity(new Intent(this, AddCourseActivity.class)));
 
         logoutButton.setOnClickListener(v -> {
+            // todo: clear local database upon logout
             firebaseAuth.signOut();
             startActivity(new Intent(this, GetStartedActivity.class));
             finishAfterTransition();

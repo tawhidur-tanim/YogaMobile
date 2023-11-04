@@ -42,6 +42,19 @@
         app:layout_constraintStart_toStartOf="@+id/imageView3"
         app:layout_constraintBottom_toTopOf="@id/btnCopyRight" />
 
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/imageView3"
+        app:layout_constraintStart_toStartOf="@+id/imageView3"
+        app:layout_constraintBottom_toTopOf="@id/btnCopyRight"
+        />
+
     <TextView
         android:id="@+id/btnCopyRight"
         android:layout_width="match_parent"

@@ -6,7 +6,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.google.gson.Gson;
 import com.grouptwo.dyoga.apiservice.RemoteService;
+import com.grouptwo.dyoga.configs.GsonConfig;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.CourseDao;
 import com.grouptwo.dyoga.data.entities.Course;
@@ -16,6 +18,7 @@ import com.grouptwo.dyoga.utils.SharedPreferenceManager;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -104,6 +107,26 @@ public class CourseRepository implements RemoteRepository<Course> {
         executor.execute(() -> {
             List<Course> courses = courseDao.searchCourses(type);
             handler.post(() -> callback.onResult(courses));
+        });
+    }
+
+    public static void sync(Context context, Callback<Boolean> callback) {
+        final CourseRepository courseRepository = new CourseRepository(context);
+        courseRepository.syncData(callback);
+    }
+
+    private void syncData(Callback<Boolean> callback) {
+        courseRemoteService.syncRemoteEntities(new Callback<Map<String, Object>>() {
+            @Override
+            public void onResult(List<Map<String, Object>> result) {
+                final Gson gson = GsonConfig.gson();
+                for (Map<String, Object> data : result) {
+                    final String jsonString = gson.toJson(data);
+                    final Course course = gson.fromJson(jsonString, Course.class);
+                    updateOnly(course.getId(), course);
+                }
+                callback.onResult(true);
+            }
         });
     }
 }
