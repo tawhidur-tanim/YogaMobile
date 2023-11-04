@@ -64,10 +64,8 @@ public class ViewCourseActivity extends AppCompatActivity {
         classInstanceViewModel.queryAllByCourseId(course.getId());
         classInstanceViewModel.getClassInstances().observe(this, classInstances -> {
             if(classInstances.isEmpty()) {
-                classInstanceSearchEditText.setVisibility(View.GONE);
                 emptyClassView.setVisibility(View.VISIBLE);
             } else {
-                classInstanceSearchEditText.setVisibility(View.VISIBLE);
                 emptyClassView.setVisibility(View.GONE);
             }
 

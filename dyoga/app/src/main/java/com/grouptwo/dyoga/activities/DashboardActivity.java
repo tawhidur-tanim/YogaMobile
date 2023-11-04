@@ -105,10 +105,8 @@ public class DashboardActivity extends AppCompatActivity {
         courseViewModel.queryCourses();
         courseViewModel.getAllCourses().observe(this, courses -> {
             if(courses.isEmpty()) {
-                searchEditText.setVisibility(View.GONE);
                 emptyCourseView.setVisibility(View.VISIBLE);
             } else {
-                searchEditText.setVisibility(View.VISIBLE);
                 emptyCourseView.setVisibility(View.GONE);
             }
 

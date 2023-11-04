@@ -12,6 +12,7 @@ public interface ClassInstanceDao extends BaseDao<ClassInstance>{
 
     @Query("select * from ClassInstance where deleted = 0 and (" +
             "instructor like '%' || :keyword || '%'" +
+            "or room like '%' || :keyword || '%'" +
             " or comments like '%' || :keyword || '%')")
     List<ClassInstance> findClassInstance(String keyword);
 
