@@ -2,8 +2,10 @@ package com.grouptwo.dyoga.apiservice;
 
 import com.grouptwo.dyoga.data.entities.RemoteEntity;
 import com.grouptwo.dyoga.data.repositories.RemoteRepository;
+import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -32,6 +34,17 @@ public class RemoteService<T extends RemoteEntity> {
         fireStoreSyncEntity(data);
     }
 
+    public void syncRemoteEntities(Callback<Map<String, Object>> callback) {
+        if(fireStoreSync)
+            fireStoreGetEntities(callback);
+        else if (apiStoreSync)
+            apiGetEntities(callback);
+    }
+
+    private void fireStoreGetEntities(Callback<Map<String, Object>> callback) {
+        fireStoreDatabase.getDocuments(collectionName, callback);
+    }
+
     private void fireStoreSyncEntity(T data) {
         if(!fireStoreSync) return;
 
@@ -43,6 +56,9 @@ public class RemoteService<T extends RemoteEntity> {
 
         fireStoreDatabase.addOrUpdate(collectionName, reference, data)
                 .addOnSuccessListener(documentReference -> repository.updateOnly(data.getId(), data));
+    }
+
+    private void apiGetEntities(Callback<Map<String, Object>> callback) {
     }
 
     private void apiSyncEntity(T data) {
