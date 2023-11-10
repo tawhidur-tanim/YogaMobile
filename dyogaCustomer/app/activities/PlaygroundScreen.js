@@ -11,7 +11,7 @@ export default function PlaygroundScreen({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.button}>
-                <Button title={"SplashScreen"} onPress={() => navigateTo("SplashScreen")}>
+                <Button title={"GetStarted"} onPress={() => navigateTo("GetStarted")}>
                     Splash Screen
                 </Button>
             </View>
