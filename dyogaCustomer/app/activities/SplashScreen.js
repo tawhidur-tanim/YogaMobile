@@ -1,12 +1,10 @@
-import { Link } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import {StatusBar} from "expo-status-bar";
 
 export default function SplashScreen() {
   return (
     <View style={styles.container}>
-
-      <StatusBar style="auto" />
+      <StatusBar translucent={true} />
     </View>
   );
 }
