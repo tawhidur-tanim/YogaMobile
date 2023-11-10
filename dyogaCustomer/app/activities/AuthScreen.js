@@ -2,13 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, Text } from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
+import DYogaButton from '../components/DYogaButton';
 
 
 export default function AuthScreen() {
     return (
     <View style={styles.container}>
 
-     <View style = {{...styles.row, marginTop: 100}}>
+     <View style = {{...styles.row, marginTop: 60}}>
          <HeaderTitle title={"Register | Login"}></HeaderTitle>
     </View>
 
@@ -38,10 +39,12 @@ export default function AuthScreen() {
 
     </View>
 
-
-        
+    <View style = {{...styles.row, justifyContent:'center'}}>
+        <DYogaButton title='Continue'/>
+    </View>
         <StatusBar style="auto" />
-        </View>
+
+    </View>
     );
 }
 
@@ -49,14 +52,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingLeft: 30
+        paddingLeft: 30,
+        paddingRight: 30,
+        width:'100%',
     },
 
     row: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        margin: 10
+        margin: 10,
+
       },
 
     column:{
