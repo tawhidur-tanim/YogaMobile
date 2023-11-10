@@ -1,7 +1,7 @@
 import {Pressable, StyleSheet, Text} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 
-export default function DYogaButton({title = 'Button', backgroundColor = DYogaColors.buttonBackgroundColor, children}) {
+export default function DYogaButton({title = 'Button', backgroundColor = DYogaColors.buttonBackgroundColor, children, onPress = () =>{}}) {
 
     const _defaultChild = <Text style={DYogaButtonStyles.buttonText}>
         {title}
@@ -9,7 +9,7 @@ export default function DYogaButton({title = 'Button', backgroundColor = DYogaCo
 
     const _children = children ? children : _defaultChild
 
-    return <Pressable style={{...DYogaButtonStyles.container, backgroundColor}}>
+    return <Pressable onPress={onPress} style={{...DYogaButtonStyles.container, backgroundColor}}>
         {_children}
     </Pressable>
 }
