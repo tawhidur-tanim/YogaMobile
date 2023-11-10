@@ -17,9 +17,10 @@ export default function App() {
     useEffect(() => {
         Font.loadAsync({
             "RobotoSlab": require("./assets/fonts/RobotoSlab.ttf"),
-            "RobotoSlabBold": require("./assets/fonts/RobotoSlabBold.ttf")
+            "RobotoSlabBold": require("./assets/fonts/RobotoSlabBold.ttf"),
+            "Inter": require("./assets/fonts/Inter-Regular.ttf"),
+            "InterBold": require("./assets/fonts/Inter-SemiBold.ttf"),
         }).catch(() => console.log("Failed to load fonts")).finally(() => {
-            console.log("finaly")
             setFontLoaded(true)
         })
     }, [])

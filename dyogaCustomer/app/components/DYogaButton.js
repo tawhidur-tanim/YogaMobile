@@ -1,4 +1,4 @@
-import {Button, Pressable, StyleSheet, Text} from "react-native";
+import {Pressable, StyleSheet, Text} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 
 export default function DYogaButton({title = 'Button', backgroundColor = DYogaColors.buttonBackgroundColor, children}) {

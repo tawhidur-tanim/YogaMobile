@@ -2,13 +2,27 @@ import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {StatusBar} from "expo-status-bar";
 import {DYogaColors} from "../utils/DYogaColors";
 import DYogaButton from "../components/DYogaButton";
+import {useState} from "react";
 
+// splash screen images
+const SPLASH_1 = require('../../assets/splash_1.png');
+const SPLASH_2 = require('../../assets/splash_2.png');
 
 export default function GetStarted() {
 
+    const [splashImage, setSplashImage] = useState(SPLASH_1)
+
+    setInterval(() => {
+        if (splashImage === SPLASH_1) {
+            setSplashImage(SPLASH_2)
+        } else {
+            setSplashImage(SPLASH_1)
+        }
+    }, 5000)
+
     return (<View style={SplashScreenStyles.container}>
             <StatusBar translucent={true}/>
-            <ImageBackground source={require('../../assets/splash_1.png')} resizeMode="cover"
+            <ImageBackground source={splashImage} resizeMode="cover"
                              style={SplashScreenStyles.image}>
                 <View style={SplashScreenStyles.iconContainer}>
                     <Image source={require("../../assets/icon.png")}/>
@@ -54,8 +68,8 @@ const SplashScreenStyles = StyleSheet.create({
         justifyContent: "flex-end"
     },
     footerText: {
-        fontFamily: "RobotoSlab",
-        fontWeight: '500',
+        fontFamily: "Inter",
+        fontWeight: '600',
         fontSize: 11,
         marginBottom: 8,
         color: "rgba(0,0,0,0.51)"
