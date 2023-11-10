@@ -40,7 +40,7 @@ export default function AuthScreen() {
     </View>
 
     <View style = {{...styles.row, justifyContent:'center'}}>
-        <DYogaButton title='Continue'/>
+        <DYogaButton title='Continue' onPress={() => console.log("pressed")}/>
     </View>
         <StatusBar style="auto" />
 
