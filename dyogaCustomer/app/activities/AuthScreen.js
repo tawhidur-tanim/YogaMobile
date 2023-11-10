@@ -1,23 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
 
+
 export default function AuthScreen() {
     return (
-        <View style={styles.container}>
+    <View style={styles.container}>
 
-     <View style = {styles.row}>
+     <View style = {{...styles.row, marginTop: 100}}>
          <HeaderTitle title={"Register | Login"}></HeaderTitle>
     </View>
 
     <View style = {styles.row}>
-        <EditText placeholder={"example@example.com"}></EditText>
+        <Text>
+        New or have an account?{"\n"}Enter your email and a password
+        </Text>
+    </View>
+
+    <View style = {styles.row}>
+        <View style={styles.column}>
+
+            <Text style={styles.label}>Email</Text>
+            <EditText placeholder={"example@example.com"}></EditText>
+
+        </View>
     </View>
 
 
     <View style = {styles.row}>
-        <EditText placeholder={"password"}></EditText>
+        
+        <View style={styles.column}>
+            <Text style={styles.label}>Password</Text>
+            <EditText placeholder={"password"} secureTextEntry={true}></EditText>
+        </View>
+
+
     </View>
 
 
@@ -31,16 +49,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        paddingLeft: 30
     },
 
     row: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        height: 100,
+        margin: 10
       },
+
+    column:{
+        flexDirection: 'column'
+    },
+    label:{
+        paddingBottom: 10
+    }
 });
 
 
