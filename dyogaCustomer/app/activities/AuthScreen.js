@@ -7,7 +7,7 @@ import { useState,useEffect } from 'react';
 import {auth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from '../firebase'
 import {constStrings} from '../utils/Constants'
 import useAuthChange from '../hooks/useAuthChange';
-import {getAllClasses, updateClasses} from '../data/classRepository'
+import {getAllClasses, updateClasses, queryClasses} from '../data/classRepository'
 
 // partly taken from https://github.com/mattfrances/FirebaseExpoAuthentication/blob/main/screens/LoginScreen.js
 
@@ -24,6 +24,12 @@ export default function AuthScreen({navigation}) {
             // updateClasses([{"comments": "updated fire", "courseId": 3, "createdAt": "2023-11-04 21:34:31", "date": "2023-11-06 21:34:11", "deleted": false, "docId": "167909", "id": 6, "instructor": "1111", "reference": "167909", "room": "1111", "synced": true, "updatedAt": "2023-11-04 21:34:31", "userId": "abOkMwtbLgbBYe2XbMCDCiWeKEw2"}, {"comments": "fire update", "courseId": 2, "createdAt": "2023-11-04 20:48:07", "date": "2023-12-04 20:50:40", "deleted": false, "docId": "e4da3b", "id": 5, "instructor": "tanim new", "reference": "e4da3b", "room": "101", "synced": true, "updatedAt": "2023-11-04 20:53:05", "userId": "abOkMwtbLgbBYe2XbMCDCiWeKEw2"}]
             // ,() => {getAllClasses((result) => console.log(result))});
             
+
+            // queryClasses([{ field: "comments", value: "updated fire" }, { field: "courseId", value: "1" }], (result) => {
+
+            //     console.log(result, "authnew");
+
+            // }, ()=>{})
 
           }
     })

@@ -1,5 +1,5 @@
 import {auth, db} from '../firebase'
-import { collection, getDocs,doc, updateDoc } from 'firebase/firestore';
+import { collection, getDocs,doc, updateDoc, query, where } from 'firebase/firestore';
 
 
 const collectionName = () => auth.currentUser.uid.substring(0,6)+"_classInstances";
@@ -57,9 +57,51 @@ const updateClasses = ( updates, success, fail) => {
   });
 };
 
+const queryClasses = (conditions, success, fail) => {
+  const results = new Map();
+
+  let queriesCompleted = 0;
+
+  conditions.forEach(condition => {
+    const q = query(collection(db, collectionName()), where(condition.field, "==", condition.value));
+    getDocs(q)
+      .then(querySnapshot => {
+
+        querySnapshot.forEach(doc => {
+
+          if (!results.has(doc.id)) {
+            results.set(doc.id, doc.data());
+          }
+
+        });
+
+        queriesCompleted++;
+        if (queriesCompleted === conditions.length) {
+         
+          if (typeof success === 'function') {
+            success(Array.from(results.values()));
+          }
+        }
+      
+      })
+      .catch(error => {
+        if (typeof fail === 'function') {
+          fail(error);
+        }
+      });
+  });
+
+
+
+
+
+
+  
+};
+
 
 // 167909
 
 
-export {getAllClasses, updateClasses}
+export {getAllClasses, updateClasses, queryClasses}
 
