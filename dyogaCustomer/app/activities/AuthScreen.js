@@ -3,9 +3,21 @@ import { StyleSheet, View, Text } from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
 import DYogaButton from '../components/DYogaButton';
+import { useState } from 'react';
 
 
 export default function AuthScreen() {
+
+    const [error, setError] =  useState(null);
+    const [email, setEmail] =  useState('');
+    const [password, setPassword] =  useState('');
+
+    const onContinue = () => {
+
+        
+
+    }
+
     return (
     <View style={styles.container}>
 
@@ -19,7 +31,7 @@ export default function AuthScreen() {
         </Text>
     </View>
 
-    <View style = {styles.row}>
+    <View style = {{...styles.row, marginTop:10}}>
         <View style={styles.column}>
 
             <Text style={styles.label}>Email</Text>
@@ -35,14 +47,15 @@ export default function AuthScreen() {
             <Text style={styles.label}>Password</Text>
             <EditText placeholder={"password"} secureTextEntry={true}></EditText>
         </View>
-
-
     </View>
+
+   {error && <Text style={{...styles.row,color: 'red'}}>{error}</Text>}
 
     <View style = {{...styles.row, justifyContent:'center'}}>
-        <DYogaButton title='Continue' onPress={() => console.log("pressed")}/>
+        <DYogaButton title='Continue' onPress={() => alert("pressed")}/>
     </View>
-        <StatusBar style="auto" />
+
+    <StatusBar style="auto" />
 
     </View>
     );
