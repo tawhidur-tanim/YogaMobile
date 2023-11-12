@@ -3,14 +3,24 @@ import { StyleSheet, View, Text } from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
 import DYogaButton from '../components/DYogaButton';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import {auth,createUserWithEmailAndPassword,signInWithEmailAndPassword} from '../firebase'
+import {constStrings} from '../utils/Constants'
+import useAuthChange from '../hooks/useAuthChange';
 
+// partly taken from https://github.com/mattfrances/FirebaseExpoAuthentication/blob/main/screens/LoginScreen.js
 
-export default function AuthScreen() {
+export default function AuthScreen({navigation}) {
 
     const [error, setError] =  useState(null);
     const [email, setEmail] =  useState('');
     const [password, setPassword] =  useState('');
+
+    useAuthChanged(user => {
+        if (user) {
+            navigation.navigate("DashboardScreen")
+          }
+    })
 
     const onContinue = () => {
 
@@ -24,9 +34,31 @@ export default function AuthScreen() {
             return;
         }
 
+        if(password.length < 6){
+            setError('Password must be at least 6 characters');
+            return;
+        }
+
         setError(null);
 
-        alert("auth success");
+      
+       createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredentials => {
+          const user = userCredentials.user;
+          console.log('Registered with:', user.email);
+        })
+        .catch(error => {
+            
+            if(error.code === constStrings.userExists){
+                
+                signInWithEmailAndPassword(auth, email, password)
+                .catch((error) => {
+                  
+                    setError("Email or password is wrong");
+
+                  });
+            }
+        })
 
     }
 
