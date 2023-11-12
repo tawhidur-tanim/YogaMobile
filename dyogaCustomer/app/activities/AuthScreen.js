@@ -14,7 +14,19 @@ export default function AuthScreen() {
 
     const onContinue = () => {
 
-        
+        if(!email){
+            setError('Email is required');
+            return;
+        }
+
+        if(!password){
+            setError('Password is required');
+            return;
+        }
+
+        setError(null);
+
+        alert("auth success");
 
     }
 
@@ -35,7 +47,7 @@ export default function AuthScreen() {
         <View style={styles.column}>
 
             <Text style={styles.label}>Email</Text>
-            <EditText placeholder={"example@example.com"}></EditText>
+            <EditText placeholder={"example@example.com"} value={email} onChangeText={ text => setEmail(text)}></EditText>
 
         </View>
     </View>
@@ -45,14 +57,14 @@ export default function AuthScreen() {
         
         <View style={styles.column}>
             <Text style={styles.label}>Password</Text>
-            <EditText placeholder={"password"} secureTextEntry={true}></EditText>
+            <EditText placeholder={"password"} secureTextEntry={true} value={password} onChangeText={ text => setPassword(text)}></EditText>
         </View>
     </View>
 
    {error && <Text style={{...styles.row,color: 'red'}}>{error}</Text>}
 
     <View style = {{...styles.row, justifyContent:'center'}}>
-        <DYogaButton title='Continue' onPress={() => alert("pressed")}/>
+        <DYogaButton title='Continue' onPress={onContinue}/>
     </View>
 
     <StatusBar style="auto" />

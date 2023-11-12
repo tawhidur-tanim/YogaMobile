@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet } from 'react-native';
 
-const EditText = ({placeholder, secureTextEntry = false, value = '', onChange = () => {}}) => {
+const EditText = ({placeholder, secureTextEntry = false, value = '', onChangeText = () => {}}) => {
     return (
 
       <TextInput
       style={styles.inputStyle}
       placeholder={placeholder}
       value={value}
-      onChange={onChange}
+      onChangeText={onChangeText}
       secureTextEntry={secureTextEntry}
       />
 
