@@ -12,6 +12,17 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
     const {type, dayOfWeek,duration, time, price, description} = item.course;
     const {instructor, room, comments} = item.classInstance;
 
+    const durationConvert = (duration) => {
+
+        if(duration < 60) return duration;
+
+        var hours = (duration / 60);
+        var realhours = Math.floor(hours);
+        var minutes = (hours - realhours) * 60;
+        var realminutes = Math.round(minutes);
+        return  realhours + " hour(s) and \n" + realminutes + " minute(s).";
+        }
+
     // todo: format `time` properly
     // todo: convert `duration` to hours when greater/equal to 60 minutes
 
@@ -33,7 +44,7 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
             <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
                     <Text style={{...ViewClassInstanceItemStyles.label}}>Duration</Text>
-                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{duration}</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{durationConvert(duration)}</Text>
                 </View>
                 <View>
                     <Text style={{...ViewClassInstanceItemStyles.label}}>Price</Text>

@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, StyleSheet, Text, View, RefreshControl} from 'react-native';
 import {constDimensions, constStrings} from "../utils/Constants";
 import {DYogaColors} from "../utils/DYogaColors";
 import EditText from "../components/EditText";
@@ -7,7 +7,8 @@ import {useEffect, useState} from "react";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 import {auth} from "../firebase";
-import { getAllClasses } from '../data/classRepository';
+import { getAllClasses,queryClasses } from '../data/classRepository';
+import moment from 'moment/moment';
 
 export default function DashboardScreen({navigation}) {
 
@@ -15,18 +16,35 @@ export default function DashboardScreen({navigation}) {
     const [filterApplied, setFilterApplied] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
     const [classInstances, setClassInstances] = useState([])
+    const [tempClassInstances, setTempClassInstances] = useState([])
+    const [searchValue, setSearchValue] = useState('');
 
-    console.log("current user", currentUser)
+    //console.log("current user", currentUser)
     const applyBookedFilter = () => {
 
+    }
+
+    const onSearch = (text) =>{
+        setSearchValue(text);
+
+        if(!text) setTempClassInstances(classInstances);
+
+        setTempClassInstances(classInstances.filter(ci => {
+
+            return new moment(ci.course.time).format('h:mm a').toLowerCase().includes(text.toLowerCase()) 
+            || ci.course.dayOfWeek.toLowerCase().includes(text.toLowerCase())
+            || ci.classInstance.room.toLowerCase().includes(text.toLowerCase())
+            || ci.course.type.toLowerCase().includes(text.toLowerCase())
+            || new moment(ci.classInstance.date).format('Do MMMM YYYY').toLowerCase().includes(text.toLowerCase())
+            
+        }))
     }
 
     useEffect(()=>{
 
         getAllClasses((result) =>{
-
-            //console.log(result)
             setClassInstances(result);
+            setTempClassInstances(result);
         })
     },[])
 
@@ -46,7 +64,7 @@ export default function DashboardScreen({navigation}) {
             </View>
 
             <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal, marginTop: 15}}>
-                <EditText placeholder={constStrings.searchClassInstances}/>
+                <EditText placeholder={constStrings.searchClassInstances} value={searchValue} onChangeText={onSearch}/>
             </View>
 
             <View style={{
@@ -69,7 +87,7 @@ export default function DashboardScreen({navigation}) {
             </View>
 
             <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal}}>
-                <FlatList data={classInstances} renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item} />}
+                <FlatList data={tempClassInstances} renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item} />}
                 />
             </View>
 
