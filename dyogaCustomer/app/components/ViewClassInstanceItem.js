@@ -2,13 +2,15 @@ import {Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 import {constDimensions, constStrings} from "../utils/Constants";
 import DYogaButton from "./DYogaButton";
+import moment from "moment/moment";
 
 export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}}) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
 
-    const {type, dayOfWeek, time, instructor, duration, room, price, description} = item
+    const {type, dayOfWeek,duration, time, price, description} = item.course;
+    const {instructor, room, comments} = item.classInstance;
 
     // todo: format `time` properly
     // todo: convert `duration` to hours when greater/equal to 60 minutes
@@ -25,7 +27,7 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
                 </View>
                 <View>
                     <Text style={{...ViewClassInstanceItemStyles.label}}>Time</Text>
-                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{time}</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{new moment(time).format('h:mm a')}</Text>
                 </View>
             </View>
             <View style={ViewClassInstanceItemStyles.row}>
