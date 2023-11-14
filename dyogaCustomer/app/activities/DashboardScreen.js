@@ -18,20 +18,28 @@ export default function DashboardScreen({navigation}) {
     const [filterApplied, setFilterApplied] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
     const [classInstances, setClassInstances] = useState([])
-    const [tempClassInstances, setTempClassInstances] = useState([])
+    const [filterClassInstances, setFilterClassInstances] = useState([])
     const [searchValue, setSearchValue] = useState('');
     const [classInstancesInCart, setClassInstancesInCart] = useState({})
 
     const applyBookedFilter = () => {
+
+        if(!filterApplied){
+            setFilterClassInstances(filterClassInstances.filter(isBooked));
+        }
+        else{
+            setFilterClassInstances(classInstances);
+        }
+        setFilterApplied(!filterApplied);
 
     }
 
     const onSearch = (text) => {
         setSearchValue(text);
 
-        if (!text) setTempClassInstances(classInstances);
+        if (!text) setFilterClassInstances(classInstances);
 
-        setTempClassInstances(classInstances.filter(ci => {
+        setFilterClassInstances(classInstances.filter(ci => {
 
             return new moment(ci.course.time).format('h:mm a').toLowerCase().includes(text.toLowerCase())
                 || ci.course.dayOfWeek.toLowerCase().includes(text.toLowerCase())
@@ -51,7 +59,7 @@ export default function DashboardScreen({navigation}) {
 
         getAllClasses((result) => {
             setClassInstances(result);
-            setTempClassInstances(result);
+            setFilterClassInstances(result);
         })
     }, [])
 
@@ -119,7 +127,7 @@ export default function DashboardScreen({navigation}) {
             </View>
 
             <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal}}>
-                <FlatList data={tempClassInstances}
+                <FlatList data={filterClassInstances}
                           renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)}
                                                                      item={item}/>}
                 />
