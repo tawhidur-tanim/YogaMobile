@@ -5,6 +5,7 @@ import DYogaButton from "../components/DYogaButton";
 import {useEffect, useState} from "react";
 import {constStrings} from "../utils/Constants";
 import {auth} from "../firebase";
+import * as Progress from 'react-native-progress';
 
 // splash screen images
 const SPLASH_1 = require('../../assets/splash_1.png');
@@ -13,6 +14,7 @@ const SPLASH_2 = require('../../assets/splash_2.png');
 export default function GetStarted({ navigation }) {
 
     const currentUser = auth.currentUser
+    const [loading, setLoading] = useState(false)
     const [splashImageIndex, setSplashImageIndex] = useState(0)
 
     const changeBackgroundImage = () => {
@@ -29,7 +31,7 @@ export default function GetStarted({ navigation }) {
         changeBackgroundImage()
 
         console.log(currentUser)
-        if(currentUser && currentUser.id) {
+        if(currentUser && currentUser.uid) {
             navigation.replace("DashboardScreen")
         }
     }, [splashImageIndex])
@@ -42,6 +44,7 @@ export default function GetStarted({ navigation }) {
                     <Image source={require("../../assets/icon.png")}/>
                 </View>
                 <View style={SplashScreenStyles.buttonContainer}>
+                    <Progress.Circle size={30} indeterminate={true} borderColor={DYogaColors.white} borderWidth={3} />
                     <DYogaButton title={constStrings.getStarted} onPress={() => navigation.replace("AuthScreen")}/>
                 </View>
                 <View style={SplashScreenStyles.footer}>
