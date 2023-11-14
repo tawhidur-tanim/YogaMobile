@@ -87,18 +87,23 @@ export default function DashboardScreen({navigation}) {
             Object.keys(classInstancesInCart ?? {}).includes(item.docId)
     }
 
-    console.log("in cart", classInstancesInCart)
+
     return (
         <View style={DashboardScreenStyles.container}>
             <View style={DashboardScreenStyles.header}>
                 <Image style={{height: 70, width: 150}} source={require("../../assets/icon.png")}/>
-                <Pressable onPress={() => navigation.navigate("CheckoutScreen")}>
+                <Pressable onPress={() => navigation.navigate("CheckoutScreen")} style={{display: 'flex'}}>
+                    
+                    <View style={{ position: 'relative'}}>
                     {classInstancesInCart && Object.keys(classInstancesInCart).length > 0 &&
                         <Text style={DashboardScreenStyles.badge}>
+                        
                             {Object.keys(classInstancesInCart).length}
                         </Text>}
-                    <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
+
+                        <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
                            source={require("../../assets/icons/cart.png")}/>
+                    </View>
                 </Pressable>
             </View>
 
@@ -161,9 +166,16 @@ const DashboardScreenStyles = StyleSheet.create({
         borderRadius: 5
     },
     badge: {
-        backgroundColor: DYogaColors.colorAccent,
+        backgroundColor: DYogaColors.grey,
+        color: DYogaColors.white,
+        verticalAlign: 'middle',
+        width: 30,
+        height: 30,
         borderRadius: 50,
-        color: DYogaColors.white
+        verticalAlign: 'middle',
+        textAlign: 'center',
+        position : 'relative',
+        right:0
     }
 });
 
