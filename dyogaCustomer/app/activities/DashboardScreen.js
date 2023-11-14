@@ -25,16 +25,9 @@ export default function DashboardScreen({navigation}) {
     const [classInstancesInCart, setClassInstancesInCart] = useState({})
     const [bookedClasses, setBookedClasses] = useState({})
 
-    const applyBookedFilter = () => {
+    const isFocused = useIsFocused()
 
-        if(!filterApplied){
-            setFilterClassInstances(filterClassInstances.filter(isBooked));
-        }
-        else{
-            setFilterClassInstances(classInstances);
-        }
-        setFilterApplied(!filterApplied);
-    }
+    const applyBookedFilter = () => setFilterApplied(!filterApplied);
 
     const onSearch = (text) => {
         setSearchValue(text);
@@ -58,8 +51,29 @@ export default function DashboardScreen({navigation}) {
             setFilterClassInstances(result);
         })
 
+    
         syncCartItems()
-    }, [])
+
+    }, [isFocused])
+
+    useEffect(() =>{
+        console.log(bookedClasses);
+
+        const convertedClasses = [];
+
+        Object.keys(bookedClasses).forEach((key) =>{
+
+            convertedClasses.push(bookedClasses[key])
+        })
+
+        if(filterApplied){
+            setFilterClassInstances(convertedClasses);
+        }
+        else{
+            setFilterClassInstances(classInstances);
+        }
+
+    },[filterApplied])
 
     function syncCartItems() {
         AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
@@ -69,6 +83,7 @@ export default function DashboardScreen({navigation}) {
 
         getAllBookedClasses((result) => {
             setBookedClasses(result)
+            console.log("fired", result);
         })
     }
 
