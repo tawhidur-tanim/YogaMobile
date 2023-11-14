@@ -1,12 +1,14 @@
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Text, ToastAndroid, SafeAreaView} from 'react-native';
+import {StyleSheet, View, Text, SafeAreaView} from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
 import DYogaButton from '../components/DYogaButton';
 import {useRef, useState} from 'react';
-import {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase'
+import {ACCOUNT_AUTHENTICATED, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase'
 import {constDimensions, constStrings} from '../utils/Constants'
 import {DYogaColors} from "../utils/DYogaColors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toaster from "../components/Toaster";
 
 // partly taken from https://github.com/mattfrances/FirebaseExpoAuthentication/blob/main/screens/LoginScreen.js
 
@@ -19,17 +21,17 @@ export default function AuthScreen({navigation}) {
 
     const inputValidation = () => {
         if (!email) {
-            ToastAndroid.show(constStrings.emailIsRequired, ToastAndroid.LONG);
+            Toaster.show({message: constStrings.emailIsRequired})
             return false;
         }
 
         if (!password) {
-            ToastAndroid.show(constStrings.passwordIsRequired, ToastAndroid.LONG);
+            Toaster.show({message: constStrings.passwordIsRequired})
             return false;
         }
 
         if (password.length < 6) {
-            ToastAndroid.show(constStrings.passwordIsRequirements, ToastAndroid.LONG);
+            Toaster.show({message: constStrings.passwordIsRequirements})
             return false;
         }
 
@@ -53,7 +55,7 @@ export default function AuthScreen({navigation}) {
             signInWithEmailAndPassword(auth, email, password).then(authenticated).catch((error) => {
                 console.log(error)
                 setLoading(false)
-                ToastAndroid.show(constStrings.loginFailed, ToastAndroid.LONG);
+                Toaster.show({message: constStrings.loginFailed})
             });
         })
     }
@@ -61,7 +63,9 @@ export default function AuthScreen({navigation}) {
     const authenticated = (userCredentials) => {
         const user = userCredentials.user;
         console.log("User authenticated: ", user)
-        navigation.replace("DashboardScreen")
+        AsyncStorage.setItem(ACCOUNT_AUTHENTICATED, "true").then(() => {
+            navigation.replace("DashboardScreen")
+        })
     }
 
     return (

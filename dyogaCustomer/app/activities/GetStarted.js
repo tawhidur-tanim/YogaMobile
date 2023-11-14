@@ -1,10 +1,14 @@
-import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {StatusBar} from "expo-status-bar";
 import {DYogaColors} from "../utils/DYogaColors";
 import DYogaButton from "../components/DYogaButton";
 import {useEffect, useState} from "react";
 import {constStrings} from "../utils/Constants";
-import {auth} from "../firebase";
+import {ACCOUNT_AUTHENTICATED, auth} from "../firebase";
+import * as Progress from 'react-native-progress';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useNetInfo} from "@react-native-community/netinfo";
+import Toaster from "../components/Toaster";
 
 // splash screen images
 const SPLASH_1 = require('../../assets/splash_1.png');
@@ -12,8 +16,12 @@ const SPLASH_2 = require('../../assets/splash_2.png');
 
 export default function GetStarted({ navigation }) {
 
+    const netInfo = useNetInfo();
     const currentUser = auth.currentUser
+    const screenWidth = Dimensions.get('window').width;
+    const [loading, setLoading] = useState(false)
     const [splashImageIndex, setSplashImageIndex] = useState(0)
+    const [displayGetStarted, setDisplayGetStarted] = useState(false)
 
     const changeBackgroundImage = () => {
         setTimeout(() => {
@@ -25,13 +33,34 @@ export default function GetStarted({ navigation }) {
         }, 5000)
     }
 
+    const loadUserData = () => {
+        if (currentUser && currentUser.uid) {
+            if (!netInfo.isConnected) {
+                Toaster.show({type: 'error', message: constStrings.noInternetConnection})
+                return
+            }
+
+            // load in the user booked data
+            setTimeout(() => {
+                navigation.replace("DashboardScreen")
+            }, 3000)
+        }
+    }
+
     useEffect(() => {
         changeBackgroundImage()
 
-        console.log(currentUser)
-        if(currentUser && currentUser.id) {
-            navigation.replace("DashboardScreen")
-        }
+        AsyncStorage.getItem(ACCOUNT_AUTHENTICATED).then(value => {
+            if (value && value === 'true'){
+                setLoading(true)
+                setDisplayGetStarted(false)
+            } else {
+                setLoading(false)
+                setDisplayGetStarted(true)
+            }
+        })
+
+        loadUserData();
     }, [splashImageIndex])
 
     return (<View style={SplashScreenStyles.container}>
@@ -41,8 +70,12 @@ export default function GetStarted({ navigation }) {
                 <View style={SplashScreenStyles.iconContainer}>
                     <Image source={require("../../assets/icon.png")}/>
                 </View>
-                <View style={SplashScreenStyles.buttonContainer}>
-                    <DYogaButton title={constStrings.getStarted} onPress={() => navigation.replace("AuthScreen")}/>
+                <View style={{...SplashScreenStyles.buttonContainer}}>
+                    {loading && <View style={{justifyContent: 'center', width: screenWidth, alignItems: 'center'}}>
+                        <Progress.Circle size={30} indeterminate={true} borderColor={DYogaColors.white} borderWidth={3} />
+                    </View>}
+                    {!loading && displayGetStarted &&
+                        <DYogaButton title={constStrings.getStarted} onPress={() => navigation.replace("AuthScreen")}/>}
                 </View>
                 <View style={SplashScreenStyles.footer}>
                     <Text style={SplashScreenStyles.footerText}>&copy; {constStrings.copyright}</Text>

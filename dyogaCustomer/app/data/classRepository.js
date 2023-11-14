@@ -2,11 +2,13 @@ import {auth, db} from '../firebase'
 import { collection, getDocs,doc, updateDoc, query, where } from 'firebase/firestore';
 
 
-const collectionName = () => auth.currentUser.uid.substring(0,6)+"_classInstances";
+const collectionName =  "classInstances";
+
+const bookedCollectionName = () => auth.currentUser.uid.substring(0,6)+"_bookedClassIntances";
 
 const getAllClasses = (callback) => {
 
-  const querySnapshot = getDocs(collection(db, collectionName()));
+  const querySnapshot = getDocs(collection(db, collectionName));
   querySnapshot
     .then((snapshot) => {
 
@@ -37,7 +39,7 @@ const getAllClasses = (callback) => {
 const updateClasses = ( updates, success, fail) => {
   updates.forEach(update => {
 
-    const docRef = doc(db, collectionName(), update.docId); 
+    const docRef = doc(db, collectionName, update.docId); 
     updateDoc(docRef, update)
       .then(() => {
 
@@ -63,7 +65,7 @@ const queryClasses = (conditions, success, fail) => {
   let queriesCompleted = 0;
 
   conditions.forEach(condition => {
-    const q = query(collection(db, collectionName()), where(condition.field, "==", condition.value));
+    const q = query(collection(db, collectionName), where(condition.field, "==", condition.value));
     getDocs(q)
       .then(querySnapshot => {
 
