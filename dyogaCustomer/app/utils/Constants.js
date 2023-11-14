@@ -22,6 +22,7 @@ const constStrings = {
     newOrHaveAnAccount: 'New or have an account?',
     enterUsernameAndPassword: "Enter your email and a password",
     noInternetConnection: "No internet connection! Trying again...",
+    durationFormat: "%1s hour(s) \nand %2s minute(s).\n",
 }
 
 const constDimensions = {

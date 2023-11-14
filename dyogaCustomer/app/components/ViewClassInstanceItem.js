@@ -4,6 +4,7 @@ import {constDimensions, constStrings} from "../utils/Constants";
 import DYogaButton from "./DYogaButton";
 import moment from "moment/moment";
 
+
 export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}}) {
 
     const screenWidth = Dimensions.get('window').width;
@@ -16,12 +17,13 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
 
         if(duration < 60) return duration;
 
-        var hours = (duration / 60);
-        var realhours = Math.floor(hours);
-        var minutes = (hours - realhours) * 60;
-        var realminutes = Math.round(minutes);
-        return  realhours + " hour(s) and \n" + realminutes + " minute(s).";
-        }
+        const hours = (duration / 60);
+        const realhours = Math.floor(hours);
+        const minutes = (hours - realhours) * 60;
+        const realminutes = Math.round(minutes);
+
+        return constStrings.durationFormat.replace("%1s", realhours).replace("%2s", realminutes);
+    }
 
     // todo: format `time` properly
     // todo: convert `duration` to hours when greater/equal to 60 minutes

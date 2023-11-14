@@ -4,6 +4,8 @@ import { collection, getDocs,doc, updateDoc, query, where } from 'firebase/fires
 
 const collectionName =  "classInstances";
 
+const bookedCollectionName = () => auth.currentUser.uid.substring(0,6)+"_bookedClassIntances";
+
 const getAllClasses = (callback) => {
 
   const querySnapshot = getDocs(collection(db, collectionName));
