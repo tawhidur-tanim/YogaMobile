@@ -1,11 +1,11 @@
-import {Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
+import {Dimensions, Pressable, Animated, StyleSheet, Text, View} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 import {constDimensions, constStrings} from "../utils/Constants";
 import DYogaButton from "./DYogaButton";
 import moment from "moment/moment";
 
 
-export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}}) {
+export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}, isBooked = false}) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -29,50 +29,59 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
     // todo: convert `duration` to hours when greater/equal to 60 minutes
 
     return <Pressable style={{...ViewClassInstanceItemStyles.container, height: screenHeight, width: screenWidth}} onPress={onToggle}>
-        <View style={{...ViewClassInstanceItemStyles.containerSheet, width: screenWidth}}>
+        <Animated.View style={{...ViewClassInstanceItemStyles.containerSheet, width: screenWidth}}>
             <View>
                 <Text style={{...ViewClassInstanceItemStyles.yogaType}}>{type}</Text>
             </View>
             <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Day of the week</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.dayOfWeek}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{dayOfWeek}</Text>
                 </View>
                 <View>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Time</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.time}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{new moment(time).format('h:mm a')}</Text>
                 </View>
             </View>
             <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Duration</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.duration}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{durationConvert(duration)}</Text>
                 </View>
                 <View>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Price</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.price}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>£{price}</Text>
                 </View>
             </View>
             <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Instructor</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.instructor}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{instructor}</Text>
                 </View>
                 <View>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Room</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.room}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{room}</Text>
                 </View>
             </View>
             {description && <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
-                    <Text style={{...ViewClassInstanceItemStyles.label}}>Description</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.description}</Text>
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{description}</Text>
                 </View>
             </View>}
-            {ctaPress && <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
+            {comments && <View style={ViewClassInstanceItemStyles.row}>
+                <View style={ViewClassInstanceItemStyles.column}>
+                    <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.comments}</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{comments}</Text>
+                </View>
+            </View>}
+            {isBooked && <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
+                <Text>{constStrings.addedToCardAlready}</Text>
+            </View>}
+            {!isBooked && ctaPress && <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
                 <DYogaButton title={ctaTitle} onPress={ctaPress}/>
             </View>}
-        </View>
+        </Animated.View>
     </Pressable>
 }
 

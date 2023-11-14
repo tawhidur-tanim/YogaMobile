@@ -21,7 +21,13 @@ const constStrings = {
     addToCart: 'Add to cart',
     newOrHaveAnAccount: 'New or have an account?',
     enterUsernameAndPassword: "Enter your email and a password",
-    noInternetConnection: "No internet connection! Trying again...",
+    noInternetConnection: "No internet connection! Trying again...", 
+    comments: "Comments", description: "Description",
+    room: "Room",
+    price: "Price",
+    duration: "Duration",
+    dayOfWeek: "Day of the week",
+    addedToCardAlready: "🛒 You added this class to your cart already!",
     durationFormat: "%1s hour(s) \nand %2s minute(s)",
 }
 
@@ -30,4 +36,8 @@ const constDimensions = {
     screenPaddingTop: 50,
 }
 
-export {constStrings, constDimensions}
+const constStoreKeys = {
+    bookedClasses : "BOOKED_CLASSES_V1"
+}
+
+export {constStrings, constDimensions, constStoreKeys}
