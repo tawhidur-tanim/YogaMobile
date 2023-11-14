@@ -26,10 +26,13 @@ import java.util.concurrent.Executors;
 public class ClassInstanceRepository implements RemoteRepository<ClassInstance> {
 
     private final RemoteService<ClassInstance> classInstanceRemoteService;
+    private final RemoteService<ClassInstance> globalClassInstanceRemoteService;
     private final ClassInstanceDao classInstanceDao;
     private final ExecutorService executor;
     private final Handler handler;
     private final String username;
+
+    private static final String CLASS_INSTANCES = "classInstances";
 
     public ClassInstanceRepository(final Context application) {
         dYogaDatabase database = dYogaDatabase.getInstance(application);
@@ -40,6 +43,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
                 Constants.USERNAME,
                 Constants.generateReference()
         );
+        this.globalClassInstanceRemoteService = new RemoteService<>(CLASS_INSTANCES);
         this.classInstanceRemoteService = new RemoteService<>(classInstanceCollectionName(username), this);
 
         executor = Executors.newSingleThreadExecutor();
@@ -57,7 +61,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
             callback.onResult(true);
 
             classInstanceRemoteService.syncEntity(classInstance);
-
+            globalClassInstanceRemoteService.syncEntity(asGlobal(classInstance));
         });
     }
 
@@ -71,6 +75,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
             callback.onResult(true);
 
             classInstanceRemoteService.syncEntity(classInstance);
+            globalClassInstanceRemoteService.syncEntity(asGlobal(classInstance));
         });
     }
 
@@ -89,6 +94,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
             callback.onResult(true);
 
             classInstanceRemoteService.syncEntity(classInstance);
+            globalClassInstanceRemoteService.syncEntity(asGlobal(classInstance));
         });
     }
 
@@ -146,5 +152,12 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
                 callback.onResult(true);
             }
         });
+    }
+
+    private ClassInstance asGlobal(ClassInstance classInstance) {
+        // maintain a unique id for each global class instance
+        String hashedId = Constants.generateReferenceById(classInstance.getId());
+        classInstance.setReference(username.substring(0, 6).concat(hashedId));
+        return classInstance;
     }
 }
