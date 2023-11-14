@@ -5,22 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:paddingVertical="@dimen/screen_padding_vertical"
     android:paddingHorizontal="@dimen/screen_padding_horizontal"
+    android:paddingVertical="@dimen/screen_padding_vertical"
     tools:context=".activities.AuthActivity">
 
     <TextView
-        style="@style/ScreenHeading"
         android:id="@+id/screenHeading"
-        android:layout_width="235dp"
-        android:layout_height="42dp"
+        style="@style/ScreenHeading"
+        android:layout_width="383dp"
+        android:layout_height="53dp"
         android:text="@string/register_login"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        style="@style/ScreenParagraph"
         android:id="@+id/screenInfo"
+        style="@style/ScreenParagraph"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -29,41 +29,41 @@
         app:layout_constraintTop_toBottomOf="@+id/screenHeading" />
 
     <TextView
-        style="@style/ScreenParagraphTwo"
         android:id="@+id/emailLabel"
+        style="@style/ScreenParagraphTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/email"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/screenInfo"/>
+        app:layout_constraintTop_toBottomOf="@+id/screenInfo" />
 
     <EditText
-        style="@style/Theme.Dyoga.EditText"
         android:id="@+id/emailEditText"
+        style="@style/Theme.Dyoga.EditText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height"
         android:layout_marginTop="4dp"
+        android:focusedByDefault="true"
         android:importantForAutofill="no"
         android:inputType="textEmailAddress"
-        android:focusedByDefault="true"
         android:labelFor="@+id/emailLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emailLabel" />
 
     <TextView
-        style="@style/ScreenParagraphTwo"
         android:id="@+id/passwordLabel"
+        style="@style/ScreenParagraphTwo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/screen_vertical_spacing_two"
         android:text="@string/passcode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/emailEditText"/>
+        app:layout_constraintTop_toBottomOf="@id/emailEditText" />
 
     <EditText
-        style="@style/Theme.Dyoga.EditText"
         android:id="@+id/passwordEditText"
+        style="@style/Theme.Dyoga.EditText"
         android:layout_width="match_parent"
         android:layout_height="@dimen/edittext_height"
         android:layout_marginTop="4dp"
@@ -82,40 +82,40 @@
         android:backgroundTint="@color/colorSecondary"
         android:text="@string/continue_text"
         app:backgroundTint="@color/colorSecondary"
-        app:layout_constraintTop_toBottomOf="@id/passwordEditText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/passwordEditText" />
 
     <ProgressBar
         android:id="@+id/loadingProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:indeterminate="true"
         android:visibility="gone"
-        android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@id/continueButton"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/continueButton" />
 
     <TextView
         android:id="@+id/btnCopyRight"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center"
         android:text="@string/copyright_2023"
-        android:layout_marginBottom="8dp"
         android:textColor="#82000000"
         android:textSize="11sp"
+        app:layout_constraintBottom_toTopOf="@id/productOfGroupii"
         app:layout_constraintEnd_toEndOf="@+id/getStarted"
-        app:layout_constraintStart_toStartOf="@+id/getStarted"
-        app:layout_constraintBottom_toTopOf="@id/productOfGroupii" />
+        app:layout_constraintStart_toStartOf="@+id/getStarted" />
 
     <TextView
         android:id="@+id/productOfGroupii"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:text="@string/product_of_group_ii"
-        android:layout_marginTop="8dp"
         android:textColor="#8200000F"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="parent"
