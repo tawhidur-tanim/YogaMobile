@@ -75,9 +75,9 @@ export default function DashboardScreen({navigation}) {
         })
     }
 
-    const isBooked = () => {
-        return selectedItem && selectedItem.docId && classInstancesInCart &&
-            Object.keys(classInstancesInCart ?? {}).includes(selectedItem.docId)
+    const isBooked = (item) => {
+        return item && item.docId && classInstancesInCart &&
+            Object.keys(classInstancesInCart ?? {}).includes(item.docId)
     }
 
     return (
@@ -122,7 +122,7 @@ export default function DashboardScreen({navigation}) {
 
             {selectedItem &&
                 <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart}
-                                       isBooked={isBooked()}
+                                       isBooked={isBooked(selectedItem)}
                                        onToggle={() => setSelectedItem(null)}/>}
 
             <StatusBar style="auto"/>
