@@ -35,4 +35,6 @@ const auth = initializeAuth(app, {
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-export {app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, db}
+const ACCOUNT_AUTHENTICATED = "ACCOUNT_AUTHENTICATED"
+
+export {app, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, db, ACCOUNT_AUTHENTICATED}

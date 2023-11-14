@@ -20,8 +20,8 @@ const constStrings = {
     checkout: 'Checkout',
     addToCart: 'Add to cart',
     newOrHaveAnAccount: 'New or have an account?',
-    enterUsernameAndPassword: "Enter your email and a password"
-
+    enterUsernameAndPassword: "Enter your email and a password",
+    noInternetConnection: "No internet connection! Trying again...",
 }
 
 const constDimensions = {
