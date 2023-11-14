@@ -8,5 +8,9 @@ export const DYogaColors = {
     bookedButtonBackground: "rgba(217,217,217,0.31)",
     bookedButtonBackgroundActive: "#520067",
     white: '#fff',
-    screenBackgroundBlur: "rgba(217,217,217,0.4)"
+    screenBackgroundBlur: "rgba(217,217,217,0.4)",
+    colorSecondary: "#000000",
+    colorPrimary: "#FF5900",
+    colorPrimaryDark: "#DC5000",
+    colorAccent: "#520067",
 }

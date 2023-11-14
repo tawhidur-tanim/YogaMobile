@@ -2,9 +2,14 @@ import React, {useState} from 'react';
 import {View, TextInput, Button, Text, StyleSheet} from 'react-native';
 import {DYogaColors} from "../utils/DYogaColors";
 
-const EditText = ({placeholder, secureTextEntry = false, value = '', onChangeText = text => {}, autoFocus=false}) => {
+const EditText = ({
+                      placeholder, secureTextEntry = false, value = '', onChangeText = text => {
+    }, autoFocus = false, returnKeyType, innerRef, onSubmitEditing
+                  }) => {
     return (<TextInput style={styles.inputStyle} placeholder={placeholder} value={value} autoFocus={autoFocus}
-                       onChangeText={onChangeText} secureTextEntry={secureTextEntry} />
+                       onChangeText={onChangeText} secureTextEntry={secureTextEntry} returnKeyType={returnKeyType}
+                       onSubmitEditing={onSubmitEditing}
+                       ref={innerRef} selectionColor={DYogaColors.colorSecondary}/>
     );
 }
 

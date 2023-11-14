@@ -19,6 +19,9 @@ const constStrings = {
     yourCheckout: 'Your Checkout',
     checkout: 'Checkout',
     addToCart: 'Add to cart',
+    newOrHaveAnAccount: 'New or have an account?',
+    enterUsernameAndPassword: "Enter your email and a password"
+
 }
 
 const constDimensions = {

@@ -1,7 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import GetStarted from "./app/activities/GetStarted";
-import PlaygroundScreen from "./app/activities/PlaygroundScreen";
 import AuthScreen from "./app/activities/AuthScreen";
 import CheckoutScreen from "./app/activities/CheckoutScreen";
 import DashboardScreen from "./app/activities/DashboardScreen";
@@ -33,7 +32,6 @@ export default function App() {
             <Stack.Navigator screenOptions={{
                 headerShown: false
             }}>
-                <Stack.Screen name="PlaygroundScreen" component={PlaygroundScreen}/>
                 <Stack.Screen name="GetStarted" component={GetStarted}/>
                 <Stack.Screen name="AuthScreen" component={AuthScreen}/>
                 <Stack.Screen name="DashboardScreen" component={DashboardScreen}/>

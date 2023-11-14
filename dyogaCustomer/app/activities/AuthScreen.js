@@ -1,9 +1,9 @@
 import {StatusBar} from 'expo-status-bar';
-import {StyleSheet, View, Text, ToastAndroid} from 'react-native';
+import {StyleSheet, View, Text, ToastAndroid, SafeAreaView} from 'react-native';
 import EditText from '../components/EditText';
 import HeaderTitle from '../components/HeaderTitle';
 import DYogaButton from '../components/DYogaButton';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword} from '../firebase'
 import {constDimensions, constStrings} from '../utils/Constants'
 import {DYogaColors} from "../utils/DYogaColors";
@@ -12,6 +12,8 @@ import {DYogaColors} from "../utils/DYogaColors";
 
 export default function AuthScreen({navigation}) {
 
+    const passwordInputField = useRef()
+    const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -39,59 +41,64 @@ export default function AuthScreen({navigation}) {
             return;
         }
 
-        createUserWithEmailAndPassword(auth, email, password).then(userCredentials => {
-            const user = userCredentials.user;
-            console.log('Registered with:', user.email);
-            navigation.navigate("DashboardScreen")
-        }).catch(error => {
+        setLoading(true)
+
+        createUserWithEmailAndPassword(auth, email, password).then(authenticated).catch(error => {
             if (error.code !== constStrings.userExists) {
                 console.log(error)
                 return
             }
 
             // attempt user sign in
-            signInWithEmailAndPassword(auth, email, password).then(userCredentials => {
-                const user = userCredentials.user;
-                console.log('Logged in with:', user.email);
-                navigation.navigate("DashboardScreen")
-            }).catch((error) => {
+            signInWithEmailAndPassword(auth, email, password).then(authenticated).catch((error) => {
                 console.log(error)
+                setLoading(false)
                 ToastAndroid.show(constStrings.loginFailed, ToastAndroid.LONG);
             });
         })
     }
 
+    const authenticated = (userCredentials) => {
+        const user = userCredentials.user;
+        console.log("User authenticated: ", user)
+        navigation.replace("DashboardScreen")
+    }
+
     return (
-        <View style={AuthScreenStyles.container}>
+        <SafeAreaView style={AuthScreenStyles.container}>
             <View style={{...AuthScreenStyles.row, marginTop: constDimensions.screenPaddingTop}}>
                 <HeaderTitle title={constStrings.registerLogin}></HeaderTitle>
             </View>
 
             <View style={{...AuthScreenStyles.row, flexDirection: 'column', alignItems: 'flex-start'}}>
-                <Text style={AuthScreenStyles.text}>New or have an account?</Text>
-                <Text style={AuthScreenStyles.text}>Enter your email and a password</Text>
+                <Text style={AuthScreenStyles.text}>{constStrings.newOrHaveAnAccount}</Text>
+                <Text style={AuthScreenStyles.text}>{constStrings.enterUsernameAndPassword}</Text>
             </View>
 
             <View style={{...AuthScreenStyles.row, marginTop: 20}}>
                 <View style={AuthScreenStyles.column}>
                     <Text style={AuthScreenStyles.label}>{constStrings.email}</Text>
-                    <EditText value={email} onChangeText={text => setEmail(text)} autoFocus={true}/>
+                    <EditText value={email} onChangeText={text => setEmail(text)} autoFocus={true} returnKeyType="next"
+                              onSubmitEditing={() => {
+                                  passwordInputField.current.focus();
+                              }}/>
                 </View>
             </View>
 
             <View style={AuthScreenStyles.row}>
                 <View style={AuthScreenStyles.column}>
                     <Text style={AuthScreenStyles.label}>Password</Text>
-                    <EditText secureTextEntry={true} value={password} onChangeText={text => setPassword(text)}/>
+                    <EditText secureTextEntry={true} value={password} onChangeText={text => setPassword(text)}
+                              innerRef={passwordInputField}/>
                 </View>
             </View>
 
             <View style={{...AuthScreenStyles.row, justifyContent: 'center', marginTop: 40}}>
-                <DYogaButton title={constStrings.continueText} onPress={onContinue}/>
+                <DYogaButton title={constStrings.continueText} onPress={onContinue} isLoading={loading}/>
             </View>
 
             <StatusBar style="auto"/>
-        </View>
+        </SafeAreaView>
     );
 }
 

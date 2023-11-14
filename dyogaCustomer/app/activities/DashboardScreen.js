@@ -6,12 +6,15 @@ import EditText from "../components/EditText";
 import {useState} from "react";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
+import {auth} from "../firebase";
 
 export default function DashboardScreen({navigation}) {
 
+    const currentUser = auth.currentUser
     const [filterApplied, setFilterApplied] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
 
+    console.log("current user", currentUser)
     const applyBookedFilter = () => {
 
     }

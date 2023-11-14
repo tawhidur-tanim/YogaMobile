@@ -2,9 +2,9 @@ import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 import {StatusBar} from "expo-status-bar";
 import {DYogaColors} from "../utils/DYogaColors";
 import DYogaButton from "../components/DYogaButton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {constStrings} from "../utils/Constants";
-import useAuthChanged from "../hooks/useAuthChange";
+import {auth} from "../firebase";
 
 // splash screen images
 const SPLASH_1 = require('../../assets/splash_1.png');
@@ -12,33 +12,37 @@ const SPLASH_2 = require('../../assets/splash_2.png');
 
 export default function GetStarted({ navigation }) {
 
-    const [splashImage, setSplashImage] = useState(SPLASH_1)
+    const currentUser = auth.currentUser
+    const [splashImageIndex, setSplashImageIndex] = useState(0)
 
-    useAuthChanged(user => {
-        if (user) {
-            console.log("Logging in user...")
-            navigation.navigate("DashboardScreen")
+    const changeBackgroundImage = () => {
+        setTimeout(() => {
+            if (splashImageIndex === 0) {
+                setSplashImageIndex(1)
+            } else {
+                setSplashImageIndex(0)
+            }
+        }, 5000)
+    }
 
+    useEffect(() => {
+        changeBackgroundImage()
+
+        console.log(currentUser)
+        if(currentUser && currentUser.id) {
+            navigation.replace("DashboardScreen")
         }
-    })
-
-    setInterval(() => {
-        if (splashImage === SPLASH_1) {
-            setSplashImage(SPLASH_2)
-        } else {
-            setSplashImage(SPLASH_1)
-        }
-    }, 5000)
+    }, [splashImageIndex])
 
     return (<View style={SplashScreenStyles.container}>
             <StatusBar translucent={true}/>
-            <ImageBackground source={splashImage} resizeMode="cover"
+            <ImageBackground source={splashImageIndex === 0 ? SPLASH_1 : SPLASH_2} resizeMode="cover"
                              style={SplashScreenStyles.image}>
                 <View style={SplashScreenStyles.iconContainer}>
                     <Image source={require("../../assets/icon.png")}/>
                 </View>
                 <View style={SplashScreenStyles.buttonContainer}>
-                    <DYogaButton title={constStrings.getStarted} onPress={() => navigation.navigate("AuthScreen")}/>
+                    <DYogaButton title={constStrings.getStarted} onPress={() => navigation.replace("AuthScreen")}/>
                 </View>
                 <View style={SplashScreenStyles.footer}>
                     <Text style={SplashScreenStyles.footerText}>&copy; {constStrings.copyright}</Text>
