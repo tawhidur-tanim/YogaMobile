@@ -3,21 +3,32 @@ import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
 import {constDimensions, constStrings} from "../utils/Constants";
 import {DYogaColors} from "../utils/DYogaColors";
 import EditText from "../components/EditText";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 import {auth} from "../firebase";
+import { getAllClasses } from '../data/classRepository';
 
 export default function DashboardScreen({navigation}) {
 
     const currentUser = auth.currentUser
     const [filterApplied, setFilterApplied] = useState(false)
     const [selectedItem, setSelectedItem] = useState()
+    const [classInstances, setClassInstances] = useState([])
 
     console.log("current user", currentUser)
     const applyBookedFilter = () => {
 
     }
+
+    useEffect(()=>{
+
+        getAllClasses((result) =>{
+
+            //console.log(result)
+            setClassInstances(result);
+        })
+    },[])
 
     const addToCart = () => {
 
@@ -58,10 +69,7 @@ export default function DashboardScreen({navigation}) {
             </View>
 
             <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal}}>
-                <FlatList data={[
-                        {key: 'Devin'},
-                        {key: '2'},
-                    ]} renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item} />}
+                <FlatList data={classInstances} renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item} />}
                 />
             </View>
 

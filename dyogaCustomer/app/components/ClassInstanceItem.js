@@ -3,6 +3,7 @@ import {
 } from 'react-native';
 import {DYogaColors} from "../utils/DYogaColors";
 import {constStrings} from "../utils/Constants";
+import moment from 'moment/moment';
 
 export default function ClassInstanceItem({item = {}, onPress, canDelete = false, onDelete}) {
 
@@ -14,7 +15,7 @@ export default function ClassInstanceItem({item = {}, onPress, canDelete = false
         <Animated.View>
             <View style={{...ClassInstanceItemStyles.container, backgroundColor: '#0085FF'}}>
                 <View style={ClassInstanceItemStyles.content}>
-                    <Text style={ClassInstanceItemStyles.date}>24th November, 2023</Text>
+                    <Text style={ClassInstanceItemStyles.date}>{new moment(item.classInstance.date).format('Do MMMM YYYY')}</Text>
                     <View style={ClassInstanceItemStyles.info}>
                         <Text
                             style={{
@@ -24,16 +25,16 @@ export default function ClassInstanceItem({item = {}, onPress, canDelete = false
                                 fontSize: 15,
                                 marginBottom: 5
                             }}>
-                            Family Yoga
+                            {item.course.type}
                         </Text>
                     </View>
                     <View style={ClassInstanceItemStyles.info}>
                         <Text style={ClassInstanceItemStyles.infoText}>{constStrings.time}:</Text>
-                        <Text style={ClassInstanceItemStyles.infoText}>Mavin James</Text>
+                        <Text style={ClassInstanceItemStyles.infoText}>{new moment(item.course.time).format('h:mm a')}</Text>
                     </View>
                     <View style={ClassInstanceItemStyles.info}>
                         <Text style={ClassInstanceItemStyles.infoText}>{constStrings.instructor}:</Text>
-                        <Text style={ClassInstanceItemStyles.infoText}>Mavin James</Text>
+                        <Text style={ClassInstanceItemStyles.infoText}>{item.classInstance.instructor}</Text>
                     </View>
                 </View>
                 <Pressable onPress={canDelete ? onDelete : _onPress}>
