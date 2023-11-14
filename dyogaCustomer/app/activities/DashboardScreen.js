@@ -80,11 +80,16 @@ export default function DashboardScreen({navigation}) {
             Object.keys(classInstancesInCart ?? {}).includes(item.docId)
     }
 
+    console.log("in cart", classInstancesInCart)
     return (
         <View style={DashboardScreenStyles.container}>
             <View style={DashboardScreenStyles.header}>
                 <Image style={{height: 70, width: 150}} source={require("../../assets/icon.png")}/>
                 <Pressable onPress={() => navigation.navigate("CheckoutScreen")}>
+                    {classInstancesInCart && Object.keys(classInstancesInCart).length > 0 &&
+                        <Text style={{backgroundColor: DYogaColors.colorAccent, color: DYogaColors.white}}>
+                            {Object.keys(classInstancesInCart).length}
+                        </Text>}
                     <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
                            source={require("../../assets/icons/cart.png")}/>
                 </Pressable>
