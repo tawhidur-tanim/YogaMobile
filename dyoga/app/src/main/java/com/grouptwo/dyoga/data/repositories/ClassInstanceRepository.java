@@ -10,9 +10,12 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.grouptwo.dyoga.apiservice.RemoteService;
 import com.grouptwo.dyoga.configs.GsonConfig;
+import com.grouptwo.dyoga.data.GlobalClassInstance;
 import com.grouptwo.dyoga.data.dYogaDatabase;
 import com.grouptwo.dyoga.data.dao.ClassInstanceDao;
+import com.grouptwo.dyoga.data.dao.CourseDao;
 import com.grouptwo.dyoga.data.entities.ClassInstance;
+import com.grouptwo.dyoga.data.entities.Course;
 import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 import com.grouptwo.dyoga.utils.SharedPreferenceManager;
@@ -26,8 +29,9 @@ import java.util.concurrent.Executors;
 public class ClassInstanceRepository implements RemoteRepository<ClassInstance> {
 
     private final RemoteService<ClassInstance> classInstanceRemoteService;
-    private final RemoteService<ClassInstance> globalClassInstanceRemoteService;
+    private final RemoteService<GlobalClassInstance> globalClassInstanceRemoteService;
     private final ClassInstanceDao classInstanceDao;
+    private final CourseDao courseDao;
     private final ExecutorService executor;
     private final Handler handler;
     private final String username;
@@ -37,6 +41,7 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
     public ClassInstanceRepository(final Context application) {
         dYogaDatabase database = dYogaDatabase.getInstance(application);
         this.classInstanceDao = database.classInstanceDao();
+        this.courseDao = database.courseDao();
 
         this.username = SharedPreferenceManager.getData(
                 application,
@@ -154,10 +159,13 @@ public class ClassInstanceRepository implements RemoteRepository<ClassInstance> 
         });
     }
 
-    private ClassInstance asGlobal(ClassInstance classInstance) {
+    private GlobalClassInstance asGlobal(ClassInstance classInstance) {
+        Course course = courseDao.getCourseById(Math.toIntExact(classInstance.getCourseId()));
+
         // maintain a unique id for each global class instance
         String hashedId = Constants.generateReferenceById(classInstance.getId());
         classInstance.setReference(username.substring(0, 6).concat(hashedId));
-        return classInstance;
+
+        return new GlobalClassInstance(course, classInstance);
     }
 }

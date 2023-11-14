@@ -4,7 +4,7 @@
 import {initializeApp} from "firebase/app";
 import {
     initializeAuth,
-    browserLocalPersistence,
+    indexedDBLocalPersistence,
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword
 } from 'firebase/auth'
@@ -27,8 +27,11 @@ const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 
 const auth = initializeAuth(app, {
-  persistence: browserLocalPersistence
+  persistence: indexedDBLocalPersistence
 });
+
+auth.setPersistence("LOCAL")
+    .finally(() => console.log("Persistence set successfully"))
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
