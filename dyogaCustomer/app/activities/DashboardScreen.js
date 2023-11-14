@@ -94,7 +94,7 @@ export default function DashboardScreen({navigation}) {
                 <Image style={{height: 70, width: 150}} source={require("../../assets/icon.png")}/>
                 <Pressable onPress={() => navigation.navigate("CheckoutScreen")}>
                     {classInstancesInCart && Object.keys(classInstancesInCart).length > 0 &&
-                        <Text style={{backgroundColor: DYogaColors.colorAccent, color: DYogaColors.white}}>
+                        <Text style={DashboardScreenStyles.badge}>
                             {Object.keys(classInstancesInCart).length}
                         </Text>}
                     <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
@@ -159,6 +159,11 @@ const DashboardScreenStyles = StyleSheet.create({
         paddingVertical: 3,
         paddingHorizontal: 5,
         borderRadius: 5
+    },
+    badge: {
+        backgroundColor: DYogaColors.colorAccent,
+        borderRadius: 50,
+        color: DYogaColors.white
     }
 });
 

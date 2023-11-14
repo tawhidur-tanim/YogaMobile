@@ -41,5 +41,5 @@ const getAllClasses = (callback) => {
 // 167909
 
 
-export {getAllClasses, updateClasses, queryClasses}
+export {getAllClasses}
 
