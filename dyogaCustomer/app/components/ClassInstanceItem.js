@@ -4,7 +4,7 @@ import {
 import {DYogaColors} from "../utils/DYogaColors";
 import {constStrings} from "../utils/Constants";
 
-export default function ClassInstanceItem({item = {}, onPress, canDelete, onDelete}) {
+export default function ClassInstanceItem({item = {}, onPress, canDelete = false, onDelete}) {
 
     const _onPress = () => {
         onPress && onPress(item)

@@ -1,9 +1,9 @@
-import {Dimensions, StyleSheet, Text, View} from "react-native";
+import {Dimensions, Pressable, StyleSheet, Text, View} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 import {constDimensions, constStrings} from "../utils/Constants";
 import DYogaButton from "./DYogaButton";
 
-export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart}) {
+export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}}) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
@@ -13,7 +13,7 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
     // todo: format `time` properly
     // todo: convert `duration` to hours when greater/equal to 60 minutes
 
-    return <View style={{...ViewClassInstanceItemStyles.container, height: screenHeight, width: screenWidth}}>
+    return <Pressable style={{...ViewClassInstanceItemStyles.container, height: screenHeight, width: screenWidth}} onPress={onToggle}>
         <View style={{...ViewClassInstanceItemStyles.containerSheet, width: screenWidth}}>
             <View>
                 <Text style={{...ViewClassInstanceItemStyles.yogaType}}>{type}</Text>
@@ -58,7 +58,7 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
                 <DYogaButton title={ctaTitle} onPress={ctaPress}/>
             </View>}
         </View>
-    </View>
+    </Pressable>
 }
 
 const ViewClassInstanceItemStyles = StyleSheet.create({

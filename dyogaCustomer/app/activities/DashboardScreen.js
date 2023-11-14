@@ -61,11 +61,11 @@ export default function DashboardScreen({navigation}) {
                 <FlatList data={[
                         {key: 'Devin'},
                         {key: '2'},
-                    ]} renderItem={({item}) => <ClassInstanceItem item={item} />}
+                    ]} renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item} />}
                 />
             </View>
 
-            {selectedItem && <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart}/>}
+            {selectedItem && <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart} onToggle={() => setSelectedItem(null)} />}
 
             <StatusBar style="auto"/>
         </View>
