@@ -1,5 +1,5 @@
 import {auth, db} from '../firebase'
-import {collection, getDocs, setDoc, doc} from 'firebase/firestore';
+import {collection, getDocs, setDoc, doc,updateDoc} from 'firebase/firestore';
 
 const collectionName = "classInstances";
 
