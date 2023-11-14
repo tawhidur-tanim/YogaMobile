@@ -1,20 +1,14 @@
-import { useState,useEffect } from 'react';
+import {useEffect} from 'react';
 import {auth} from '../firebase'
 
-
-
-export default useAuthChanged  = (callBack) =>{
-
+const useAuthChanged = (callBack) => {
     useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(user => {
-            if(callBack && typeof callBack == "function"){
-
+        return auth.onAuthStateChanged(user => {
+            if (callBack && typeof callBack == "function") {
                 callBack(user);
             }
-
         })
-    
-        return unsubscribe
-      }, []);
-
+    }, []);
 }
+
+export default useAuthChanged

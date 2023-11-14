@@ -3,14 +3,24 @@ import {StatusBar} from "expo-status-bar";
 import {DYogaColors} from "../utils/DYogaColors";
 import DYogaButton from "../components/DYogaButton";
 import {useState} from "react";
+import {constStrings} from "../utils/Constants";
+import useAuthChanged from "../hooks/useAuthChange";
 
 // splash screen images
 const SPLASH_1 = require('../../assets/splash_1.png');
 const SPLASH_2 = require('../../assets/splash_2.png');
 
-export default function GetStarted() {
+export default function GetStarted({ navigation }) {
 
     const [splashImage, setSplashImage] = useState(SPLASH_1)
+
+    useAuthChanged(user => {
+        if (user) {
+            console.log("Logging in user...")
+            navigation.navigate("DashboardScreen")
+
+        }
+    })
 
     setInterval(() => {
         if (splashImage === SPLASH_1) {
@@ -28,11 +38,11 @@ export default function GetStarted() {
                     <Image source={require("../../assets/icon.png")}/>
                 </View>
                 <View style={SplashScreenStyles.buttonContainer}>
-                    <DYogaButton title={'Get Started'}/>
+                    <DYogaButton title={constStrings.getStarted} onPress={() => navigation.navigate("AuthScreen")}/>
                 </View>
                 <View style={SplashScreenStyles.footer}>
-                    <Text style={SplashScreenStyles.footerText}>&copy; Copyright 2023</Text>
-                    <Text style={SplashScreenStyles.footerText}>Product of Group II</Text>
+                    <Text style={SplashScreenStyles.footerText}>&copy; {constStrings.copyright}</Text>
+                    <Text style={SplashScreenStyles.footerText}>{constStrings.productOfGroupII}</Text>
                 </View>
             </ImageBackground>
         </View>

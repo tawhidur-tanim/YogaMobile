@@ -1,5 +1,12 @@
 export const DYogaColors = {
     grey: "#575757",
+    grey65: "rgba(0,0,0,0.65)",
     buttonBackgroundColor: "#000000",
     buttonTextColor: "rgba(253,253,253,0.85)",
+    screenBackground: "#fff",
+    inputBackground: "rgba(240, 240, 240, 0.38)",
+    bookedButtonBackground: "rgba(217,217,217,0.31)",
+    bookedButtonBackgroundActive: "#520067",
+    white: '#fff',
+    screenBackgroundBlur: "rgba(217,217,217,0.4)"
 }

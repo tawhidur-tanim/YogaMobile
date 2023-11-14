@@ -1,21 +1,91 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
+import {StatusBar} from 'expo-status-bar';
+import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {constDimensions, constStrings} from "../utils/Constants";
+import {DYogaColors} from "../utils/DYogaColors";
+import EditText from "../components/EditText";
+import {useState} from "react";
+import ClassInstanceItem from "../components/ClassInstanceItem";
+import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 
-export default function DashboardScreen() {
+export default function DashboardScreen({navigation}) {
+
+    const [filterApplied, setFilterApplied] = useState(false)
+    const [selectedItem, setSelectedItem] = useState()
+
+    const applyBookedFilter = () => {
+
+    }
+
+    const addToCart = () => {
+
+        setSelectedItem(null)
+    }
+
     return (
-        <View style={styles.container}>
+        <View style={DashboardScreenStyles.container}>
+            <View style={DashboardScreenStyles.header}>
+                <Image style={{height: 70, width: 150}} source={require("../../assets/icon.png")}/>
+                <Pressable onPress={() => navigation.navigate("CheckoutScreen")}>
+                    <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
+                           source={require("../../assets/icons/cart.png")}/>
+                </Pressable>
+            </View>
 
-            <StatusBar style="auto" />
+            <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal, marginTop: 15}}>
+                <EditText placeholder={constStrings.searchClassInstances}/>
+            </View>
+
+            <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingHorizontal: constDimensions.screenPaddingHorizontal,
+                paddingVertical: 10
+            }}>
+                <Text>{constStrings.filter}:</Text>
+                <Pressable style={{
+                    ...DashboardScreenStyles.bookedButton,
+                    backgroundColor: (filterApplied ? DYogaColors.bookedButtonBackgroundActive
+                        : DYogaColors.bookedButtonBackground)
+                }} onPress={applyBookedFilter}>
+                    <Text style={{
+                        fontFamily: 'RobotoSlab',
+                        color: (filterApplied ? DYogaColors.white : DYogaColors.grey65)
+                    }}>{constStrings.booked}</Text>
+                </Pressable>
+            </View>
+
+            <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal}}>
+                <FlatList data={[
+                        {key: 'Devin'},
+                        {key: '2'},
+                    ]} renderItem={({item}) => <ClassInstanceItem item={item} />}
+                />
+            </View>
+
+            {selectedItem && <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart}/>}
+
+            <StatusBar style="auto"/>
         </View>
     );
 }
 
-const styles = StyleSheet.create({
+const DashboardScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: DYogaColors.screenBackground,
+        paddingTop: constDimensions.screenPaddingTop
     },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    bookedButton: {
+        marginHorizontal: 5,
+        fontFamily: "RobotoSlab",
+        paddingVertical: 3,
+        paddingHorizontal: 5,
+        borderRadius: 5
+    }
 });
 

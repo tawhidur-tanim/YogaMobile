@@ -1,9 +1,16 @@
 import {Pressable, StyleSheet, Text} from "react-native";
 import {DYogaColors} from "../utils/DYogaColors";
 
-export default function DYogaButton({title = 'Button', backgroundColor = DYogaColors.buttonBackgroundColor, children, onPress = () =>{}}) {
+export default function DYogaButton({
+                                        title = 'Button',
+                                        backgroundColor = DYogaColors.buttonBackgroundColor,
+                                        children,
+                                        onPress = () => {
+                                        },
+                                        buttonTextStyles = {}
+                                    }) {
 
-    const _defaultChild = <Text style={DYogaButtonStyles.buttonText}>
+    const _defaultChild = <Text style={{...DYogaButtonStyles.buttonText, ...buttonTextStyles}}>
         {title}
     </Text>
 
@@ -24,7 +31,9 @@ const DYogaButtonStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    buttonText : {
+    buttonText: {
+        fontFamily: "Inter",
+        fontSize: 16,
         color: DYogaColors.buttonTextColor,
         fontWeight: "bold"
     }
