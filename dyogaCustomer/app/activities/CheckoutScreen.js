@@ -1,29 +1,76 @@
 import {StatusBar} from 'expo-status-bar';
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
-import {constDimensions, constStrings} from "../utils/Constants";
+import {constDimensions, constStoreKeys, constStrings} from "../utils/Constants";
 import HeaderTitle from "../components/HeaderTitle";
 import {DYogaColors} from "../utils/DYogaColors";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import DYogaButton from "../components/DYogaButton";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toaster from "../components/Toaster";
+import {auth} from "../firebase";
+import {updateUserBookedClasses} from "../data/classRepository";
 
 export default function CheckoutScreen() {
 
     const screenWidth = Dimensions.get('window').width;
 
+    const currentUser = auth.currentUser
     const [selectedItem, setSelectedItem] = useState()
-    const [classInstances, setClassInstances] = useState([
-        {key: 'Devin'},
-        {key: '2'},
-    ])
+    const [classInstances, setClassInstances] = useState([])
+    const [isCheckingOut, setIsCheckingOut] = useState(false)
 
-    const onClassInstancePressed = () => {
+    useEffect(() => {
+        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+            const classInstanceArray = JSON.parse(value ?? "{}")
+            setClassInstances(Object.values(classInstanceArray))
+        })
+    }, [classInstances])
 
+    const onClassInstancePressed = (item) => {
+        if (isCheckingOut) return
+
+        setSelectedItem(item)
     }
 
-    const onClassInstanceDelete = () => {
+    const onClassInstanceDelete = (item) => {
+        if (isCheckingOut) return
 
+        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+            try {
+                const classInstanceArray = JSON.parse(value ?? "{}")
+                delete classInstanceArray[item.docId]
+                AsyncStorage.setItem(constStoreKeys.bookedClasses, JSON.stringify(classInstanceArray))
+                    .then(() => setClassInstances(Object.values(classInstanceArray)))
+            } catch (error) {
+                console.log(error)
+                Toaster.show({type: 'error', message: "Error deleting item from cart. Try again!"})
+            }
+        })
+    }
+
+    const checkout = () => {
+        if (isCheckingOut) return
+
+        setIsCheckingOut(true)
+
+        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+            const classInstancesInCart = JSON.parse(value ?? "{}")
+            updateUserBookedClasses(classInstancesInCart).then(() => [
+                AsyncStorage.removeItem(constStoreKeys.bookedClasses).then(() => {
+                    setIsCheckingOut(false)
+                    setClassInstances([])
+                    Toaster.show({type: 'success', message: "Classes booked successfully! 🎉"})
+                }).finally(() => setIsCheckingOut(false))
+            ]).catch(error => {
+                console.log(error)
+                Toaster.show({type: 'success', message: "Error booking classes!"})
+            }).finally(() => setIsCheckingOut(false))
+        }).catch(error => {
+            console.log(error)
+            Toaster.show({type: 'success', message: "Error booking classes!"})
+        }).finally(() => setIsCheckingOut(false))
     }
 
     return (
@@ -35,18 +82,20 @@ export default function CheckoutScreen() {
                 You are ready to book your classes. Proceed to checkout
             </Text>
             <View style={{marginTop: 10}}>
-                <FlatList data={classInstances} renderItem={({item}) => <ClassInstanceItem item={item} canDelete={true}
-                                                                                           onDelete={onClassInstanceDelete}
-                                                                                           onPress={onClassInstancePressed}/>}
+                <FlatList data={classInstances} renderItem={({item}) =>
+                    <ClassInstanceItem item={item} canDelete={true} onDelete={onClassInstanceDelete}
+                                       onPress={onClassInstancePressed}/>}
                 />
             </View>
 
-            {selectedItem && <ViewClassInstanceItem item={selectedItem} />}
+            {selectedItem && <ViewClassInstanceItem item={selectedItem}/>}
 
-            <View style={{...CheckoutScreenStyles.checkoutButtonContainer, width: screenWidth}}>
-                <DYogaButton title={`${constStrings.checkout} (${classInstances.length})`}
-                             buttonTextStyles={{fontWeight: '500', color: DYogaColors.white}}/>
-            </View>
+            {classInstances.length > 0 &&
+                <View style={{...CheckoutScreenStyles.checkoutButtonContainer, width: screenWidth}}>
+                    <DYogaButton title={`${constStrings.checkout} (${classInstances.length})`} onPress={checkout}
+                                 isLoading={isCheckingOut}
+                                 buttonTextStyles={{fontWeight: '500', color: DYogaColors.white}}/>
+                </View>}
             <StatusBar style="auto"/>
         </View>
     );
