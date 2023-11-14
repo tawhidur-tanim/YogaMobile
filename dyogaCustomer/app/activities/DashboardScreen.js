@@ -188,16 +188,18 @@ const DashboardScreenStyles = StyleSheet.create({
         borderRadius: 5
     },
     badge: {
-        backgroundColor: DYogaColors.grey,
+        backgroundColor: DYogaColors.grey65,
         color: DYogaColors.white,
         verticalAlign: 'middle',
         width: 30,
-        height: 30,
+        height: 20,
         borderRadius: 50,
         verticalAlign: 'middle',
         textAlign: 'center',
-        position : 'relative',
-        right:0
+        position : 'absolute',
+        right:15,
+        bottom: 10,
+        zIndex:2
     }
 });
 
