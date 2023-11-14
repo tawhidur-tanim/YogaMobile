@@ -11,6 +11,10 @@ export default function ClassInstanceItem({item = {}, onPress, canDelete = false
         onPress && onPress(item)
     }
 
+    const _onDelete = () => {
+        onDelete && onDelete(item)
+    }
+
     return <Pressable onPress={_onPress}>
         <Animated.View>
             <View style={{...ClassInstanceItemStyles.container, backgroundColor: '#0085FF'}}>
@@ -37,7 +41,7 @@ export default function ClassInstanceItem({item = {}, onPress, canDelete = false
                         <Text style={ClassInstanceItemStyles.infoText}>{item.classInstance.instructor}</Text>
                     </View>
                 </View>
-                <Pressable onPress={canDelete ? onDelete : _onPress}>
+                <Pressable onPress={canDelete ? _onDelete : _onPress}>
                     {canDelete ? <Image style={{height: 24, width: 24, marginHorizontal: 10}}
                                         source={require("../../assets/icons/delete.png")}/> :
                         <Image style={{height: 24, width: 24, marginHorizontal: 10}}

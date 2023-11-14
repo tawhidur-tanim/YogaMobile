@@ -7,10 +7,12 @@ import {useEffect, useState} from "react";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 import {auth} from "../firebase";
-import {getAllClasses, queryClasses} from '../data/classRepository';
+import {getAllBookedClasses, getAllClasses} from '../data/classRepository';
 import moment from 'moment/moment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toaster from "../components/Toaster";
+import {useFocusEffect} from "@react-navigation/native";
+import { useIsFocused } from '@react-navigation/native';
 
 export default function DashboardScreen({navigation}) {
 
@@ -21,6 +23,7 @@ export default function DashboardScreen({navigation}) {
     const [filterClassInstances, setFilterClassInstances] = useState([])
     const [searchValue, setSearchValue] = useState('');
     const [classInstancesInCart, setClassInstancesInCart] = useState({})
+    const [bookedClasses, setBookedClasses] = useState({})
 
     const applyBookedFilter = () => {
 
@@ -50,35 +53,47 @@ export default function DashboardScreen({navigation}) {
     }
 
     useEffect(() => {
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
-            const classInstanceArray = JSON.parse(value ?? "{}")
-            setClassInstancesInCart(classInstanceArray)
-            console.log(classInstanceArray)
-        })
-
         getAllClasses((result) => {
             setClassInstances(result);
             setFilterClassInstances(result);
         })
+
+        syncCartItems()
     }, [])
 
+    function syncCartItems() {
+        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+            const classInstanceArray = JSON.parse(value ?? "{}")
+            setClassInstancesInCart(classInstanceArray)
+        })
+
+        getAllBookedClasses((result) => {
+            setBookedClasses(result)
+        })
+    }
+
+    // todo: this function is being called frequently, optimize it. Don't use
+    // useFocusEffect(() => {
+    //     if(useIsFocused) {
+    //         syncCartItems()
+    //     }
+    // })
+
     const addToCart = () => {
+        setSelectedItem(null)
         AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
             const classInstanceArray = JSON.parse(value ?? "{}")
             classInstanceArray[selectedItem.docId] = selectedItem
             setClassInstancesInCart(classInstanceArray)
             AsyncStorage.setItem(constStoreKeys.bookedClasses, JSON.stringify(classInstanceArray)).then(() => {
                 Toaster.show({type: 'success', message: "Class added to cart!"})
-                setSelectedItem(null)
             }).catch(error => {
                 console.log(error)
                 Toaster.show({type: 'error', message: "Error adding class to cart"})
-                setSelectedItem(null)
             })
         }).catch(error => {
             console.log(error)
             Toaster.show({type: 'error', message: "Error adding class to cart"})
-            setSelectedItem(null)
         })
     }
 
@@ -87,7 +102,6 @@ export default function DashboardScreen({navigation}) {
             Object.keys(classInstancesInCart ?? {}).includes(item.docId)
     }
 
-    console.log("in cart", classInstancesInCart)
     return (
         <View style={DashboardScreenStyles.container}>
             <View style={DashboardScreenStyles.header}>
