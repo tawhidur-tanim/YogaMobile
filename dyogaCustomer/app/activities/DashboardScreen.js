@@ -31,7 +31,6 @@ export default function DashboardScreen({navigation}) {
             setFilterClassInstances(classInstances);
         }
         setFilterApplied(!filterApplied);
-
     }
 
     const onSearch = (text) => {
