@@ -59,15 +59,8 @@ export default function DashboardScreen({navigation}) {
     useEffect(() =>{
         console.log(bookedClasses);
 
-        const convertedClasses = [];
-
-        Object.keys(bookedClasses).forEach((key) =>{
-
-            convertedClasses.push(bookedClasses[key])
-        })
-
         if(filterApplied){
-            setFilterClassInstances(convertedClasses);
+            setFilterClassInstances(Object.values(bookedClasses));
         }
         else{
             setFilterClassInstances(classInstances);
