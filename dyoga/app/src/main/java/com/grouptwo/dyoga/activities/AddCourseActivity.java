@@ -31,7 +31,6 @@ import com.grouptwo.dyoga.utils.DoubleConverter;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-
 public class AddCourseActivity extends AppCompatActivity implements CourseBottomSheet.BottomSheetListener, Callback<Boolean> {
 
     protected Spinner yogaTypesSpinner, daysOfWeekSpinner, durationSpinner;
