@@ -4,12 +4,13 @@ import {DYogaColors} from "../utils/DYogaColors";
 
 const EditText = ({
                       children, placeholder, secureTextEntry = false, value = '', onChangeText = text => {
-    }, autoFocus = false, returnKeyType, innerRef, onSubmitEditing
+    }, autoFocus = false, returnKeyType, innerRef, onSubmitEditing, autoComplete = "off"
                   }) => {
     return (<View style={{flexDirection: 'row'}}>
             <TextInput style={styles.inputStyle} placeholder={placeholder} value={value} autoFocus={autoFocus}
                        onChangeText={onChangeText} secureTextEntry={secureTextEntry} returnKeyType={returnKeyType}
                        onSubmitEditing={onSubmitEditing}
+                       autoComplete={autoComplete}
                        ref={innerRef} selectionColor={DYogaColors.colorSecondary}/>
             {children}
         </View>

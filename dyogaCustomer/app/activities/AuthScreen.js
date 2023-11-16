@@ -83,6 +83,7 @@ export default function AuthScreen({navigation}) {
                 <View style={AuthScreenStyles.column}>
                     <Text style={AuthScreenStyles.label}>{constStrings.email}</Text>
                     <EditText value={email} onChangeText={text => setEmail(text)} autoFocus={true} returnKeyType="next"
+                              autoComplete="email"
                               onSubmitEditing={() => {
                                   passwordInputField.current.focus();
                               }}/>
@@ -92,7 +93,7 @@ export default function AuthScreen({navigation}) {
             <View style={AuthScreenStyles.row}>
                 <View style={AuthScreenStyles.column}>
                     <Text style={AuthScreenStyles.label}>Password</Text>
-                    <EditText secureTextEntry={true} value={password} onChangeText={text => setPassword(text)}
+                    <EditText secureTextEntry={true} value={password} onChangeText={text => setPassword(text)} 
                               innerRef={passwordInputField}/>
                 </View>
             </View>
