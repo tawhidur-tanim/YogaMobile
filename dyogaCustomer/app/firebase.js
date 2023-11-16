@@ -14,7 +14,7 @@ import {getFirestore} from 'firebase/firestore'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCbvouckcJZUSIHP2LbxtJKnOLz8wKXvzE",
+    apiKey: "AIzaSyBdKRvEnTYHviGRtPufmCvNbv3b_lwJjnI",
     authDomain: "dyoga-68ec6.firebaseapp.com",
     databaseURL: "https://dyoga-68ec6-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "dyoga-68ec6",

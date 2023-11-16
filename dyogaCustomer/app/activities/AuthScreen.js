@@ -47,13 +47,13 @@ export default function AuthScreen({navigation}) {
 
         createUserWithEmailAndPassword(auth, email, password).then(authenticated).catch(error => {
             if (error.code !== constStrings.userExists) {
-                console.log(error)
+                console.error(error)
                 return
             }
 
             // attempt user sign in
             signInWithEmailAndPassword(auth, email, password).then(authenticated).catch((error) => {
-                console.log(error)
+                console.error(error)
                 setLoading(false)
                 Toaster.show({message: constStrings.loginFailed})
             });

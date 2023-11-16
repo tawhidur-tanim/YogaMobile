@@ -27,8 +27,12 @@ const constStrings = {
     price: "Price",
     duration: "Duration",
     dayOfWeek: "Day of the week",
-    addedToCardAlready: "🛒 You added this class to your cart already!",
+    addedToCartAlready: "🛒 You added this class to your cart already!",
+    bookedClassAlready: "🛒 You booked this class to your cart already!",
     durationFormat: "%1s hour(s) \nand %2s minute(s)",
+    gotoCart: "Go to cart",
+    applyFilter: "Apply Filter",
+    noClassesAvailable: "No classes available. Pull to refresh"
 }
 
 const constDimensions = {
@@ -37,7 +41,8 @@ const constDimensions = {
 }
 
 const constStoreKeys = {
-    bookedClasses : "BOOKED_CLASSES_V1"
+    classInstancesInCart : "CLASS_INSTANCES_IN_CART",
+    bookedClasses : "BOOKED_CLASSES"
 }
 
 export {constStrings, constDimensions, constStoreKeys}

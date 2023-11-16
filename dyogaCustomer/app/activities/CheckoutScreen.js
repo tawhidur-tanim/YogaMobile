@@ -1,5 +1,5 @@
 import {StatusBar} from 'expo-status-bar';
-import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, FlatList, Image, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {constDimensions, constStoreKeys, constStrings} from "../utils/Constants";
 import HeaderTitle from "../components/HeaderTitle";
 import {DYogaColors} from "../utils/DYogaColors";
@@ -9,25 +9,30 @@ import {useEffect, useState} from "react";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toaster from "../components/Toaster";
-import {auth} from "../firebase";
 import {updateUserBookedClasses} from "../data/classRepository";
+import {auth} from "../firebase";
 
-export default function CheckoutScreen() {
+export default function CheckoutScreen({navigation}) {
 
     const screenWidth = Dimensions.get('window').width;
 
     const currentUser = auth.currentUser
     const [selectedItem, setSelectedItem] = useState()
     const [classInstances, setClassInstances] = useState([])
+    const [refreshing, setRefreshing] = useState(false)
     const [isCheckingOut, setIsCheckingOut] = useState(false)
 
     useEffect(() => {
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+        syncItems()
+    }, [])
+
+    const syncItems = () => {
+        setRefreshing(true)
+        AsyncStorage.getItem(constStoreKeys.classInstancesInCart).then(value => {
             const classInstanceArray = JSON.parse(value ?? "{}")
             setClassInstances(Object.values(classInstanceArray))
-        })
-    }, [classInstances])
-
+        }).finally(() => setRefreshing(false))
+    }
     const onClassInstancePressed = (item) => {
         if (isCheckingOut) return
 
@@ -37,14 +42,14 @@ export default function CheckoutScreen() {
     const onClassInstanceDelete = (item) => {
         if (isCheckingOut) return
 
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+        AsyncStorage.getItem(constStoreKeys.classInstancesInCart).then(value => {
             try {
                 const classInstanceArray = JSON.parse(value ?? "{}")
                 delete classInstanceArray[item.docId]
-                AsyncStorage.setItem(constStoreKeys.bookedClasses, JSON.stringify(classInstanceArray))
+                AsyncStorage.setItem(constStoreKeys.classInstancesInCart, JSON.stringify(classInstanceArray))
                     .then(() => setClassInstances(Object.values(classInstanceArray)))
             } catch (error) {
-                console.log(error)
+                console.error(error)
                 Toaster.show({type: 'error', message: "Error deleting item from cart. Try again!"})
             }
         })
@@ -55,20 +60,20 @@ export default function CheckoutScreen() {
 
         setIsCheckingOut(true)
 
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+        AsyncStorage.getItem(constStoreKeys.classInstancesInCart).then(value => {
             const classInstancesInCart = JSON.parse(value ?? "{}")
-            updateUserBookedClasses(classInstancesInCart).then(() => [
-                AsyncStorage.removeItem(constStoreKeys.bookedClasses).then(() => {
-                    setIsCheckingOut(false)
+            updateUserBookedClasses(currentUser, classInstancesInCart).then(() => [
+                AsyncStorage.removeItem(constStoreKeys.classInstancesInCart).then(() => {
                     setClassInstances([])
                     Toaster.show({type: 'success', message: "Classes booked successfully! 🎉"})
+                    setIsCheckingOut(false)
                 }).finally(() => setIsCheckingOut(false))
             ]).catch(error => {
-                console.log(error)
+                console.error(error)
                 Toaster.show({type: 'success', message: "Error booking classes!"})
             }).finally(() => setIsCheckingOut(false))
         }).catch(error => {
-            console.log(error)
+            console.error(error)
             Toaster.show({type: 'success', message: "Error booking classes!"})
         }).finally(() => setIsCheckingOut(false))
     }
@@ -76,7 +81,7 @@ export default function CheckoutScreen() {
     return (
         <View style={CheckoutScreenStyles.container}>
             <View style={{...CheckoutScreenStyles.row, marginTop: constDimensions.screenPaddingTop}}>
-                <HeaderTitle title={constStrings.yourCheckout}></HeaderTitle>
+                <HeaderTitle title={constStrings.yourCheckout} navigation={navigation} canGoBack={true}></HeaderTitle>
             </View>
             <Text style={CheckoutScreenStyles.label}>
                 You are ready to book your classes. Proceed to checkout
@@ -85,8 +90,22 @@ export default function CheckoutScreen() {
                 <FlatList data={classInstances} renderItem={({item}) =>
                     <ClassInstanceItem item={item} canDelete={true} onDelete={onClassInstanceDelete}
                                        onPress={onClassInstancePressed}/>}
+                          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={syncItems}/>}
                 />
             </View>
+
+            {classInstances.length === 0 &&
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={syncItems}/>}>
+                    <View style={{width: '100%', alignItems: 'center', marginTop: '50%'}}>
+                        <Image resizeMode={"center"} style={{height: 50, width: 50}}
+                               source={require("../../assets/icons/info.png")}/>
+                        <Text style={{
+                            marginTop: 10,
+                            fontFamily: 'RobotoSlab',
+                            color: DYogaColors.grey65
+                        }}>{constStrings.noClassesAvailable}</Text>
+                    </View>
+                </ScrollView>}
 
             {selectedItem && <ViewClassInstanceItem item={selectedItem}/>}
 
@@ -125,5 +144,3 @@ const CheckoutScreenStyles = StyleSheet.create({
         bottom: 40
     }
 });
-
-

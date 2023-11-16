@@ -1,7 +1,77 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Dyoga" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+
+        <item name="android:fontFamily">@font/robotoslabregular</item>
+        <item name="fontFamily">@font/robotoslabregular</item>
+    </style>
+
+    <style name="Theme.Dyoga" parent="Base.Theme.Dyoga" />
+
+    <style name="ScreenHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">32sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_weight">3</item>
+        <item name="android:fontWeight">600</item>
+        <item name="fontWeight">600</item>
+        <item name="fontFamily">@font/robotoslabbold</item>
+        <item name="android:textColor">@color/titleBlack</item>
+    </style>
+
+    <style name="ScreenParagraph" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ScreenParagraphTwo" parent="ScreenParagraph">
+        <item name="android:paddingVertical">10dp</item>
+    </style>
+
+    <style name="Theme.Dyoga.Button" parent="Widget.Material3.Button">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">20dp</item>
+    </style>
+
+    <style name="Theme.Dyoga.Spinner" parent="Widget.AppCompat.Spinner">
+        <item name="android:background">@drawable/spinner_background</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingHorizontal">10dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Theme.Dyoga.SpinnerText" parent="Widget.AppCompat.TextView">
+        <item name="android:paddingVertical">5dp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Theme.Dyoga.EditText" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@drawable/edittext_background</item>
+        <item name="android:paddingVertical">14dp</item>
+        <item name="android:paddingHorizontal">14dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="Theme.Dyoga.BottomSheetLabel" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/grey</item>
+        <item name="fontWeight">400</item>
+    </style>
+
+
+    <style name="Theme.Dyoga.BottomSheetValue" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/titleBlack</item>
+        <item name="fontWeight">400</item>
+        <item name="android:layout_marginTop">10dp</item>
     </style>
 </resources>
