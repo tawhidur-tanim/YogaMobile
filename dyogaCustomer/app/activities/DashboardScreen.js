@@ -191,13 +191,13 @@ const DashboardScreenStyles = StyleSheet.create({
         backgroundColor: DYogaColors.grey65,
         color: DYogaColors.white,
         verticalAlign: 'middle',
-        width: 30,
+        width: 20,
         height: 20,
         borderRadius: 50,
         verticalAlign: 'middle',
         textAlign: 'center',
         position : 'absolute',
-        right:15,
+        right:10,
         bottom: 10,
         zIndex:2
     }
