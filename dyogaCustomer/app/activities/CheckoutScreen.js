@@ -5,18 +5,18 @@ import HeaderTitle from "../components/HeaderTitle";
 import {DYogaColors} from "../utils/DYogaColors";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import DYogaButton from "../components/DYogaButton";
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toaster from "../components/Toaster";
 import {updateUserBookedClasses} from "../data/classRepository";
-import {AuthUserContext} from "../data/AuthUserContext";
+import {auth} from "../firebase";
 
 export default function CheckoutScreen({navigation}) {
 
     const screenWidth = Dimensions.get('window').width;
 
-    const currentUser = useContext(AuthUserContext)
+    const currentUser = auth.currentUser
     const [selectedItem, setSelectedItem] = useState()
     const [classInstances, setClassInstances] = useState([])
     const [refreshing, setRefreshing] = useState(false)
@@ -64,9 +64,9 @@ export default function CheckoutScreen({navigation}) {
             const classInstancesInCart = JSON.parse(value ?? "{}")
             updateUserBookedClasses(currentUser, classInstancesInCart).then(() => [
                 AsyncStorage.removeItem(constStoreKeys.classInstancesInCart).then(() => {
-                    setIsCheckingOut(false)
                     setClassInstances([])
                     Toaster.show({type: 'success', message: "Classes booked successfully! 🎉"})
+                    setIsCheckingOut(false)
                 }).finally(() => setIsCheckingOut(false))
             ]).catch(error => {
                 console.error(error)
