@@ -1,5 +1,5 @@
 import {db} from '../firebase'
-import {collection, getDocs, setDoc, doc, query, where, updateDoc} from 'firebase/firestore';
+import {collection, getDocs, setDoc, doc} from 'firebase/firestore';
 
 const getAllClasses = (callback) => {
     const querySnapshot = getDocs(collection(db, "classInstances"));
@@ -20,11 +20,20 @@ const getAllClasses = (callback) => {
     });
 }
 
-const updateUserBookedClasses = (currentUser, data) => {
+const updateUserBookedClasses = async (currentUser, data) => {
     const subDocumentName = "data"
     const documentName = currentUser.uid.substring(0, 6) + "_bookedClassInstances"
 
-    return setDoc(doc(db, documentName, subDocumentName), data);
+    const querySnapshot = getDocs(collection(db, documentName));
+    const docs = await querySnapshot
+    let result = []
+    docs.forEach((doc) => {
+        result = doc.data()
+    });
+    Object.keys(data).forEach(k => {
+        result[k] = data[k]
+    })
+    return setDoc(doc(db, documentName, subDocumentName), result);
 }
 
 const getAllBookedClasses = (currentUser, callback) => {
