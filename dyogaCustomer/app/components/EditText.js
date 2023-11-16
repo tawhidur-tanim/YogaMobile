@@ -3,13 +3,16 @@ import {View, TextInput, Button, Text, StyleSheet} from 'react-native';
 import {DYogaColors} from "../utils/DYogaColors";
 
 const EditText = ({
-                      placeholder, secureTextEntry = false, value = '', onChangeText = text => {
+                      children, placeholder, secureTextEntry = false, value = '', onChangeText = text => {
     }, autoFocus = false, returnKeyType, innerRef, onSubmitEditing
                   }) => {
-    return (<TextInput style={styles.inputStyle} placeholder={placeholder} value={value} autoFocus={autoFocus}
+    return (<View style={{flexDirection: 'row'}}>
+            <TextInput style={styles.inputStyle} placeholder={placeholder} value={value} autoFocus={autoFocus}
                        onChangeText={onChangeText} secureTextEntry={secureTextEntry} returnKeyType={returnKeyType}
                        onSubmitEditing={onSubmitEditing}
                        ref={innerRef} selectionColor={DYogaColors.colorSecondary}/>
+            {children}
+        </View>
     );
 }
 
@@ -19,7 +22,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 47,
         backgroundColor: DYogaColors.inputBackground,
-        borderRadius: 6,
+        borderRadius: 50,
         padding: 15
     },
 });

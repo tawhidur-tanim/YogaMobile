@@ -1,169 +1,195 @@
 import {StatusBar} from 'expo-status-bar';
-import {FlatList, Image, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {constDimensions, constStoreKeys, constStrings} from "../utils/Constants";
 import {DYogaColors} from "../utils/DYogaColors";
 import EditText from "../components/EditText";
 import {useEffect, useState} from "react";
 import ClassInstanceItem from "../components/ClassInstanceItem";
 import ViewClassInstanceItem from "../components/ViewClassInstanceItem";
-import {auth} from "../firebase";
+import {ACCOUNT_AUTHENTICATED, auth} from "../firebase";
 import {getAllBookedClasses, getAllClasses} from '../data/classRepository';
-import moment from 'moment/moment';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toaster from "../components/Toaster";
-import {useFocusEffect} from "@react-navigation/native";
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
+import {
+    filterClassInstancesByDate,
+    isInClassesInstanceArray,
+    orderClassInstances,
+    searchClassInstances
+} from "../utils/ClassInstanceUtils";
+import UseFilterView from "../components/UseFilterView";
 
 export default function DashboardScreen({navigation}) {
 
+    const isFocused = useIsFocused()
     const currentUser = auth.currentUser
-    const [filterApplied, setFilterApplied] = useState(false)
+
+    const [refreshing, setRefreshing] = useState(false)
+    const [filterParams, setFilterParams] = useState()
     const [selectedItem, setSelectedItem] = useState()
+    const [showFilterDialog, setShowFilterDialog] = useState(false)
     const [classInstances, setClassInstances] = useState([])
     const [filterClassInstances, setFilterClassInstances] = useState([])
     const [searchValue, setSearchValue] = useState('');
     const [classInstancesInCart, setClassInstancesInCart] = useState({})
     const [bookedClasses, setBookedClasses] = useState({})
 
-    const isFocused = useIsFocused()
+    useEffect(() => {
+        syncDashboardItems()
+    }, [isFocused, currentUser])
 
-    const applyBookedFilter = () => setFilterApplied(!filterApplied);
+    useEffect(() => {
+        let filteredClassInstances = classInstances
+        if (filterParams) {
+            const {bookFiltered, filterTimeFrom, filterTimeTo} = filterParams
+            if (bookFiltered) {
+                filteredClassInstances = Object.values(bookedClasses)
+            }
+
+            if (filterTimeFrom || filterTimeTo) {
+                filteredClassInstances = filterClassInstancesByDate(filteredClassInstances, filterTimeFrom, filterTimeTo)
+            }
+        } else {
+            filteredClassInstances = classInstances
+        }
+
+        setFilterClassInstances(orderClassInstances(filteredClassInstances));
+
+    }, [filterParams])
 
     const onSearch = (text) => {
         setSearchValue(text);
 
-        if (!text) setFilterClassInstances(classInstances);
+        if ((!text || text.trim().length === 0) && !filterParams) {
+            setFilterClassInstances(searchClassInstances(classInstances, text))
+            return
+        }
 
-        setFilterClassInstances(classInstances.filter(ci => {
-
-            return new moment(ci.course.time).format('h:mm a').toLowerCase().includes(text.toLowerCase())
-                || ci.course.dayOfWeek.toLowerCase().includes(text.toLowerCase())
-                || ci.classInstance.room.toLowerCase().includes(text.toLowerCase())
-                || ci.course.type.toLowerCase().includes(text.toLowerCase())
-                || new moment(ci.classInstance.date).format('Do MMMM YYYY').toLowerCase().includes(text.toLowerCase())
-
-        }))
+        setFilterClassInstances(searchClassInstances(filterClassInstances, text))
     }
 
-    useEffect(() => {
-        getAllClasses((result) => {
-            setClassInstances(result);
-            setFilterClassInstances(result);
-        })
+    const applyBookedFilter = (params) => {
+        setFilterParams({...params, date: new Date()});
+        setShowFilterDialog(false)
+    }
 
-    
-        syncCartItems()
+    function syncDashboardItems() {
+        setRefreshing(true)
+        setSearchValue(null)
+        setFilterParams(null)
 
-    }, [isFocused])
-
-    useEffect(() =>{
-        console.log(bookedClasses);
-
-        if(filterApplied){
-            setFilterClassInstances(Object.values(bookedClasses));
-        }
-        else{
-            setFilterClassInstances(classInstances);
-        }
-
-    },[filterApplied])
-
-    function syncCartItems() {
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+        AsyncStorage.getItem(constStoreKeys.classInstancesInCart).then(value => {
             const classInstanceArray = JSON.parse(value ?? "{}")
             setClassInstancesInCart(classInstanceArray)
         })
 
-        getAllBookedClasses((result) => {
-            setBookedClasses(result)
-            console.log("fired", result);
+        getAllClasses((result) => {
+            const sortedResult = orderClassInstances(result)
+            setClassInstances(sortedResult);
+            setFilterClassInstances(sortedResult);
+
+            getAllBookedClasses(currentUser, result => {
+                setBookedClasses(result)
+                setRefreshing(false)
+            })
         })
     }
-
-    // todo: this function is being called frequently, optimize it. Don't use
-    // useFocusEffect(() => {
-    //     if(useIsFocused) {
-    //         syncCartItems()
-    //     }
-    // })
 
     const addToCart = () => {
         setSelectedItem(null)
-        AsyncStorage.getItem(constStoreKeys.bookedClasses).then(value => {
+        AsyncStorage.getItem(constStoreKeys.classInstancesInCart).then(value => {
             const classInstanceArray = JSON.parse(value ?? "{}")
             classInstanceArray[selectedItem.docId] = selectedItem
             setClassInstancesInCart(classInstanceArray)
-            AsyncStorage.setItem(constStoreKeys.bookedClasses, JSON.stringify(classInstanceArray)).then(() => {
+            AsyncStorage.setItem(constStoreKeys.classInstancesInCart, JSON.stringify(classInstanceArray)).then(() => {
                 Toaster.show({type: 'success', message: "Class added to cart!"})
             }).catch(error => {
-                console.log(error)
+                console.error(error)
                 Toaster.show({type: 'error', message: "Error adding class to cart"})
             })
         }).catch(error => {
-            console.log(error)
+            console.error(error)
             Toaster.show({type: 'error', message: "Error adding class to cart"})
         })
     }
 
-    const isBooked = (item) => {
-        return item && item.docId && classInstancesInCart &&
-            Object.keys(classInstancesInCart ?? {}).includes(item.docId)
+    const logout = () => {
+        auth.signOut().then(() => {
+            AsyncStorage.removeItem(ACCOUNT_AUTHENTICATED).then(() => {
+                navigation.replace("GetStarted")
+            }).catch(error => {
+                console.error(error)
+                Toaster.show({type: 'error', message: "Error signing out. Please try again!"})
+            })
+        }).catch(error => {
+            console.error(error)
+            Toaster.show({type: 'error', message: "Error signing out. Please try again!"})
+        })
     }
 
     return (
         <View style={DashboardScreenStyles.container}>
             <View style={DashboardScreenStyles.header}>
                 <Image style={{height: 70, width: 150}} source={require("../../assets/icon.png")}/>
-                <Pressable onPress={() => navigation.navigate("CheckoutScreen")} style={{display: 'flex'}}>
-                    
-                    <View style={{ position: 'relative'}}>
-                    {classInstancesInCart && Object.keys(classInstancesInCart).length > 0 &&
-                        <Text style={DashboardScreenStyles.badge}>
-                        
-                            {Object.keys(classInstancesInCart).length}
-                        </Text>}
-
-                        <Image style={{height: 24, width: 24, marginHorizontal: constDimensions.screenPaddingHorizontal}}
-                           source={require("../../assets/icons/cart.png")}/>
-                    </View>
-                </Pressable>
+                <View style={{flexDirection: 'row'}}>
+                    <Pressable onPress={() => navigation.navigate("CheckoutScreen")} style={{display: 'flex'}}>
+                        <View style={{position: 'relative'}}>
+                            {classInstancesInCart && Object.keys(classInstancesInCart).length > 0 &&
+                                <Text style={DashboardScreenStyles.badge}>
+                                    {Object.keys(classInstancesInCart).length}
+                                </Text>}
+                            <Image resizeMode={"center"}
+                                   style={{height: 50, width: 24}}
+                                   source={require("../../assets/icons/cart.png")}/>
+                        </View>
+                    </Pressable>
+                    <Pressable onPress={logout}>
+                        <Image resizeMode={"center"}
+                               style={{height: 50, width: 50, marginHorizontal: 10}}
+                               source={require("../../assets/icons/logout.png")}/>
+                    </Pressable>
+                </View>
             </View>
 
-            <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal, marginTop: 15}}>
-                <EditText placeholder={constStrings.searchClassInstances} value={searchValue} onChangeText={onSearch}/>
-            </View>
-
-            <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                paddingHorizontal: constDimensions.screenPaddingHorizontal,
-                paddingVertical: 10
-            }}>
-                <Text>{constStrings.filter}:</Text>
-                <Pressable style={{
-                    ...DashboardScreenStyles.bookedButton,
-                    backgroundColor: (filterApplied ? DYogaColors.bookedButtonBackgroundActive
-                        : DYogaColors.bookedButtonBackground)
-                }} onPress={applyBookedFilter}>
-                    <Text style={{
-                        fontFamily: 'RobotoSlab',
-                        color: (filterApplied ? DYogaColors.white : DYogaColors.grey65)
-                    }}>{constStrings.booked}</Text>
-                </Pressable>
+            <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal, marginTop: 15, marginBottom: 15}}>
+                <EditText placeholder={constStrings.searchClassInstances} value={searchValue} onChangeText={onSearch}>
+                    <Pressable onPress={() => setShowFilterDialog(true)}
+                               style={{position: 'absolute', right: 0, borderRadius: 50}}>
+                        <Image resizeMode={"center"} style={{height: 50, width: 50}}
+                               source={require("../../assets/icons/filter.png")}/>
+                    </Pressable>
+                </EditText>
             </View>
 
             <View style={{paddingHorizontal: constDimensions.screenPaddingHorizontal}}>
-                <FlatList data={filterClassInstances}
-                          renderItem={({item}) => <ClassInstanceItem onPress={() => setSelectedItem(item)}
-                                                                     item={item}/>}
+                <FlatList data={filterClassInstances} renderItem={({item}) =>
+                    <ClassInstanceItem onPress={() => setSelectedItem(item)} item={item}/>}
+                          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={syncDashboardItems}/>}
                 />
             </View>
 
+            {!refreshing && filterClassInstances.length === 0 &&
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={syncDashboardItems}/>}>
+                <View style={{width: '100%', alignItems: 'center', marginTop: '50%'}}>
+                    <Image resizeMode={"center"} style={{height: 50, width: 50}}
+                           source={require("../../assets/icons/info.png")}/>
+                    <Text style={{
+                        marginTop: 10,
+                        fontFamily: 'RobotoSlab',
+                        color: DYogaColors.grey65
+                    }}>{constStrings.noClassesAvailable}</Text>
+                </View>
+            </ScrollView>}
+
             {selectedItem &&
-                <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart}
-                                       isBooked={isBooked(selectedItem)}
+                <ViewClassInstanceItem item={selectedItem} ctaPress={addToCart} navigation={navigation}
+                                       isInCart={isInClassesInstanceArray(classInstancesInCart, selectedItem)}
+                                       isBooked={isInClassesInstanceArray(bookedClasses, selectedItem)}
                                        onToggle={() => setSelectedItem(null)}/>}
 
+            {showFilterDialog &&
+                <UseFilterView item={selectedItem} ctaPress={applyBookedFilter} filterParams={filterParams}
+                               onToggle={() => setShowFilterDialog(false)}/>}
             <StatusBar style="auto"/>
         </View>
     );
@@ -188,18 +214,17 @@ const DashboardScreenStyles = StyleSheet.create({
         borderRadius: 5
     },
     badge: {
-        backgroundColor: DYogaColors.grey65,
+        backgroundColor: DYogaColors.colorPrimaryDark,
         color: DYogaColors.white,
         verticalAlign: 'middle',
-        width: 30,
-        height: 20,
+        paddingHorizontal: 5,
+        fontSize: 11,
         borderRadius: 50,
-        verticalAlign: 'middle',
         textAlign: 'center',
-        position : 'absolute',
-        right:15,
-        bottom: 10,
-        zIndex:2
+        position: 'absolute',
+        right: -5,
+        top: 7,
+        zIndex: 2
     }
 });
 

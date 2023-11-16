@@ -3,32 +3,28 @@ import {DYogaColors} from "../utils/DYogaColors";
 import {constDimensions, constStrings} from "../utils/Constants";
 import DYogaButton from "./DYogaButton";
 import moment from "moment/moment";
+import {convertDuration} from "../utils/DateTimeUtils";
 
 
-export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = constStrings.addToCart, onToggle = () => {}, isBooked = false}) {
+export default function ViewClassInstanceItem({
+                                                  navigation,
+                                                  item = {},
+                                                  ctaPress,
+                                                  ctaTitle = constStrings.addToCart,
+                                                  onToggle = () => {
+                                                  },
+                                                  isInCart = false,
+                                                  isBooked = false,
+                                              }) {
 
     const screenWidth = Dimensions.get('window').width;
     const screenHeight = Dimensions.get('window').height;
 
-    const {type, dayOfWeek,duration, time, price, description} = item.course;
+    const {type, dayOfWeek, duration, time, price, description} = item.course;
     const {instructor, room, comments} = item.classInstance;
 
-    const durationConvert = (duration) => {
-
-        if(duration < 60) return duration;
-
-        const hours = (duration / 60);
-        const realhours = Math.floor(hours);
-        const minutes = (hours - realhours) * 60;
-        const realminutes = Math.round(minutes);
-
-        return constStrings.durationFormat.replace("%1s", realhours).replace("%2s", realminutes);
-    }
-
-    // todo: format `time` properly
-    // todo: convert `duration` to hours when greater/equal to 60 minutes
-
-    return <Pressable style={{...ViewClassInstanceItemStyles.container, height: screenHeight, width: screenWidth}} onPress={onToggle}>
+    return <Pressable style={{...ViewClassInstanceItemStyles.container, height: screenHeight, width: screenWidth}}
+                      onPress={onToggle}>
         <Animated.View style={{...ViewClassInstanceItemStyles.containerSheet, width: screenWidth}}>
             <View>
                 <Text style={{...ViewClassInstanceItemStyles.yogaType}}>{type}</Text>
@@ -46,7 +42,7 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
             <View style={ViewClassInstanceItemStyles.row}>
                 <View style={ViewClassInstanceItemStyles.column}>
                     <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.duration}</Text>
-                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{durationConvert(duration)}</Text>
+                    <Text style={{...ViewClassInstanceItemStyles.infoText}}>{convertDuration(duration)}</Text>
                 </View>
                 <View>
                     <Text style={{...ViewClassInstanceItemStyles.label}}>{constStrings.price}</Text>
@@ -75,12 +71,19 @@ export default function ViewClassInstanceItem({item = {}, ctaPress, ctaTitle = c
                     <Text style={{...ViewClassInstanceItemStyles.infoText}}>{comments}</Text>
                 </View>
             </View>}
-            {isBooked && <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
-                <Text>{constStrings.addedToCardAlready}</Text>
-            </View>}
-            {!isBooked && ctaPress && <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
-                <DYogaButton title={ctaTitle} onPress={ctaPress}/>
-            </View>}
+            {(isBooked || isInCart) &&
+                <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
+                    {isInCart && <Text>{constStrings.addedToCartAlready}</Text>}
+                    {isBooked && <Text>{constStrings.bookedClassAlready}</Text>}
+                </View>}
+            {isInCart && ctaPress &&
+                <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 4}}>
+                    <DYogaButton title={constStrings.gotoCart} onPress={() => navigation.navigate("CheckoutScreen")}/>
+                </View>}
+            {!isBooked && !isInCart && ctaPress &&
+                <View style={{...ViewClassInstanceItemStyles.cta, justifyContent: 'center', marginTop: 40}}>
+                    <DYogaButton title={ctaTitle} onPress={ctaPress}/>
+                </View>}
         </Animated.View>
     </Pressable>
 }

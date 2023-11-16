@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "dyogaCustomer",
+    "name": "dyoga Customer",
     "slug": "dyogaCustomer",
     "version": "1.0.0",
     "scheme": "dyogaCustomer",
@@ -21,8 +21,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#000000"
+      },
+      "package": "com.dyoga.customer"
     },
     "web": {
       "favicon": "./assets/favicon.png"

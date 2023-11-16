@@ -1,10 +1,8 @@
-import {auth, db} from '../firebase'
-import {collection, getDocs, setDoc, doc,updateDoc} from 'firebase/firestore';
-
-const collectionName = "classInstances";
+import {db} from '../firebase'
+import {collection, getDocs, setDoc, doc, query, where, updateDoc} from 'firebase/firestore';
 
 const getAllClasses = (callback) => {
-    const querySnapshot = getDocs(collection(db, collectionName));
+    const querySnapshot = getDocs(collection(db, "classInstances"));
     querySnapshot.then((snapshot) => {
         if (typeof callback != "function") return;
         if (snapshot.empty) {
@@ -17,20 +15,25 @@ const getAllClasses = (callback) => {
         });
         callback(result);
     }).catch((error) => {
-        console.error("Error getting documents: ", error);
+        console.error("Error getting documents [classInstances]: ", error);
+        callback([])
     });
 }
 
-const updateUserBookedClasses = (data) => {
+const updateUserBookedClasses = (currentUser, data) => {
     const subDocumentName = "data"
-    const documentName = auth.currentUser.uid.substring(0, 6) + "_bookedClassInstances"
+    const documentName = currentUser.uid.substring(0, 6) + "_bookedClassInstances"
 
     return setDoc(doc(db, documentName, subDocumentName), data);
 }
 
-const getAllBookedClasses = (callback) => {
-    const subDocumentName = "data"
-    const documentName = auth.currentUser.uid.substring(0, 6) + "_bookedClassInstances"
+const getAllBookedClasses = (currentUser, callback) => {
+    if (!currentUser) {
+        callback([])
+        return
+    }
+
+    const documentName = currentUser.uid.substring(0, 6) + "_bookedClassInstances"
     const querySnapshot = getDocs(collection(db, documentName));
     querySnapshot.then((snapshot) => {
         if (typeof callback != "function") return;
@@ -44,7 +47,8 @@ const getAllBookedClasses = (callback) => {
         });
         callback(result);
     }).catch((error) => {
-        console.error("Error getting documents: ", error);
+        console.error("Error getting documents [bookedClassInstances]: ", error);
+        callback([])
     });
 }
 

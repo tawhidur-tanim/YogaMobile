@@ -14,12 +14,14 @@ import Toaster from "../components/Toaster";
 const SPLASH_1 = require('../../assets/splash_1.png');
 const SPLASH_2 = require('../../assets/splash_2.png');
 
-export default function GetStarted({ navigation }) {
+export default function GetStarted({navigation}) {
 
     const netInfo = useNetInfo();
+    const [netInfoCounter, setNetInfoCounter] = useState(0)
     const currentUser = auth.currentUser
     const screenWidth = Dimensions.get('window').width;
     const [loading, setLoading] = useState(false)
+    const [triggeredTimeout, setTriggeredTimeout] = useState(false)
     const [splashImageIndex, setSplashImageIndex] = useState(0)
     const [displayGetStarted, setDisplayGetStarted] = useState(false)
 
@@ -34,13 +36,20 @@ export default function GetStarted({ navigation }) {
     }
 
     const loadUserData = () => {
+        if (displayGetStarted) return;
+
         if (currentUser && currentUser.uid) {
             if (!netInfo.isConnected) {
-                Toaster.show({type: 'error', message: constStrings.noInternetConnection})
+                if (netInfoCounter > 3)
+                    Toaster.show({
+                        type: 'error',
+                        message: constStrings.noInternetConnection
+                    })
+                setNetInfoCounter(netInfoCounter + 1)
                 return
             }
 
-            // load in the user booked data
+            // todo: load in the user booked data
             setTimeout(() => {
                 navigation.replace("DashboardScreen")
             }, 3000)
@@ -51,12 +60,24 @@ export default function GetStarted({ navigation }) {
         changeBackgroundImage()
 
         AsyncStorage.getItem(ACCOUNT_AUTHENTICATED).then(value => {
-            if (value && value === 'true'){
+            if (value && value === 'true') {
                 setLoading(true)
                 setDisplayGetStarted(false)
             } else {
                 setLoading(false)
                 setDisplayGetStarted(true)
+            }
+        }).finally(() => {
+            if(!triggeredTimeout) {
+                setTimeout(() => {
+                    if(!displayGetStarted) return
+
+                    AsyncStorage.removeItem(ACCOUNT_AUTHENTICATED).then(() => {
+                        setLoading(false)
+                        setDisplayGetStarted(true)
+                    })
+                }, 10000)
+                setTriggeredTimeout(true)
             }
         })
 
@@ -72,7 +93,8 @@ export default function GetStarted({ navigation }) {
                 </View>
                 <View style={{...SplashScreenStyles.buttonContainer}}>
                     {loading && <View style={{justifyContent: 'center', width: screenWidth, alignItems: 'center'}}>
-                        <Progress.Circle size={30} indeterminate={true} borderColor={DYogaColors.white} borderWidth={3} />
+                        <Progress.Circle size={30} indeterminate={true} borderColor={DYogaColors.white}
+                                         borderWidth={3}/>
                     </View>}
                     {!loading && displayGetStarted &&
                         <DYogaButton title={constStrings.getStarted} onPress={() => navigation.replace("AuthScreen")}/>}

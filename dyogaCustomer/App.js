@@ -6,6 +6,8 @@ import CheckoutScreen from "./app/activities/CheckoutScreen";
 import DashboardScreen from "./app/activities/DashboardScreen";
 import * as Font from "expo-font";
 import {useEffect, useState} from "react";
+import {AuthUserContext} from "./app/data/AuthUserContext";
+import {auth} from "./app/firebase";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,24 +21,26 @@ export default function App() {
             "RobotoSlabBold": require("./assets/fonts/RobotoSlabBold.ttf"),
             "Inter": require("./assets/fonts/Inter-Regular.ttf"),
             "InterBold": require("./assets/fonts/Inter-SemiBold.ttf"),
-        }).catch(() => console.log("Failed to load fonts")).finally(() => {
+        }).catch(() => console.error("Failed to load fonts")).finally(() => {
             setFontLoaded(true)
         })
     }, [])
 
-    if(!fontsLoaded) {
+    if (!fontsLoaded) {
         return null
     }
 
-    return (<NavigationContainer>
-            <Stack.Navigator screenOptions={{
-                headerShown: false
-            }}>
-                <Stack.Screen name="GetStarted" component={GetStarted}/>
-                <Stack.Screen name="AuthScreen" component={AuthScreen}/>
-                <Stack.Screen name="DashboardScreen" component={DashboardScreen}/>
-                <Stack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
-            </Stack.Navigator>
-        </NavigationContainer>
+    return (<AuthUserContext.Provider value={auth.currentUser}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false
+                }}>
+                    <Stack.Screen name="GetStarted" component={GetStarted}/>
+                    <Stack.Screen name="AuthScreen" component={AuthScreen}/>
+                    <Stack.Screen name="DashboardScreen" component={DashboardScreen}/>
+                    <Stack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </AuthUserContext.Provider>
     );
 }
