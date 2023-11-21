@@ -38,21 +38,3 @@ Welcome to the Yoga App! This application is designed to guide users in their yo
 
 - **Authentication:** As a customer, I want to log out from the app. 
 
-## Installation
-
-To install the Yoga App, follow these steps:
-
-1. Clone the repository:
-   ```bash
-   azure clone https://dev.azure.com/tt5769g/_git/Group%202%20Coursework?path=/ReadMe.md&_a=history
-Install dependencies:
-
-bash
-Copy code
-cd yoga-app
-npm install
-Run the app:
-
-bash
-Copy code
-npm start
