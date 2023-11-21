@@ -6,6 +6,7 @@ import com.grouptwo.dyoga.interfaces.Callback;
 import com.grouptwo.dyoga.utils.Constants;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,13 +30,22 @@ public class RemoteService<T extends RemoteEntity> {
         this.fireStoreDatabase = new dYogaFireStoreDatabase<>();
     }
 
+    public RemoteService(String collectionName) {
+        this.repository = null;
+        this.collectionName = collectionName;
+
+        this.apiClient = new dYogaApiClient();
+        this.executorService = Executors.newSingleThreadExecutor();
+        this.fireStoreDatabase = new dYogaFireStoreDatabase<>();
+    }
+
     public void syncEntity(T data) {
         apiSyncEntity(data);
         fireStoreSyncEntity(data);
     }
 
     public void syncRemoteEntities(Callback<Map<String, Object>> callback) {
-        if(fireStoreSync)
+        if (fireStoreSync)
             fireStoreGetEntities(callback);
         else if (apiStoreSync)
             apiGetEntities(callback);
@@ -46,7 +56,7 @@ public class RemoteService<T extends RemoteEntity> {
     }
 
     private void fireStoreSyncEntity(T data) {
-        if(!fireStoreSync) return;
+        if (!fireStoreSync) return;
 
         final String reference = data.getReference() == null
                 ? Constants.generateReferenceById(data.getId())
@@ -55,14 +65,17 @@ public class RemoteService<T extends RemoteEntity> {
         data.setSynced(true);
 
         fireStoreDatabase.addOrUpdate(collectionName, reference, data)
-                .addOnSuccessListener(documentReference -> repository.updateOnly(data.getId(), data));
+                .addOnSuccessListener(documentReference -> {
+                    if (Objects.nonNull(repository))
+                        repository.updateOnly(data.getId(), data);
+                });
     }
 
     private void apiGetEntities(Callback<Map<String, Object>> callback) {
     }
 
     private void apiSyncEntity(T data) {
-        if(!apiStoreSync) return;
+        if (!apiStoreSync) return;
 
         //todo: sync with the api
     }

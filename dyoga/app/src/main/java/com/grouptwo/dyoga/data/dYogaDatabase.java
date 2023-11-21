@@ -14,7 +14,7 @@ import com.grouptwo.dyoga.data.entities.ClassInstance;
 import com.grouptwo.dyoga.data.entities.Course;
 
 @TypeConverters({Converters.class})
-@Database(entities = {Course.class, ClassInstance.class}, version = 9, exportSchema = false)
+@Database(entities = {Course.class, ClassInstance.class}, version = 10, exportSchema = false)
 public abstract class dYogaDatabase extends RoomDatabase {
 
     private static volatile dYogaDatabase INSTANCE;

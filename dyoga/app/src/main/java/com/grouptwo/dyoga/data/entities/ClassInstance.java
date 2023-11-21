@@ -1,5 +1,7 @@
 package com.grouptwo.dyoga.data.entities;
 
+import android.graphics.Color;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -20,6 +22,8 @@ public class ClassInstance implements RemoteEntity, Serializable {
     private boolean deleted;
     private String userId;
     private boolean synced;
+    private String color;
+
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
@@ -36,7 +40,8 @@ public class ClassInstance implements RemoteEntity, Serializable {
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
+    public String getColor() {return color;}
+    public void setColor(String color) {this.color = color;}
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

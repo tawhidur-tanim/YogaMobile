@@ -1,0 +1,46 @@
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import GetStarted from "./app/activities/GetStarted";
+import AuthScreen from "./app/activities/AuthScreen";
+import CheckoutScreen from "./app/activities/CheckoutScreen";
+import DashboardScreen from "./app/activities/DashboardScreen";
+import * as Font from "expo-font";
+import {useEffect, useState} from "react";
+import {AuthUserContext} from "./app/data/AuthUserContext";
+import {auth} from "./app/firebase";
+
+const Stack = createNativeStackNavigator();
+
+export default function App() {
+
+    const [fontsLoaded, setFontLoaded] = useState(false)
+
+    useEffect(() => {
+        Font.loadAsync({
+            "RobotoSlab": require("./assets/fonts/RobotoSlab.ttf"),
+            "RobotoSlabBold": require("./assets/fonts/RobotoSlabBold.ttf"),
+            "Inter": require("./assets/fonts/Inter-Regular.ttf"),
+            "InterBold": require("./assets/fonts/Inter-SemiBold.ttf"),
+        }).catch(() => console.error("Failed to load fonts")).finally(() => {
+            setFontLoaded(true)
+        })
+    }, [])
+
+    if (!fontsLoaded) {
+        return null
+    }
+
+    return (<AuthUserContext.Provider value={auth.currentUser}>
+            <NavigationContainer>
+                <Stack.Navigator screenOptions={{
+                    headerShown: false
+                }}>
+                    <Stack.Screen name="GetStarted" component={GetStarted}/>
+                    <Stack.Screen name="AuthScreen" component={AuthScreen}/>
+                    <Stack.Screen name="DashboardScreen" component={DashboardScreen}/>
+                    <Stack.Screen name="CheckoutScreen" component={CheckoutScreen}/>
+                </Stack.Navigator>
+            </NavigationContainer>
+        </AuthUserContext.Provider>
+    );
+}
