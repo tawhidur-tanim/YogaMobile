@@ -50,7 +50,7 @@ export default function CheckoutScreen({navigation}) {
                     .then(() => setClassInstances(Object.values(classInstanceArray)))
             } catch (error) {
                 console.error(error)
-                Toaster.show({type: 'error', message: "Error deleting item from cart. Try again!"})
+                Toaster.show({type: 'error', message: constStrings.errorDeletingItemFromCart})
             }
         })
     }
@@ -65,16 +65,16 @@ export default function CheckoutScreen({navigation}) {
             updateUserBookedClasses(currentUser, classInstancesInCart).then(() => [
                 AsyncStorage.removeItem(constStoreKeys.classInstancesInCart).then(() => {
                     setClassInstances([])
-                    Toaster.show({type: 'success', message: "Classes booked successfully! 🎉"})
+                    Toaster.show({type: 'success', message: constStrings.classBookedSuccessfully})
                     setIsCheckingOut(false)
                 }).finally(() => setIsCheckingOut(false))
             ]).catch(error => {
                 console.error(error)
-                Toaster.show({type: 'success', message: "Error booking classes!"})
+                Toaster.show({type: 'success', message: constStrings.errorBookingClasses})
             }).finally(() => setIsCheckingOut(false))
         }).catch(error => {
             console.error(error)
-            Toaster.show({type: 'success', message: "Error booking classes!"})
+            Toaster.show({type: 'success', message: constStrings.errorBookingClasses})
         }).finally(() => setIsCheckingOut(false))
     }
 
