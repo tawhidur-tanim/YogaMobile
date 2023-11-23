@@ -38,3 +38,10 @@ Welcome to the Yoga App! This application is designed to guide users in their yo
 
 - **Authentication:** As a customer, I want to log out from the app. 
 
+
+## Releases
+Download Admin App (Android)
+https://uogcloud-my.sharepoint.com/:u:/g/personal/ue1734y_gre_ac_uk/EenYwHlGk19Elj4pHPEAdM0BjEVMJhbJzRD4M6_C_LsBrQ?e=GPxcSc
+
+Download Customer App (Android)
+https://uogcloud-my.sharepoint.com/:u:/g/personal/ue1734y_gre_ac_uk/EVi06I88T5JDukB4xtXY4QUBDqawNr9L-hZcDkLc2h35_Q?e=WjUS46
