@@ -93,8 +93,8 @@ public class DashboardActivity extends AppCompatActivity {
             };
 
             final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setTitle("Log out")
-                    .setMessage("Are sure to log out?")
+                    .setTitle(R.string.log_out)
+                    .setMessage(R.string.are_sure_to_log_out)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton(android.R.string.yes, positiveCallback)
                     .setNegativeButton(android.R.string.no, null).create();
@@ -144,12 +144,12 @@ public class DashboardActivity extends AppCompatActivity {
 
         final DialogInterface.OnClickListener positiveButtonDialogInterface = (dialog, whichButton) -> {
             courseViewModel.deleteCourse(course);
-            Toast.makeText(DashboardActivity.this, "Course has been deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DashboardActivity.this, R.string.course_has_been_deleted, Toast.LENGTH_SHORT).show();
         };
 
         final AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setTitle("Delete Course")
-                .setMessage("Do you really want to delete course?")
+                .setTitle(R.string.delete_course)
+                .setMessage(R.string.do_you_really_want_to_delete_course)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setPositiveButton(android.R.string.yes, positiveButtonDialogInterface)
                 .setNegativeButton(android.R.string.no, null).create();
