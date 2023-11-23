@@ -36,6 +36,9 @@ const constStrings = {
     classBookedSuccessfully: "Classes booked successfully! 🎉",
     errorBookingClasses: "Error booking classes!",
     errorDeletingItemFromCart: "Error deleting item from cart. Try again!",
+    classAddedInCart: "Class added to cart!",
+    errorAddingClassToCart: "Error adding class to cart",
+    errorSigningOut: "Error signing out. Please try again!",
 }
 
 const constDimensions = {

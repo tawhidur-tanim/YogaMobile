@@ -102,14 +102,14 @@ export default function DashboardScreen({navigation}) {
             classInstanceArray[selectedItem.docId] = selectedItem
             setClassInstancesInCart(classInstanceArray)
             AsyncStorage.setItem(constStoreKeys.classInstancesInCart, JSON.stringify(classInstanceArray)).then(() => {
-                Toaster.show({type: 'success', message: "Class added to cart!"})
+                Toaster.show({type: 'success', message: constStrings.classAddedInCart})
             }).catch(error => {
                 console.error(error)
-                Toaster.show({type: 'error', message: "Error adding class to cart"})
+                Toaster.show({type: 'error', message: constStrings.errorAddingClassToCart})
             })
         }).catch(error => {
             console.error(error)
-            Toaster.show({type: 'error', message: "Error adding class to cart"})
+            Toaster.show({type: 'error', message: constStrings.errorAddingClassToCart})
         })
     }
 
@@ -119,11 +119,11 @@ export default function DashboardScreen({navigation}) {
                 navigation.replace("GetStarted")
             }).catch(error => {
                 console.error(error)
-                Toaster.show({type: 'error', message: "Error signing out. Please try again!"})
+                Toaster.show({type: 'error', message: constStrings.errorSigningOut})
             })
         }).catch(error => {
             console.error(error)
-            Toaster.show({type: 'error', message: "Error signing out. Please try again!"})
+            Toaster.show({type: 'error', message: constStrings.errorSigningOut})
         })
     }
 
