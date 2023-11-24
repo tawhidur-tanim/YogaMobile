@@ -75,8 +75,6 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private boolean validate(String emailAddress, String passcode) {
-
-        // todo: improvements validate that email is correct format too
         if (emailAddress.isEmpty()) {
             Toast.makeText(this, R.string.please_enter_a_valid_email_address, Toast.LENGTH_LONG).show();
             return false;

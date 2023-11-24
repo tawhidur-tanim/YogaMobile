@@ -32,7 +32,13 @@ const constStrings = {
     durationFormat: "%1s hour(s) \nand %2s minute(s)",
     gotoCart: "Go to cart",
     applyFilter: "Apply Filter",
-    noClassesAvailable: "No classes available. Pull to refresh"
+    noClassesAvailable: "No classes available. Pull to refresh",
+    classBookedSuccessfully: "Classes booked successfully! 🎉",
+    errorBookingClasses: "Error booking classes!",
+    errorDeletingItemFromCart: "Error deleting item from cart. Try again!",
+    classAddedInCart: "Class added to cart!",
+    errorAddingClassToCart: "Error adding class to cart",
+    errorSigningOut: "Error signing out. Please try again!",
 }
 
 const constDimensions = {
