@@ -25,14 +25,15 @@ const updateUserBookedClasses = async (currentUser, data) => {
     const documentName = currentUser.uid.substring(0, 6) + "_bookedClassInstances"
 
     const querySnapshot = getDocs(collection(db, documentName));
-    const docs = await querySnapshot
-    let result = []
+    const docs = await querySnapshot;
+    let result = {};
     docs.forEach((doc) => {
         result = doc.data()
     });
     Object.keys(data).forEach(k => {
         result[k] = data[k]
     })
+    console.log("booking",result, data)
     return setDoc(doc(db, documentName, subDocumentName), result);
 }
 
