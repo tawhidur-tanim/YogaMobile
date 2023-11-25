@@ -62,7 +62,6 @@ export default function AuthScreen({navigation}) {
 
     const authenticated = (userCredentials) => {
         const user = userCredentials.user;
-        console.log("User authenticated: ", user)
         AsyncStorage.setItem(ACCOUNT_AUTHENTICATED, "true").then(() => {
             navigation.replace("DashboardScreen")
         })
