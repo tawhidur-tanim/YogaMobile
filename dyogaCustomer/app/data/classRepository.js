@@ -33,7 +33,6 @@ const updateUserBookedClasses = async (currentUser, data) => {
     Object.keys(data).forEach(k => {
         result[k] = data[k]
     })
-    console.log("booking",result, data)
     return setDoc(doc(db, documentName, subDocumentName), result);
 }
 

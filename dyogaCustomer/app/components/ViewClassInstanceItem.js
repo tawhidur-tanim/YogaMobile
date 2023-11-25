@@ -18,7 +18,7 @@ export default function ViewClassInstanceItem({
                                               }) {
 
     const screenWidth = Dimensions.get('window').width;
-    const screenHeight = Dimensions.get('window').height;
+    const screenHeight = Dimensions.get('window').height + 50;
 
     const {type, dayOfWeek, duration, time, price, description} = item.course;
     const {instructor, room, comments} = item.classInstance;

@@ -11,7 +11,6 @@ import {
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage"
 
 import {getFirestore} from 'firebase/firestore'
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdKRvEnTYHviGRtPufmCvNbv3b_lwJjnI",

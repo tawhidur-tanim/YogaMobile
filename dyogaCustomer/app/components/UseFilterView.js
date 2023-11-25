@@ -13,7 +13,7 @@ export default function UseFilterView({
                                       }) {
 
     const screenWidth = Dimensions.get('window').width;
-    const screenHeight = Dimensions.get('window').height;
+    const screenHeight = Dimensions.get('window').height + 50;
 
     const [date, setDate] = useState(new Date());
     const [params, setParams] = useState(filterParams ?? {
