@@ -44,6 +44,8 @@ The repository contains two major project folders:
 
 1. dyoga - this is the admin application and should be opened in your android studio
 2. dyogaCustomer - this is developed in React Native using Visual Studio Code. 
+<br/>
+<br/>
 
 ### dyoga
 
@@ -55,7 +57,8 @@ The repository contains two major project folders:
 After cloning or downloading the project. Simply open `/dyoga` folder in your Android Studio.
 
 It might take some minutes to build, afterwards you can run the project on your emulator or using a physical device.
-
+<br/>
+<br/>
 
 ### dyogaCustomer
 
@@ -76,6 +79,8 @@ It might take some minutes to build, afterwards you can run the project on your 
     
     Run `expo start --ios` to run the application in iOS simulator
 
+<br/>
+<br/>
 
 ### Help/Support
 If  you experience any issues, kindly don't hesitate reach out to any of the group members.
