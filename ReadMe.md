@@ -39,9 +39,43 @@ Welcome to the Yoga App! This application is designed to guide users in their yo
 - **Authentication:** As a customer, I want to log out from the app. 
 
 
-## Releases
-Download Admin App (Android)
-https://uogcloud-my.sharepoint.com/:u:/g/personal/ue1734y_gre_ac_uk/EenYwHlGk19Elj4pHPEAdM0BjEVMJhbJzRD4M6_C_LsBrQ?e=GPxcSc
+## Installation
+The repository contains two major project folders:
 
-Download Customer App (Android)
-https://uogcloud-my.sharepoint.com/:u:/g/personal/ue1734y_gre_ac_uk/EVi06I88T5JDukB4xtXY4QUBDqawNr9L-hZcDkLc2h35_Q?e=WjUS46
+1. dyoga - this is the admin application and should be opened in your android studio
+2. dyogaCustomer - this is developed in React Native using Visual Studio Code. 
+
+### dyoga
+
+#### Requirements
+1. Android Studio
+2. Emulator or Physical Android device
+
+
+After cloning or downloading the project. Simply open `/dyoga` folder in your Android Studio.
+
+It might take some minutes to build, afterwards you can run the project on your emulator or using a physical device.
+
+
+### dyogaCustomer
+
+#### Requirements
+1. A code editor ([Visual Studio Code](https://code.visualstudio.com/download), preferably)
+2. Emulator or Physical Android/iOS device
+3. Install [node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+#### Steps
+1. Clone or download the repository
+2. Open `/dyogaCustomer` folder in your code editor
+3. Open a terminal and navigate to `/dyogaCustomer`
+4. Run `npm install` in the terminal
+5. Start your android emulator or iOS simulator
+6. After steps above completion,
+    
+    Run `expo start --android` to run the application in Android
+    
+    Run `expo start --ios` to run the application in iOS simulator
+
+
+### Help/Support
+If  you experience any issues, kindly don't hesitate reach out to any of the group members.
