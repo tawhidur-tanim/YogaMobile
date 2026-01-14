@@ -1,86 +1,53 @@
-# Yoga App
+🧘 Yoga App (d’Yoga)
 
-Welcome to the Yoga App! This application is designed to guide users in their yoga practice, providing a personalized and comprehensive yoga experience.
+d’Yoga is a mobile application for discovering, booking, and managing yoga classes.
+It consists of two connected apps: an Admin app for managing courses and schedules, and a Customer app for browsing and booking classes.
 
-## Features (Admin)
+The goal of this project is to demonstrate real-world mobile development, cloud data synchronization, and clean user experience design across native and cross-platform environments.
 
-- **Enter details of a course:** As an admin user, I want to be able to enter details of a course and create a course  
+📱 What the App Does
 
-- **Enter details of a course:** As an admin user, I want to be able to view a list of my courses. 
+Allows admins to create and manage yoga courses and class schedules
 
-- **Enter details of a class instance:** As an admin user, I want to be able to enter and create class instances for my courses 
+Enables customers to browse available classes and book them
 
-- **Enter details of a course:** As an admin user, I want to be able to view a list of my courses. 
+Uses cloud storage to keep data synchronized in real time
 
-- **Enter details of a course:** As an admin user, I should be shown an error if I missed any required field 
+Includes secure authentication for both admins and users
 
-- **Enter details of a class instance:** As an admin user, I want to be able to specify the room of my class instance. 
+🛠 Tech Stack
 
-- **Enter details of a class instance:** I want to be able to search through my class instance 
+Android (Java)
 
-- **Store, view and delete details:** As an admin I want to be able to review the course details before saving. 
+React Native (Expo)
 
-- **Store, view and delete details:** As an admin user I want to see an empty state view if I have no course. 
+Firebase Authentication
 
-- **Store, view and delete details:** I want my data to be synchronized using to the cloud 
+Firebase Firestore
 
-- **Authentication:** I want to be able to register or login into the app with my email and password 
+📸 Screenshots
+Admin App
+<!-- Insert admin app screenshots here --> <!-- Example: ![Create Course](screenshots/admin_create_course.png) ![Course List](screenshots/admin_course_list.png) -->
+Customer App
+<!-- Insert customer app screenshots here --> <!-- Example: ![Class List](screenshots/customer_class_list.png) ![Cart and Checkout](screenshots/customer_checkout.png) -->
+⚙️ Setup
+Admin App
 
-## Features (User)
+Open /dyoga in Android Studio
 
-- **Add to cart classes:** As a customer, I want to be able to book a class instance and have it added to my cart. Also, an action to go directly to my cart if I need to checkout
+Build the project
 
-- **Check out Classes:** As a customer, when I check out a class instance, there should be a confirmation toast that my booking was successful. 
+Run on an emulator or physical Android device
 
-- **View Classes:** As a customer, I want to be presented with a view of the list of yoga classes available for booking with filtering (booked and time) 
+Customer App
 
-- **Authentication:** As a customer, I want to be able to register and login to the app. 
+Open /dyogaCustomer in a code editor
 
-- **Authentication:** As a customer, I want to log out from the app. 
+Install dependencies:
 
-
-## Installation
-The repository contains two major project folders:
-
-1. dyoga - this is the admin application and should be opened in your android studio
-2. dyogaCustomer - this is developed in React Native using Visual Studio Code. 
-<br/>
-<br/>
-
-### dyoga
-
-#### Requirements
-1. Android Studio
-2. Emulator or Physical Android device
+npm install
 
 
-After cloning or downloading the project. Simply open `/dyoga` folder in your Android Studio.
+Start the app:
 
-It might take some minutes to build, afterwards you can run the project on your emulator or using a physical device.
-<br/>
-<br/>
-
-### dyogaCustomer
-
-#### Requirements
-1. A code editor ([Visual Studio Code](https://code.visualstudio.com/download), preferably)
-2. Emulator or Physical Android/iOS device
-3. Install [node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-
-#### Steps
-1. Clone or download the repository
-2. Open `/dyogaCustomer` folder in your code editor
-3. Open a terminal and navigate to `/dyogaCustomer`
-4. Run `npm install` in the terminal
-5. Start your android emulator or iOS simulator
-6. After steps above completion,
-    
-    Run `expo start --android` to run the application in Android
-    
-    Run `expo start --ios` to run the application in iOS simulator
-
-<br/>
-<br/>
-
-### Help/Support
-If  you experience any issues, kindly don't hesitate reach out to any of the group members.
+expo start
