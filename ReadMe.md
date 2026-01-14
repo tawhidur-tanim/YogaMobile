@@ -1,53 +1,74 @@
-🧘 Yoga App (d’Yoga)
+# Yoga App
 
-d’Yoga is a mobile application for discovering, booking, and managing yoga classes.
-It consists of two connected apps: an Admin app for managing courses and schedules, and a Customer app for browsing and booking classes.
+Welcome to the Yoga App!  
+This mobile application allows users to browse and book yoga classes while enabling administrators to manage courses and class schedules. The app uses cloud services for real-time data synchronization and secure authentication.
 
-The goal of this project is to demonstrate real-world mobile development, cloud data synchronization, and clean user experience design across native and cross-platform environments.
+---
 
-📱 What the App Does
+## Features
 
-Allows admins to create and manage yoga courses and class schedules
+### Admin
+- Create and manage yoga courses  
+- Create class instances and assign rooms  
+- Search and review course and class details  
+- Cloud-based data synchronization  
+- Email and password authentication  
 
-Enables customers to browse available classes and book them
+### User
+- Browse available yoga classes  
+- Filter classes by time and booking status  
+- Book classes and add them to a cart  
+- Checkout with booking confirmation  
+- Register, log in, and log out  
 
-Uses cloud storage to keep data synchronized in real time
+---
 
-Includes secure authentication for both admins and users
+## Screenshots
 
-🛠 Tech Stack
+### Admin App
+<!-- Insert screenshots here -->
+<!-- Example:
+![Admin Course List](screenshots/admin_course_list.png)
+![Create Class](screenshots/admin_create_class.png)
+-->
 
-Android (Java)
+### User App
+<!-- Insert screenshots here -->
+<!-- Example:
+![User Class List](screenshots/user_class_list.png)
+![Checkout](screenshots/user_checkout.png)
+-->
 
-React Native (Expo)
+---
 
-Firebase Authentication
+## Installation
 
-Firebase Firestore
+The repository contains two main project folders:
 
-📸 Screenshots
-Admin App
-<!-- Insert admin app screenshots here --> <!-- Example: ![Create Course](screenshots/admin_create_course.png) ![Course List](screenshots/admin_course_list.png) -->
-Customer App
-<!-- Insert customer app screenshots here --> <!-- Example: ![Class List](screenshots/customer_class_list.png) ![Cart and Checkout](screenshots/customer_checkout.png) -->
-⚙️ Setup
-Admin App
+1. **dyoga** – Admin application (Android)
+2. **dyogaCustomer** – Customer application (React Native)
 
-Open /dyoga in Android Studio
+---
 
-Build the project
+### dyoga
 
-Run on an emulator or physical Android device
+**Requirements**
+- Android Studio  
+- Android emulator or physical device  
 
-Customer App
+Open the `/dyoga` folder in Android Studio, allow the project to build, and run it on an emulator or physical device.
 
-Open /dyogaCustomer in a code editor
+---
 
-Install dependencies:
+### dyogaCustomer
 
-npm install
+**Requirements**
+- Visual Studio Code (recommended)  
+- Node.js and npm  
+- Android or iOS emulator  
 
-
-Start the app:
-
-expo start
+**Steps**
+1. Open the `/dyogaCustomer` folder  
+2. Install dependencies:
+   ```bash
+   npm install
