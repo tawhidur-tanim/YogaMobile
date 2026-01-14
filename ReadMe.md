@@ -1,56 +1,74 @@
-# Yoga App
+# Yoga App (d’Yoga)
 
-Welcome to the Yoga App!  
-This mobile application allows users to browse and book yoga classes while enabling administrators to manage courses and class schedules. The app is built using **Android (Java)** and **React Native**, with **Firebase** providing authentication and cloud data storage for real-time synchronization.
+The Yoga App is a mobile application for managing and booking yoga classes.  
+It consists of two connected applications:
 
----
+- **Admin App** – for creating and managing yoga courses and class schedules  
+- **Customer App** – for browsing, filtering, booking, and checking out yoga classes  
 
-## Features
-
-### Admin
-- Create and manage yoga courses  
-- Create class instances and assign rooms  
-- Search and review course and class details  
-- Cloud-based data synchronization  
-- Email and password authentication  
-
-### User
-- Browse available yoga classes  
-- Filter classes by time and booking status  
-- Book classes and add them to a cart  
-- Checkout with booking confirmation  
-- Register, log in, and log out  
+The project is built using **Android (Java)** and **React Native**, with **Firebase** handling authentication and cloud data synchronization.
 
 ---
 
 ## Screenshots
 
 ### Admin App
-<!-- Insert screenshots here -->
-<!-- Example:
-![Admin Course List](screenshots/admin_course_list.png)
-![Create Class](screenshots/admin_create_class.png)
--->
 
-### User App
-<!-- Insert screenshots here -->
-<!-- Example:
-![User Class List](screenshots/user_class_list.png)
-![Checkout](screenshots/user_checkout.png)
--->
+**Add a new course**
+![Add Course](screenshots/image1.jpg)
+
+**Form validation for required fields**
+![Validation Error](screenshots/image3.jpg)
+
+**View and manage courses**
+![Your Courses](screenshots/image2.jpg)
+
+**Search courses**
+![Search Courses](screenshots/image5.png)
+
+**Empty state when no courses exist**
+![Empty State](screenshots/image6.jpg)
+
+---
+
+### Customer App
+
+**Browse available class instances**
+![Class List](screenshots/image15.jpg)
+
+**Search and filter classes**
+![Filter Classes](screenshots/image16.jpg)
+
+**Apply booking and time filters**
+![Apply Filter](screenshots/image14.jpg)
+
+**Add classes to cart**
+![Add to Cart](screenshots/image13.png)
+
+**Checkout selected classes**
+![Checkout](screenshots/image4.png)
+
+---
+
+## Technology Used
+
+- Android (Java) – Admin application  
+- React Native with Expo – Customer application  
+- Firebase Authentication  
+- Firebase Firestore (Cloud Database)
 
 ---
 
 ## Installation
 
-The repository contains two main project folders:
+The repository contains two main folders:
 
-1. **dyoga** – Admin application (Android – Java)
+1. **dyoga** – Admin application (Android Studio)
 2. **dyogaCustomer** – Customer application (React Native)
 
 ---
 
-### dyoga
+### dyoga (Admin App)
 
 **Requirements**
 - Android Studio  
@@ -60,12 +78,12 @@ Open the `/dyoga` folder in Android Studio, allow the project to build, and run 
 
 ---
 
-### dyogaCustomer
+### dyogaCustomer (Customer App)
 
 **Requirements**
-- Visual Studio Code (recommended)  
 - Node.js and npm  
 - Android or iOS emulator  
+- Visual Studio Code (recommended)
 
 **Steps**
 1. Open the `/dyogaCustomer` folder  
