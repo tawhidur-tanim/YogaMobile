@@ -1,7 +1,7 @@
 # Yoga App
 
 Welcome to the Yoga App!  
-This mobile application allows users to browse and book yoga classes while enabling administrators to manage courses and class schedules. The app uses cloud services for real-time data synchronization and secure authentication.
+This mobile application allows users to browse and book yoga classes while enabling administrators to manage courses and class schedules. The app is built using **Android (Java)** and **React Native**, with **Firebase** providing authentication and cloud data storage for real-time synchronization.
 
 ---
 
@@ -45,7 +45,7 @@ This mobile application allows users to browse and book yoga classes while enabl
 
 The repository contains two main project folders:
 
-1. **dyoga** – Admin application (Android)
+1. **dyoga** – Admin application (Android – Java)
 2. **dyogaCustomer** – Customer application (React Native)
 
 ---
