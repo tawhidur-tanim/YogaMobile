@@ -14,46 +14,44 @@ The project is built using **Android (Java)** and **React Native**, with **Fireb
 
 ### Admin App
 
-**Add a new course**
-![Add Course](screenshots/image1.jpg)
+<p float="left">
+  <img src="screenshots/image1.jpg" width="240" />
+  <img src="screenshots/image3.jpg" width="240" />
+  <img src="screenshots/image2.jpg" width="240" />
+</p>
 
-**Form validation for required fields**
-![Validation Error](screenshots/image3.jpg)
+<p float="left">
+  <img src="screenshots/image5.png" width="240" />
+  <img src="screenshots/image6.jpg" width="240" />
+  <img src="screenshots/image14.jpg" width="240" />
+</p>
 
-**View and manage courses**
-![Your Courses](screenshots/image2.jpg)
-
-**Search courses**
-![Search Courses](screenshots/image5.png)
-
-**Empty state when no courses exist**
-![Empty State](screenshots/image6.jpg)
+**Admin features shown:**  
+Course creation, validation, course listing, search functionality, and empty state handling.
 
 ---
 
 ### Customer App
 
-**Browse available class instances**
-![Class List](screenshots/image15.jpg)
+<p float="left">
+  <img src="screenshots/image15.jpg" width="240" />
+  <img src="screenshots/image16.jpg" width="240" />
+  <img src="screenshots/image13.png" width="240" />
+</p>
 
-**Search and filter classes**
-![Filter Classes](screenshots/image16.jpg)
+<p float="left">
+  <img src="screenshots/image4.png" width="240" />
+</p>
 
-**Apply booking and time filters**
-![Apply Filter](screenshots/image14.jpg)
-
-**Add classes to cart**
-![Add to Cart](screenshots/image13.png)
-
-**Checkout selected classes**
-![Checkout](screenshots/image4.png)
+**Customer features shown:**  
+Class browsing, filtering, adding to cart, and checkout flow.
 
 ---
 
 ## Technology Used
 
 - Android (Java) – Admin application  
-- React Native with Expo – Customer application  
+- React Native (Expo) – Customer application  
 - Firebase Authentication  
 - Firebase Firestore (Cloud Database)
 
@@ -63,30 +61,4 @@ The project is built using **Android (Java)** and **React Native**, with **Fireb
 
 The repository contains two main folders:
 
-1. **dyoga** – Admin application (Android Studio)
-2. **dyogaCustomer** – Customer application (React Native)
-
----
-
-### dyoga (Admin App)
-
-**Requirements**
-- Android Studio  
-- Android emulator or physical device  
-
-Open the `/dyoga` folder in Android Studio, allow the project to build, and run it on an emulator or physical device.
-
----
-
-### dyogaCustomer (Customer App)
-
-**Requirements**
-- Node.js and npm  
-- Android or iOS emulator  
-- Visual Studio Code (recommended)
-
-**Steps**
-1. Open the `/dyogaCustomer` folder  
-2. Install dependencies:
-   ```bash
-   npm install
+1.
