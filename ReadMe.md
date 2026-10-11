@@ -81,6 +81,4 @@ Open the `/dyoga` folder in Android Studio, allow the project to build, and run 
 - Android or iOS emulator  
 - Visual Studio Code (recommended)
 
-**Steps**
-1. Open the `/dyogaCustomer` folder  
-2. Install de
+
